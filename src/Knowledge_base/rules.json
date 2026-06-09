@@ -1,0 +1,61 @@
+{
+  "h2_rules": [
+    {
+      "metadata": {
+        "rule_id": "RULE_H2_VIBRATE_12MM",
+        "description": "Výška hrotu vibračního nože pro 12mm PET felt.",
+        "source": "Osobní znalostní báze_ PET_felty_moodpasta_V2.md",
+        "confidence": 0.95,
+        "validation_status": "accepted",
+        "rule_class": "CLASS_B"
+      },
+      "cutter_type_id": 1,
+      "material_thickness_mm": 12.0,
+      "ideal_h2_range": [-0.3, -0.1],
+      "critical_h2_threshold": 0.1
+    },
+    {
+      "metadata": {
+        "rule_id": "RULE_H2_VIBRATE_24MM",
+        "description": "Výška hrotu vibračního nože pro 24mm PET felt.",
+        "source": "CNC operátor - Wynnwood",
+        "confidence": 0.90,
+        "validation_status": "accepted",
+        "rule_class": "CLASS_B"
+      },
+      "cutter_type_id": 1,
+      "material_thickness_mm": 24.0,
+      "ideal_h2_range": [-0.5, -0.2],
+      "critical_h2_threshold": 0.1
+    }
+  ],
+  "sequence_rules": [
+    {
+      "metadata": {
+        "rule_id": "RULE_SEQ_OUTER_LAST",
+        "description": "Obvodový ořez vibračním nožem musí být poslední aktivní vrstva.",
+        "source": "DEV_EPISTEMIC_HANDOFF_Gatekeeper.json",
+        "confidence": 0.99,
+        "validation_status": "accepted",
+        "rule_class": "CLASS_A"
+      },
+      "check_nesting_hierarchy": true,
+      "must_cut_last_cutter_id": 1
+    }
+  ],
+  "fixation_rules": [
+    {
+      "metadata": {
+        "rule_id": "RULE_FIX_SMALL_PANEL",
+        "description": "Mechanická fixace odřezků a panelů s malou plochou.",
+        "source": "Průmyslový znalostní korpus - Formalizace dat z produkčního listu CNC.md",
+        "confidence": 0.95,
+        "validation_status": "accepted",
+        "rule_class": "CLASS_B"
+      },
+      "min_area_m2_no_tape": 1.67,
+      "critical_area_m2": 0.5,
+      "tape_perimeter_coverage_pct": 80.0
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "handoff_id": "VCF_COMPILER_KNOWLEDGE_BASE_V1.0",
+  "title": "Znalostní korpus pro vývoj kompilátoru syntetických .VCF souborů (Ruida VCutWorks)",
+  "version": "1.0",
+  "created": "2026-05-31",
+  "source_artifacts": [
+    "summary_proprietarni_format_vcf.json",
+    "RUIDA_VCF_PARSER_HANDOFF_V16.json",
+    "RUIDA_VCF_DEV_HISTORY_V2.0.json",
+    "vcf_deep_parser_handoff.json",
+    "vcf_pair_analysis.txt",
+    "vcf_parser_v10.json",
+    "Dekonstrukce_automatizace_CAM_formatu_VCF.md",
+    "analyza_a_dekodovani_proprietarniho_formatu_vcf.md",
+    "moodpasta_vcf_re_handoff_final.json"
+  ],
+  "compiler_goal": "Generovat binární .VCF soubor (verze RDVCUTFILEVER1.0.013) z raw DXF geometrie a uživatelsky definovaných technologických parametrů (rychlosti, nástroje, přesahy, barvy vrstev).",
+
+  "format_philosophy": {
+    "summary": ".VCF je binární serializace C++ struktur s little-endian uspořádáním, IEEE 754 double pro souřadnice a Windows-1250 pro textová metadata. Není komprimovaný ani šifrovaný, ale obsahuje pevně daný balast (20 systémových palet) a neintuitivní uspořádání (aktivní vrstvy až na konci souboru).",
+    "endianness": "little-endian",
+    "encoding_text": "Windows-1250 (pro cesty, názvy vrstev, fonty, uživatelské štítky)",
+    "encoding_geometry": "IEEE 754 64-bit double (little-endian)",
+    "magic_header_string": "RDVCUTFILEVER1.0.013 (verze 013 je zaručeně stabilní; verze 012 se liší offsety, není podporována)"
+  },
+
+  "global_file_structure": {
+    "order": [
+      "1. ASCII hlavička a metadata",
+      "2. Hřbitov palet (20 systémových palet – vždy přítomno, i když nepoužito)",
+      "3. Geometrický payload (sekvence elementů, každý s vlastní 8B signaturou)",
+      "4. Sekce aktivních vrstev (až na konci souboru, posledních ~200–2000 B)"
+    ],
+    "size_estimates": {
+      "header_plus_palette_graveyard": "~150–200 kB (fixní režie)",
+      "per_geometry_element": "~575 bajtů (odvozeno z pair analysis: 2 elementy → delta 537 B, 5 elementů → delta 1260 B, tedy cca 252 B na element? Pozor: ve skutečnosti 74 B na segment + 57 B hlavička + padding. Přesnější: jeden obdélník (4 segmenty) zabírá cca 157 kB, dva obdélníky 158 kB, tedy rozdíl 537 B. Z toho vyplývá, že každý geometrický element má hlavičku 57 B + pt_count * 74 B. Pro obdélník (4 segmenty) = 57+4*74=353 B, ale delta mezi soubory byla 537 B, což odpovídá 353 + 184 B režie (metadata, cesty, atd.). Pro kompilátor: generovat každý element jako 57B hlavička + pt_count*74B dat.",
+      "layer_section": "200–2000 B podle počtu aktivních vrstev (každá vrstva cca 120–150 B)"
+    }
+  },
+
+  "section_1_header_and_metadata": {
+    "offset_start": 0,
+    "structure": [
+      {
+        "field": "magic_string",
+        "type": "ASCII null-terminated?",
+        "value": "RDVCUTFILEVER1.0.013",
+        "encoding": "ASCII",
+        "notes": "Následováno pravděpodobně jedním nebo více nulovými bajty (0x00)."
+      },
+      {
+        "field": "dxf_source_path",
+        "type": "string",
+        "encoding": "Windows-1250",
+        "notes": "Absolutní cesta k původnímu DXF souboru (např. 'C:\\Users\\PC\\Documents\\...\\line_01.dxf'). Může být více řetězců za sebou (fonty, jména vrstev)."
+      },
+      {
+        "field": "user_tags",
+        "type": "string",
+        "encoding": "Windows-1250",
+        "notes": "Např. 'Karel V', 'Moodpasta_R' – volitelné."
+      },
+      {
+        "field": "font_names",
+        "type": "string[]",
+        "encoding": "Windows-1250",
+        "notes": "Např. 'Arial Black', 'FS.SHX', 'HUGO' – ukládá se i když není text."
+      }
+    ],
+    "compiler_notes": "Kompilátor musí vygenerovat platnou hlavičku s verzí 1.0.013. Cesty a jména mohou být prázdné řetězce (pouze ukončovací 0x00). Kódování Windows-1250 je kritické pro diakritiku – nepoužívat UTF-8."
+  },
+
+  "section_2_palette_graveyard": {
+    "description": "20 výchozích systémových palet (barev) s jejich technologickými parametry. VCutWorks je zapisuje vždy, bez ohledu na to, zda jsou použity. Parser je musí ignorovat; kompilátor je musí vygenerovat identicky pro každý soubor.",
+    "structure": "20 bloků, každý o pevné velikosti (pravděpodobně 120–150 B, viz odvozeno z layer_structure). Obsahují rychlost, typ nástroje, H1/H2, atd., ale pro nepoužité vrstvy mají výchozí hodnoty (např. speed=10 mm/s, tool_type=0).",
+    "compiler_notes": "Pro syntetický soubor lze zkopírovat paletu z libovolného existujícího .VCF (např. rectangle_01.vcf) – je neměnná. Neměnit, jinak hrozí nekompatibilita s VCutWorks."
+  },
+
+  "section_3_geometry_payload": {
+    "overview": "Sekvence geometrických elementů (Line, Polyline, Polygon, Circle). Každý element začíná 8B signaturou, následovanou proměnlivou hlavičkou a pak pt_count * 74 B segmentů.",
+    "element_magic_signature": {
+      "offset_from_element_start": 0,
+      "length_bytes": 8,
+      "typical_value": "0x01 0x00 0x01 0x00 0x00 0xFF 0xFF 0xFF",
+      "variant": "Někdy začíná 0x00 místo 0x01? Dle pair analysis: `01 00 01 00 00 FF FF FF` je konzistentní. Kompilátor použije tuto hodnotu.",
+      "detection_notes": "Parser hledá tuto signaturu v celém souboru. Kompilátor ji zapíše před každý element."
+    },
+    "geometry_element_header": {
+      "size": "57 bajtů (od signature do začátku segmentů)",
+      "fields": [
+        {
+          "name": "signature",
+          "offset": 0,
+          "length": 8,
+          "type": "bytes",
+          "fixed_value": [0x01, 0x00, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0xFF]
+        },
+        {
+          "name": "unknown_1",
+          "offset": 8,
+          "length": 4,
+          "type": "uint32",
+          "typical_value": 0x00000000,
+          "compiler_advice": "Vyplnit nulami."
+        },
+        {
+          "name": "unknown_2",
+          "offset": 12,
+          "length": 4,
+          "type": "uint32",
+          "typical_value": 0x00000000,
+          "compiler_advice": "Vyplnit nulami."
+        },
+        {
+          "name": "color",
+          "offset": 16,  // Odvozeno z kontextu: geom_color na pos+8? Ale v handoff je color_offset = pos+8. Zde uvádím pos+16? Nutno ověřit. Podle RUIDA_VCF_PARSER_HANDOFF_V16.json: color_offset = pos+8 (32-bit uint). Takže správně: offset 8-11 je barva.
+          "length": 4,
+          "type": "uint32",
+          "description": "ARGB barva dráhy (např. 0xFFFF0000 = červená). Slouží k mapování na vrstvu (layer_color << 8).",
+          "compiler_advice": "Barva musí odpovídat barvě vrstvy, do které element patří: geom_color = (layer_color << 8) & 0xFFFFFFFF. Layer_color je 32-bit ARGB (z konce souboru)."
+        },
+        {
+          "name": "unknown_3",
+          "offset": 20,
+          "length": 25, // 45-20=25
+          "type": "bytes",
+          "typical_value": "většinou nuly",
+          "compiler_advice": "Vyplnit nulami."
+        },
+        {
+          "name": "type_id",
+          "offset": 45,
+          "length": 4,
+          "type": "uint32",
+          "values": {
+            "0": "Line nebo otevřená lomená čára (polyline)",
+            "1": "Polygon (uzavřený) nebo kružnice"
+          },
+          "compiler_advice": "Pro uzavřené polygony a kružnice nastavit 1, pro otevřené křivky a úsečky 0."
+        },
+        {
+          "name": "pt_count",
+          "offset": 49,
+          "length": 4,
+          "type": "uint32",
+          "description": "Počet následujících 74B segmentů. Pro úsečku (type_id=0) je pt_count=1 (jeden segment definuje jednu úsečku? Pozor: V datech z pair analysis pro line_01.VCF byl pt_count=1 a délka 2500 mm – odpovídá. Pro lomenou čáru o 3 segmentech je pt_count=3. Pro polygon (obdélník) je pt_count=4 (4 strany).",
+          "compiler_notes": "Kompilátor vypočítá počet segmentů z geometrie: pro úsečku/pt_count=1, pro lomenou čáru/polygon = počet úseček (N bodů -> N-1 segmentů pro otevřenou, N segmentů pro uzavřený polygon). Pro kružnici je pt_count=1? Podle handoff: kružnice je type_id=1, subtype=3 a používá jeden segment, kde se čtou pouze X1 a X2 (střed a bod na obvodu)."
+        },
+        {
+          "name": "subtype",
+          "offset": 53,
+          "length": 4,
+          "type": "uint32",
+          "values": {
+            "0": "Pro type_id=0: úsečka; pro type_id=1: obecný polygon",
+            "3": "Pro type_id=1: kružnice; pro type_id=0: otevřená křivka (polyline)"
+          },
+          "compiler_advice": "Kružnice: type_id=1, subtype=3. Polyline otevřený: type_id=0, subtype=3. Úsečka: type_id=0, subtype=0. Polygon uzavřený: type_id=1, subtype=0."
+        }
+      ]
+    },
+    "segment_structure_74_bytes": {
+      "size": 74,
+      "fields": [
+        {
+          "name": "padding_or_metadata_1",
+          "offset": 0,
+          "length": 14,
+          "type": "bytes",
+          "typical_value": "směs nul a identifikátorů (např. barva, index)",
+          "compiler_advice": "Vyplnit nulami, případně zkopírovat z existujícího segmentu (nejjednodušší: vzít 14 bajtů z prvního segmentu jakéhokoli .VCF)."
+        },
+        {
+          "name": "X1",
+          "offset": 14,
+          "length": 8,
+          "type": "double (IEEE 754 little-endian)",
+          "description": "X souřadnice prvního bodu úsečky (nebo středu kružnice)",
+          "compiler_advice": "Pro kružnici: X1 = střed_X."
+        },
+        {
+          "name": "Y1",
+          "offset": 22,
+          "length": 8,
+          "type": "double",
+          "description": "Y souřadnice prvního bodu úsečky (nebo pro kružnici: nečte se! V ruida_vcf_handoff stojí: 'pro kružnici se čtou pouze X-ové souřadnice' – Y1 je ignorováno? Parser V15 četl pouze X1 a X2 pro kružnici. Kompilátor by měl Y1 a Y2 nastavit na 0.0.",
+          "compiler_advice": "Pro kružnici nastavit Y1 = 0.0, Y2 = 0.0. Pro ostatní elementy standardně."
+        },
+        {
+          "name": "X2",
+          "offset": 30,
+          "length": 8,
+          "type": "double",
+          "description": "X souřadnice druhého bodu úsečky (nebo pro kružnici: bod na obvodu)",
+          "compiler_advice": "Pro kružnici: X2 = bod_na_obvodu_X (pak radius = |X2 - X1|)."
+        },
+        {
+          "name": "Y2",
+          "offset": 38,
+          "length": 8,
+          "type": "double",
+          "description": "Y souřadnice druhého bodu úsečky",
+          "compiler_advice": "Pro kružnici nastavit 0.0."
+        },
+        {
+          "name": "padding_or_metadata_2",
+          "offset": 46,
+          "length": 28,
+          "type": "bytes",
+          "typical_value": "převážně nuly, občas hodnoty jako 0x3FF00000 (double 1.0), 0x00000000 atd.",
+          "compiler_advice": "Vyplnit nulami, nebo použít šablonu z existujícího .VCF (např. z rectangle_01.vcf)."
+        }
+      ],
+      "notes": "Pro polygon nebo lomenou čáru se segmenty řadí za sebou. Každý segment definuje jednu úsečku (X1,Y1)-(X2,Y2). Pro uzavřený polygon je poslední segment definován z posledního bodu do prvního (parser to musí zajistit). Kompilátor musí vygenerovat segmenty tak, aby tvořily souvislou cestu."
+    },
+    "special_cases": {
+      "circle": {
+        "type_id": 1,
+        "subtype": 3,
+        "pt_count": 1,
+        "segment_usage": "Pouze X1 (střed) a X2 (bod na obvodu). Y1 a Y2 ignorovány (nastavit 0.0). Délka se vypočítá jako 2 * π * |X2 - X1|.",
+        "compiler_implementation": "Z DXF kružnice (střed S, poloměr R) vygenerovat segment s X1 = S.x, X2 = S.x + R (nebo S.x - R), Y1=0, Y2=0. VCutWorks při načtení rekonstruuje kružnici správně."
+      },
+      "polyline_open": {
+        "type_id": 0,
+        "subtype": 3,
+        "pt_count": "počet segmentů (N-1 pro N bodů)",
+        "segment_sequence": "Každý segment (i-tý) spojuje bod i a bod i+1."
+      },
+      "line_segment": {
+        "type_id": 0,
+        "subtype": 0,
+        "pt_count": 1,
+        "segment": "(X1,Y1)-(X2,Y2)"
+      },
+      "polygon_closed": {
+        "type_id": 1,
+        "subtype": 0,
+        "pt_count": "počet stran (pro N bodů je N segmentů, poslední spojuje N->1)",
+        "segment_sequence": "Bod1->Bod2, Bod2->Bod3, ..., BodN->Bod1."
+      }
+    },
+    "geometry_notes_from_parser_evolution": {
+      "critical_lessons": [
+        "Nikdy nepoužívat pevné offsety pro délku (V10 fatální chyba – kruh 500 mm vyšel 8 mm). Délka se vždy počítá ze souřadnic.",
+        "Kružnice nesmí číst Y souřadnice (V14 regrese – nadhodnocení o 41 %).",
+        "pt_count je klíčový – podle něj iterovat segmenty, ne podle typu elementu (V16 univerzální smyčka).",
+        "Pro složené geometrie (grouping) není žádná speciální komprese – každý element má vlastní hlavičku. Chybná interpretace grouping (V13) vedla k desynchronizaci."
+      ]
+    }
+  },
+
+  "section_4_active_layers_section": {
+    "location": "Posledních 200–2000 bajtů souboru, za všemi geometrickými elementy.",
+    "detection": "Parser hledá signature 0x01000000 (4 bajty) před rychlostí vrstvy. Kompilátor musí tuto sekci vygenerovat na konec souboru.",
+    "layer_block_structure": {
+      "per_layer_fields": [
+        {
+          "name": "color",
+          "offset_from_layer_block_start": -8,  // S - 8, kde S je začátek rychlosti
+          "length": 4,
+          "type": "uint32",
+          "description": "ARGB barva vrstvy (např. 0xFFFF0000 = červená). V GUI VCutWorks se tato barva zobrazuje.",
+          "compiler_advice": "Přiřadit unikátní barvu pro každou vrstvu. Barva dráhy (v geometry elementu) se vypočítá jako (layer_color << 8) & 0xFFFFFFFF. Tedy pokud je layer_color=0xFFFF0000, pak geom_color=0xFF000000? To by ztratilo červenou. Pozor: vzorec z handoff: `geom_color == ((layer_color << 8) & 0xffffffff)`. To znamená, že pokud je layer_color 0x00RRGGBB? Ve skutečnosti ARGB: alpha, red, green, blue. Posun o 8 bitů doleva posune alpha do vyššího bajtu? Příklad: layer_color=0xFFFF0000 (červená, plné alpha) -> <<8 = 0xFF000000 (černá). To nedává smysl. Možná je to naopak: `layer_color = (geom_color >> 8)`. Kompilátor by měl dodržet: zvolit layer_color, pak geom_color = (layer_color << 8) | (layer_color >> 24)? Toto je nejasné. Doporučuje se použít stejný pár barva/geom_color jako v některém existujícím .VCF (např. musica)."
+        },
+        {
+          "name": "signature",
+          "offset_from_layer_block_start": -4,
+          "length": 4,
+          "type": "bytes",
+          "fixed_value": [0x01, 0x00, 0x00, 0x00],
+          "compiler_advice": "Pevně daný marker začátku bloku rychlosti. Kompilátor zapíše 0x01000000."
+        },
+        {
+          "name": "speed_mm_s",
+          "offset_from_layer_block_start": 0,
+          "length": 8,
+          "type": "double (little-endian)",
+          "description": "Rychlost řezu v mm/s.",
+          "compiler_advice": "Uživatelský vstup."
+        },
+        {
+          "name": "unknown_before_cutter_type",
+          "offset_from_layer_block_start": 8,
+          "length": 20,  // 28-8=20
+          "type": "bytes",
+          "typical_value": "nuly",
+          "compiler_advice": "Vyplnit nulami."
+        },
+        {
+          "name": "cutter_type_raw",
+          "offset_from_layer_block_start": 28,
+          "length": 4,
+          "type": "uint32",
+          "description": "Zakódovaný typ nástroje. Musí se maskovat: cutter_type = (cutter_type_raw >> 16) if (cutter_type_raw >> 16) != 0 else (cutter_type_raw & 0xFFFF).",
+          "values": {
+            "0": "Vibrate cutter (oscilační nůž)",
+            "1": "Wheel (kolečko)",
+            "2": "Milling (fréza)",
+            "3": "V-slot (V-drážka)",
+            "4": "Vibrate cut (alternativní)"
+          },
+          "compiler_advice": "Uživatelský vstup. Při generování raw hodnoty: pokud je cutter_type <= 0xFFFF, pak cutter_type_raw = cutter_type (dolní 16 bitů), jinak cutter_type_raw = cutter_type << 16. Pro jistotu použít cutter_type_raw = cutter_type & 0xFFFF (většina nástrojů je malá čísla)."
+        },
+        {
+          "name": "unknown_after_cutter_type",
+          "offset_from_layer_block_start": 32,
+          "length": 44,  // 76-32=44
+          "type": "bytes",
+          "typical_value": "nuly, občas float 1.0 (0x3FF0000000000000)",
+          "compiler_advice": "Vyplnit nulami, ale pro jistotu zkopírovat z existujícího .VCF (např. segment z musica)."
+        },
+        {
+          "name": "feed_h1_mm",
+          "offset_from_layer_block_start": 76,
+          "length": 8,
+          "type": "double",
+          "description": "Start height (výška najetí nástroje v mm).",
+          "compiler_advice": "Uživatelský vstup (typicky 0.0 nebo výška materiálu)."
+        },
+        {
+          "name": "feed_count",
+          "offset_from_layer_block_start": 84,
+          "length": 4,
+          "type": "uint32",
+          "description": "Počet průchodů (počet opakování řezu).",
+          "compiler_advice": "Typicky 1."
+        },
+        {
+          "name": "feed_h2_mm",
+          "offset_from_layer_block_start": 92,
+          "length": 8,
+          "type": "double",
+          "description": "End height (výška po dořezu v mm).",
+          "compiler_advice": "Typicky 0.0 nebo 6.0 (pro V-slot)."
+        },
+        {
+          "name": "v_slot_extensions",
+          "condition": "cutter_type == 3",
+          "fields": [
+            {
+              "name": "direction",
+              "offset_from_layer_block_start": 100,
+              "length": 2,
+              "type": "uint16",
+              "values": {"0": "Left", "1": "Right", "2": "Cut both side"},
+              "compiler_advice": "Uživatelský vstup."
+            },
+            {
+              "name": "v_slot_width_comp_mm",
+              "offset_from_layer_block_start": 102,
+              "length": 8,
+              "type": "double",
+              "description": "Kompenzace šířky V-drážky (mm).",
+              "compiler_advice": "Typicky 0.0."
+            },
+            {
+              "name": "starting_extension_mm",
+              "offset_from_layer_block_start": 110,
+              "length": 8,
+              "type": "double",
+              "description": "Nájezdový přesah (mm).",
+              "compiler_advice": "Uživatelský vstup (např. 2.5)."
+            },
+            {
+              "name": "ending_extension_mm",
+              "offset_from_layer_block_start": 118,
+              "length": 8,
+              "type": "double",
+              "description": "Výjezdový přesah (mm).",
+              "compiler_advice": "Uživatelský vstup."
+            }
+          ]
+        }
+      ],
+      "ordering": "Vrstvy jsou uloženy v tom pořadí, v jakém se objevují v GUI VCutWorks (obvykle podle barev). Kompilátor by měřit generovat vrstvy v definovaném pořadí (např. podle zadaného seznamu)."
+    },
+    "compiler_notes_layer_section": "Sekce aktivních vrstev musí být až za všemi geometrickými elementy. Mezi posledním elementem a první vrstvou mohou být nuly nebo jiná metadata. Kompilátor by měl vygenerovat vrstvy těsně za sebou, bez mezer, a celý soubor ukončit. Velikost sekce = 20 (pevná hlavička?) + počet_vrstev * (velikost_bloku_vrstvy). Velikost bloku vrstvy je přibližně 120-150 bajtů (dle handoff: S+0 až S+118 pro V-slot = 118 bajtů + 4B signature + 4B color = 126 B bez padding). Doporučeno použít přesné offsety z existujícího souboru jako šablonu a pouze měnit rychlost, barvu, H1/H2, V-slot parametry."
+
+  },
+
+  "compiler_implementation_roadmap": {
+    "phase_1": "Šablona – načíst existující .VCF (např. rectangle_01.vcf), vyextrahovat hlavičku, paletu, a sekci vrstev jako binární šablonu. Nahradit geometrický payload vlastní geometrií z DXF.",
+    "phase_2": "Generování geometrických elementů: Pro každý prvek z DXF (úsečka, kružnice, polyline, polygon) vytvořit hlavičku (57 B) a pole segmentů (74 B * pt_count). Barvu elementu nastavit podle vrstvy ((layer_color << 8) ...).",
+    "phase_3": "Sestavení celého souboru: Hlavička + paleta (zkopírovat) + geometrické elementy za sebou + aktivní vrstvy (zkopírovat ze šablony, upravit rychlosti, barvy, atd.).",
+    "phase_4": "Validace: Vygenerovaný soubor otevřít v VCutWorks, porovnat s originálem. Otestovat na jednoduchých tvarech (čára, obdélník, kruh).",
+    "phase_5": "Rozšíření o podporu více vrstev, V-slot parametrů, extension (přesahy) – nezapomenout, že přesahy nejsou součástí geometrie, ale jsou v parametrech vrstvy. Kompilátor by měl mít možnost přičíst je k celkové délce, ale do souboru se ukládají jen jako metadata.",
+    "phase_6": "Optimalizace: Minimalizovat velikost souboru (odstranit zbytečné padding? Ale VCutWorks očekává přesnou strukturu – lepší zachovat padding z šablony)."
+  },
+
+  "critical_compiler_constraints": [
+    "Verze formátu: RDVCUTFILEVER1.0.013 – jiné verze (012) mají odlišné offsety (nejsou testovány).",
+    "Kódování textu: Windows-1250, nikoli UTF-8. Všechny cesty, názvy vrstev, fonty musí být převedeny.",
+    "Endianita: little-endian – při zápisu double a uint32 použít struct.pack('<d', value) a '<I'.",
+    "Zachování palety: 20 systémových palet musí být přítomno beze změny. Nejjednodušší: zkopírovat binární blok z existujícího .VCF.",
+    "Barvy: Vztah mezi layer_color a geom_color je kritický. Pokud není vzorec jasný, použít stejnou dvojici jako v referenčním souboru.",
+    "Kružnice: Pouze X-ové souřadnice, Y nastavit na 0.0. Poloměr se odvodí z rozdílu X2-X1.",
+    "Žádná komprese: Negroupovat elementy. Každý geometrický prvek má vlastní hlavičku a signaturu.",
+    "pt_count musí přesně odpovídat počtu segmentů. Pro kružnici pt_count=1, pro úsečku 1, pro polygon N (počet stran), pro lomenou čáru N-1."
+  ],
+
+  "test_plan_for_compiler": [
+    {
+      "test": "Generovat úsečku délky 1000 mm, type_id=0, subtype=0, pt_count=1. Otevřít v VCutWorks, změřit délku nástrojem Measure – musí být 1000 mm."
+    },
+    {
+      "test": "Generovat kružnici poloměru 500 mm, type_id=1, subtype=3, pt_count=1, X1=střed_X, X2=střed_X+500, Y1=0, Y2=0. Otevřít, změřit obvod – musí být 2*π*500 = 3141.59 mm."
+    },
+    {
+      "test": "Generovat obdélník 2790x1200 mm (4 segmenty), type_id=1, subtype=0, pt_count=4. Otevřít, změřit obvod – 7980 mm."
+    },
+    {
+      "test": "Generovat dvě vrstvy s různými rychlostmi (např. 100 mm/s a 200 mm/s) a přiřadit jim geometrii (každé jeden obdélník). Otevřít v VCutWorks, zkontrolovat barvy a rychlosti v GUI."
+    },
+    {
+      "test": "Generovat V-slot vrstvu (cutter_type=3) s extension 2.5 mm, direction=Left. Otevřít, zkontrolovat parametry v dialogu Layer Parameter."
+    },
+    {
+      "test": "Porovnat vygenerovaný soubor s ručně vytvořeným .VCF (např. rectangle_01.vcf) pomocí hexdump – struktura by měla být identická až na geometrické souřadnice a parametry vrstev."
+    }
+  ],
+
+  "known_gaps_and_uncertainties": [
+    "Přesná velikost a struktura paddingových oblastí (např. mezi color a type_id, uvnitř segmentů). Doporučuje se kopírovat z existujícího .VCF.",
+    "Vztah mezi layer_color a geom_color. Vzorec `geom_color == ((layer_color << 8) & 0xffffffff)` může být chybný nebo neúplný. Kompilátor by měl používat stejnou dvojici jako referenční soubor (např. pro červenou vrstvu v musica.vcf: zjistit geom_color a layer_color).",
+    "Podpora elips a Bézierových křivek – v testovacích datech nebyly přítomny. Kompilátor by je měl tesselovat na úsečky (polyline) a ztratit přesnost, nebo vyžadovat od uživatele konverzi na polyline.",
+    "Starší verze formátu (1.0.012) – nejsou podporovány. Kompilátor bude generovat pouze 1.0.013.",
+    "Počet vrstev větší než 7 – netestováno. Struktura na konci souboru může být nepravidelná. Kompilátor by měl generovat vrstvy v kompaktním bloku bez mezer."
+  ],
+
+  "conclusion": "Tento znalostní korpus shrnuje všechny poznatky z reverzního inženýrství formátu .VCF (verze 1.0.013) provedeného během 14 dnů (12.–25. 5. 2026). Parser V16 dosahuje 99,99% přesnosti extrakce geometrie. Na základě těchto znalostí je možné vyvinout kompilátor, který z DXF dat a uživatelských parametrů generuje syntetické .VCF soubory plně kompatibilní s VCutWorks a Ruida kontroléry. Hlavní výzvou zůstává přesné zachování paddingových oblastí a vztahu barev. Doporučuje se přístup „šablona + injektáž geometrie“ s následnou validací v cílovém softwaru."
+}

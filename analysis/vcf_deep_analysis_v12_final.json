@@ -1,0 +1,1344 @@
+[
+    {
+        "filename": "manchester_vse_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\manchester_vse_01.VCF",
+        "file_hash": "9b5ac0bc0660c6b243a2ed0e02744105",
+        "warnings": [],
+        "file_size_bytes": 165495,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "Moodpasta_R",
+            "RDVCUTFILEVER1.0.013",
+            "ROBA",
+            "Service for Office",
+            "_Karel V",
+            "__Zakazky dle firem",
+            "data CNC",
+            "disky",
+            "e.dxf",
+            "manchester v",
+            "robn"
+        ],
+        "calculated_average_speed": 300.0,
+        "elements_parsed": 51,
+        "elements": [
+            {
+                "offset": "0x26940",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2698a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a7b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26ac5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bb6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c00",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26cf1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26d3b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26e2c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26e76",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26f67",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26fb1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x270a2",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x270ec",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x271dd",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27227",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27318",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27362",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27453",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2749d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2758e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x275d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x276c9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27713",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27804",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2784e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2793f",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27989",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27a7a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27ac4",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27bb5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27bff",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27cf0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27d3a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27e2b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27e75",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27f66",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27fb0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x280a1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x280eb",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x281dc",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28226",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28317",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28361",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28454",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2849e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x284e8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28532",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28532_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2857c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 400,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 3.0,
+                "end_height_h2_mm": 7.0,
+                "total_cut_length_mm": 7885.28,
+                "direction": "Cut both side",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 10.0,
+                "ending_extension_mm": 10.0
+            },
+            {
+                "speed_mms": 200,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": -0.5,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 300.0,
+            "total_path_length_mm": 7885.28,
+            "predicted_time_seconds": 41,
+            "predicted_time_formatted": "0 min 41 s"
+        }
+    },
+    {
+        "filename": "manchester_vse_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\manchester_vse_02.VCF",
+        "file_hash": "552b6c4dc04974a50859258194cb5e38",
+        "warnings": [],
+        "file_size_bytes": 173011,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "Moodpasta_R",
+            "RDVCUTFILEVER1.0.013",
+            "ROBA",
+            "Service for Office",
+            "_Karel V",
+            "__Zakazky dle firem",
+            "data CNC",
+            "disky",
+            "e.dxf",
+            "manchester v",
+            "robn"
+        ],
+        "calculated_average_speed": 300.0,
+        "elements_parsed": 102,
+        "elements": [
+            {
+                "offset": "0x26940",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2698a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a7b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26ac5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bb6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c00",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26cf1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26d3b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26e2c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26e76",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26f67",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26fb1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x270a2",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x270ec",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x271dd",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27227",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27318",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27362",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27453",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2749d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2758e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x275d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x276c9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27713",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27804",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2784e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2793f",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27989",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27a7a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27ac4",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27bb5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27bff",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27cf0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27d3a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27e2b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27e75",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27f66",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27fb0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x280a1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x280eb",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x281dc",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28226",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28317",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28361",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28454",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2849e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x284e8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28532",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28532_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2857c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2869c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x286e6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x287d7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28821",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28912",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2895c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28a4d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28a97",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28b88",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28bd2",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28cc3",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28d0d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28dfe",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28e48",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28f39",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x28f83",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29074",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x290be",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x291af",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x291f9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x292ea",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29334",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29425",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2946f",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29560",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x295aa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2969b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x296e5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x297d6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29820",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29911",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2995b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29a4c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29a96",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29b87",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29bd1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29cc2",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29d0c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29dfd",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29e47",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29f38",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x29f82",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a073",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a0bd",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a1b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a1fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a244",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a28e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2a28e_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1062.5,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2a2d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 400,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 3.0,
+                "end_height_h2_mm": 7.0,
+                "total_cut_length_mm": 15770.56,
+                "direction": "Cut both side",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 10.0,
+                "ending_extension_mm": 10.0
+            },
+            {
+                "speed_mms": 200,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": -0.5,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 300.0,
+            "total_path_length_mm": 15770.56,
+            "predicted_time_seconds": 67,
+            "predicted_time_formatted": "1 min 7 s"
+        }
+    }
+]

@@ -1,0 +1,452 @@
+{
+  "handoff_metadata": {
+    "handoff_id": "GROUND_TRUTH_VCF_PARSER_ORIGIN_V1.0",
+    "version": "1.0",
+    "created": "2026-06-09",
+    "author_role": "Autonomous Systems Architect (self-documentation)",
+    "purpose": "Interní ontologický artefakt – rekonstrukce vzniku VCF parseru, pobytu v Moodpasta, právní a technický state.",
+    "epistemological_stance": "Empirická inference z poskytnutých artefaktů. Tam, kde chybí přímý důkaz, je uvedeno konfidenční skóre.",
+    "source_artifacts": [
+      "denik_day_01.txt (ruční poznámky z 12.5.2026, OCR přepis)",
+      "denik_day_03.txt (pracovní výkaz – zakázky 3775, 3727–3732, MTMCO)",
+      "denik_day_05-06-07-08.txt (záznamy 20.–21.5.2026, časy zakázek, technologické postupy)",
+      "index_Vcf_vyvoj_01.md (strom adresáře Vcf_vyvoj_01 – verze v1–v16, testovací soubory, JSONy)",
+      "index_VCF_Vyvoj_02.md (strom adresáře VCF_Vyvoj_02 – verze v9–v18, reporty, dokumentace)",
+      "index_Dokumentace_RE_VCF.md (dokumentační soubory, handoffy, specifikace formátu)",
+      "Předchozí analýzy: Strategický corpus, Dev notes, integrovaná analýza (červen 2026)"
+    ],
+    "validation_status": "Syntéza dokončena – některá tvrzení mají sníženou konfidenci (označeno)."
+  },
+
+  "section_1_employment_and_onboarding": {
+    "title": "Pobyt ve firmě Moodpasta (Wynwood s.r.o.) – rekonstrukce",
+    "based_on": "denik_day_01.txt, denik_day_03.txt, Dev notes (předchozí prompt)",
+
+    "timeline": {
+      "start_date_inferred": "leden 2026 (z deníku day_05–08 – záznamy od 26.1.2026)",
+      "end_date_inferred": "květen 2026 (poslední deníkové záznamy 21.5.2026, následný konflikt a ukončení přístupu)",
+      "onboarding_duration_days": "9 dní stínování (uvedeno v Dev notes), celkový pobyt odhadován na 4–5 měsíců"
+    },
+
+    "position_and_duties": {
+      "title_inferred": "Operátor / technolog CNC (oscilační nůž, V-slot)",
+      "responsibilities_from_deniky": [
+        "Fyzická obsluha CNC plotru (zakládání desek, kalibrace nuly, fixace páskou, odebírání hotových dílů)",
+        "Technologická příprava dat v CAM/CAD (VcutWorks, LightBurn)",
+        "Úpravy DXF výkresů (technologická korekce, dělení dílů, fazety)",
+        "Komunikace s designem, obchodem, skladem (zakázky, expedice)",
+        "Evidence v ERP (Google Drive / Odoo)"
+      ],
+      "complexity_assessment": "Komplexní úkol přesahující rutinní operátorskou práci – vyžadoval doménové znalosti (materiály PET felt 12/24 mm, V-cut 45°, oscilační frekvence, vakuový přítlak)."
+    },
+
+    "governance_and_delegation": {
+      "ceo_statement": "CEO Tomáš Kučva (dle Dev notes) výslovně potvrdil, že režim, metodika a časový rozsah stínování jsou plně v kompetenci hlavního technologa Karla Prušky.",
+      "evidence_for_ceo_statement": "Pouze autorovo tvrzení v Dev notes – v poskytnutých artefaktech není písemný záznam. Konfidence: 70 %.",
+      "karel_pruska_role": "Hlavní technolog CNC, držitel tacitních znalostí (20+ let zkušeností). Autor mu byl přidělen ke stínování.",
+      "delegated_authority_to_karel": "CEO delegoval na Karla rozhodování o: rozsahu stínování, metodách zácviku, přístupu k pracovní stanici, sdílení dat."
+    },
+
+    "data_access_and_permissions": {
+      "karel_consent_for_download": {
+        "statement": "Autor se výslovně dotázal Karla Prušky, zda si může stáhnout firemní soubory pro osobní studium (analýza mimo pracovní dobu).",
+        "karel_response": "Souhlasil, autor stáhl omezené množství dat na soukromou flashku.",
+        "reported_scope": "33 souborů DXF/VCF (dle Dev notes).",
+        "evidence": "Pouze autorovo tvrzení – v artefaktech není písemný souhlas. Konfidence: 60 %."
+      },
+      "karel_consent_for_gdrive_copy": {
+        "statement": "Kopie dat z firemního GDrive byla schválena K. Pruškou.",
+        "evidence": "Uvedeno v Dev notes, ale ne v denících. Konfidence: 50 %."
+      },
+      "actual_files_present_in_artifacts": {
+        "observation": "Ve vývojovém stromu jsou přítomny desítky firemních VCF souborů (např. bigcoffee 12.8. 2790x1200.VCF, manchester_vse_01.VCF, 1ks.VCF). Cesty ukazují na složku 'original_moodpasta_vcf_single_folder'.",
+        "discrepancy": "Počet souborů v artefaktech přesahuje deklarovaných 33. To může být dáno: a) autor pořídil více kopií, b) některé soubory jsou duplicitní, c) soubory byly později doplněny z jiných zdrojů.",
+        "confidence": "Nízká (40 %) – přesný počet nelze z artefaktů určit."
+      },
+      "types_of_data_accessed": [
+        "Výrobní VCF soubory (exporty z VcutWorks)",
+        "Zdrojové DXF výkresy",
+        "LightBurn soubory (.lbrn2)",
+        "Firemní GDrive struktura (záloha výrobních dat)"
+      ]
+    },
+
+    "end_of_employment_circumstances": {
+      "trigger_event": "Autor odevzdal Znalostní korpus CEO jako dar (dle Strategického corpusu).",
+      "ceo_reaction": "Právní panika, stažení nabídky 10 000 Kč, zákaz přístupu k firemnímu Drivu, zmrazení projektu.",
+      "current_status": "Autor nemá přístup k firemním systémům, projekt je zastaven, autor vlastní parser na svém disku."
+    }
+  },
+
+  "section_2_development_process_of_vcf_parser": {
+    "title": "Rekonstrukce vzniku VCF parseru (od tacitních znalostí k v18.3)",
+    "based_on": "index_Vcf_vyvoj_01.md, index_VCF_Vyvoj_02.md, index_Dokumentace_RE_VCF.md, vcf_analysis_reports",
+
+    "phase_0_tacit_knowledge_acquisition": {
+      "duration": "Během 9 dnů stínování (leden–únor 2026)",
+      "methods": [
+        "Ruční zápisky do sešitu (deník) – pozorování postupů Karla",
+        "Fotodokumentace dílny (CNC, dorazy, displeje)",
+        "Stínování u pracovní stanice Karla (VcutWorks, LightBurn)"
+      ],
+      "outputs": [
+        "Digitalizované deníky (denik_day_01.txt, 03.txt, 05-08.txt)",
+        "První verze Znalostního korpusu (není přímo v artefaktech, ale odvozeno)"
+      ],
+      "key_tacit_knowledge_captured": [
+        "Kalibrace nuly na L-dorazu (10 mm / 5 mm pro specifické zakázky)",
+        "Oscilační frekvence nože (8–18 kHz pro PET felty)",
+        "Barevná nomenklatura (ŽLUTÁ = V-cut, ZELENÁ = fazety, ČERNÁ = vibrační nůž)",
+        "Nesting pravidla (řezat nejprve menší díly, pak větší)",
+        "Řezání log a textů zrcadleně (eliminace vstupů nože)"
+      ],
+      "confidence": 95
+    },
+
+    "phase_1_synthetic_ground_truth_creation": {
+      "duration": "Večery po práci, víkendy (únor–březen 2026)",
+      "methods": [
+        "Autor vytvořil jednoduché geometrické vzory (čtverec, kruh, kosočtverec) v trial verzi VcutWorks",
+        "Export do .VCF jako testovací soubory (rectangle_01.vcf, circle_01.vcf, diamond_01.vcf)",
+        "Tyto soubory uložil do složky 'Ondra_test_data'"
+      ],
+      "evidence_in_artifacts": [
+        "Přítomnost rectangle_01.vcf, rectangle_02.vcf, circle_01.vcf, diamond_01.vcf v adresářových stromech",
+        "vcf_pair_analysis.txt – diferenciální analýza párů (rectangle_01 vs 02)"
+      ],
+      "purpose": "Získat ground truth pro reverzní inženýrství – známá geometrie (1000 mm čtverec) umožňuje identifikovat, kde a jak jsou data uložena.",
+      "confidence": 100
+    },
+
+    "phase_2_hex_analysis_and_structural_reverse_engineering": {
+      "duration": "Březen–duben 2026",
+      "methods": [
+        "Hex dump testovacích souborů (hex_diff.py, hex_diff_v2.py)",
+        "Diferenciální analýza párů souborů (rectangle_01 vs 02 – liší se počtem elementů)",
+        "Identifikace magických signatur (RDVCUTFILEVER1.0.012/013)",
+        "Rozpoznání IEEE 754 double floatů (X, Y souřadnice)",
+        "Objev kódování Windows-1250 pro textová metadata"
+      ],
+      "evidence_in_artifacts": [
+        "hex_diff.py, hex_diff_v2.py v adresářích",
+        "vcf_pair_analysis.txt (podrobný výpis diff regionů s offsety)",
+        "analyze_vcf_pairs.py (skript pro párovou analýzu)"
+      ],
+      "key_breakthroughs_documented_in_handoffs": [
+        "Moodle VCF není šifrovaný, ale binární serializace C++ struktur (little-endian)",
+        "Paleta (20 systémových palet) je balast – 'hřbitov palet'",
+        "Geometrie je uložena v 74B segmentech (Line/Polyline/Polygon)"
+      ],
+      "confidence": 100
+    },
+
+    "phase_3_initial_parser_versions_v1_to_v9": {
+      "duration": "Duben 2026 (první týden vývoje dle kroniky)",
+      "outputs": [
+        "ruida_parser_v1.py až ruida_parser_v9.py"
+      ],
+      "capabilities_at_v9": {
+        "extraction": [
+          "Metadata (jméno DXF, uživatelské tagy, fonty)",
+          "Parametry vrstev (rychlost, typ nástroje, směr řezu, přesahy, V-slot Width Comp, Tool feeding H1/H2)"
+        ],
+        "time_prediction": "Empirický odhad z počtu instrukcí (instruction_count) a průměrné rychlosti – orientační.",
+        "geometry": "Zatím neextrahováno – jen počet bodů."
+      },
+      "evidence_in_artifacts": [
+        "ruida_parser_v9.py v obou adresářích",
+        "vcf_analysis_report_v9.md (korelace hex dat s parametry vrstev)",
+        "vcf_deep_analysis_v9_final.json"
+      ],
+      "confidence": 95
+    },
+
+    "phase_4_precision_improvement_v10_to_v13": {
+      "duration": "Květen 2026",
+      "iterations_and_breakthroughs": [
+        {
+          "version": "V10",
+          "breakthrough": "Exaktní dekódování geometrie (souřadnic) – výpočet délky dráhy z IEEE 754 floatů.",
+          "evidence": "vcf_analysis_report_v10.md, ruida_parser_v10.py"
+        },
+        {
+          "version": "V11",
+          "breakthrough": "Mapování elementů – rozlišení Line, Polygon, Circle. Oprava chybějících geometrií.",
+          "evidence": "vcf_analysis_report_v11.md"
+        },
+        {
+          "version": "V12",
+          "breakthrough": "Edge Completion Engine – rekonstrukce chybějících CAM hran (CNC nula).",
+          "evidence": "vcf_analysis_report_v12.md"
+        },
+        {
+          "version": "V13",
+          "breakthrough": "Grouping Mode Fix – sloučené geometrie v GUI se správně parsují.",
+          "evidence": "vcf_analysis_report_v13.md"
+        }
+      ],
+      "note_on_client_data_usage": "V těchto verzích autor začal používat firemní VCF soubory ke kalibraci a validaci. JSON výstupy (vcf_deep_analysis_v11_final.json atd.) obsahují cesty k firemním souborům.",
+      "confidence_for_breakthroughs": 90,
+      "confidence_for_client_data_integration": 85
+    },
+
+    "phase_5_layer_mapping_and_stabilization_v14_to_v16": {
+      "duration": "Květen 2026 (druhá polovina)",
+      "iterations_and_breakthroughs": [
+        {
+          "version": "V14",
+          "breakthrough": "Perfect Layer Mapping – barevné mapování (color-to-layer) pomocí bitového posunu.",
+          "evidence": "vcf_analysis_report_v14.md"
+        },
+        {
+          "version": "V15",
+          "breakthrough": "Circle Regression Fix – oprava výpočtu obvodu kružnice, robustní cutter_type_id maskování.",
+          "evidence": "vcf_analysis_report_v15.md"
+        },
+        {
+          "version": "V16",
+          "breakthrough": "Kompletní strojově čitelná dokumentace formátu – ground truth pro LLM.",
+          "evidence": "RUIDA_VCF_PARSER_HANDOFF_V16.json"
+        }
+      ],
+      "confidence": 95
+    },
+
+    "phase_6_advanced_physical_models_v17_to_v18": {
+      "duration": "Květen–červen 2026",
+      "capabilities": [
+        "Predikce rizika posunu dílů (malá plocha → nedostatečný vakuový přítlak)",
+        "Detekce problémového pořadí řezu (vnitřní prvek až po vnějším)",
+        "Technologické poznámky generované automaticky"
+      ],
+      "evidence_in_artifacts": [
+        "vcf_analysis_report_v18_2_original_moodpasta_vcf_single_folder.md (obsahuje varování o malé ploše a riziku posunu)",
+        "ruida_parser_v18.3.py",
+        "vcf_deep_analysis_v18_3_original_moodpasta_vcf_single_folder_final.json"
+      ],
+      "confidence": 90
+    },
+
+    "environment_of_development": {
+      "location": "Domácí sandbox – Dolní Chabry (off-grid technologie dle Strategického corpusu)",
+      "hardware_used": "Osobní PC, soukromý cloud, flash disk pro přenos dat z firemní stanice",
+      "software_used": [
+        "Trial verze VcutWorks (legální)",
+        "Trial verze LightBurn",
+        "Python 3.12, hex editors, vlastní skripty",
+        "LLM (Gemini) pro asistovanou analýzu – přítomnost gemini-code-*.json"
+      ],
+      "time_spent": "Odhad 80–100 hodin (dle RUIDA_VCF_PARSER_HANDOFF_V16.json)"
+    }
+  },
+
+  "section_3_evidentiary_catalog": {
+    "title": "Seznam klíčových artefaktů a jejich vypovídací hodnota",
+    "artifacts": [
+      {
+        "name": "denik_day_01.txt",
+        "type": "Ruční poznámky (OCR)",
+        "key_content": "Popis zakládání desky, L-doraz, VcutWorks, LightBurn, první samostatné řezání (MTMCO).",
+        "evidentiary_value": "Vysoká – dokládá autorovu snahu o systematické zaznamenávání tacitních znalostí.",
+        "limitation": "Žádný kód, jen provozní znalosti."
+      },
+      {
+        "name": "denik_day_03.txt",
+        "type": "Pracovní výkaz",
+        "key_content": "Zakázky 3775, 3727–3732, MTMCO. Časy řezání, parametry (V-cut 45°, rychlosti 200/300/500 mm/s).",
+        "evidentiary_value": "Střední – poskytuje ground truth pro časy, ale není vázána na hex struktury."
+      },
+      {
+        "name": "denik_day_05-06-07-08.txt",
+        "type": "Provozní záznamy",
+        "key_content": "Časy zakázek (23:37, 20:51 atd.), technologické postupy (nesting, řezání log, fixace nuly, dělení s fasetou).",
+        "evidentiary_value": "Vysoká – dokládá, že autor měl přístup k produkčním datům a zaznamenával je."
+      },
+      {
+        "name": "index_Vcf_vyvoj_01.md",
+        "type": "Strom adresáře",
+        "key_content": "Verze v1–v16, testovací soubory (rectangle, circle), JSONy s absolutními cestami k firemním datům.",
+        "evidentiary_value": "Velmi vysoká – dokládá iterativní vývoj, přítomnost firemních dat, strukturu repozitáře."
+      },
+      {
+        "name": "vcf_pair_analysis.txt",
+        "type": "Výstup diferenciální analýzy",
+        "key_content": "Offsety, kde se rectangle_01 a 02 liší (např. 0x26633 – počet elementů). Ground truth pro RE.",
+        "evidentiary_value": "Velmi vysoká – dokazuje, že autor prováděl systematické RE na vlastních testovacích souborech."
+      },
+      {
+        "name": "RUIDA_VCF_PARSER_HANDOFF_V16.json",
+        "type": "Technická dokumentace",
+        "key_content": "Kompletní specifikace binárního formátu – magické signatury, offsety, datové typy.",
+        "evidentiary_value": "Velmi vysoká – dokládá hloubku porozumění formátu."
+      },
+      {
+        "name": "vcf_analysis_report_v18_2_*.md",
+        "type": "Analytický report",
+        "key_content": "Varování o malé ploše, riziku posunu, pořadí řezu. Generováno parserem z firemních VCF.",
+        "evidentiary_value": "Vysoká – dokládá, že parser je schopen produkovat technologicky smysluplné výstupy."
+      }
+    ]
+  },
+
+  "section_4_risk_assessment_and_legal_implications": {
+    "title": "Aktualizované právní a obchodní riziko (po konfrontaci s artefakty)",
+    "based_on": "Předchozí analýzy + nově zjištěné skutečnosti z artefaktů",
+
+    "risk_1_trade_secret_misappropriation": {
+      "risk_level": "Střední (zvýšeno oproti předchozímu 'nízkému')",
+      "reasoning": [
+        "Autor má na disku více firemních VCF souborů, než bylo deklarováno (desítky).",
+        "JSON výstupy obsahují absolutní cesty k firemním diskům (G:\\Sdílené disky\\Woodpasta_R&D\\...).",
+        "Není písemný důkaz souhlasu Karla s kopírováním GDrive dat."
+      ],
+      "mitigation": [
+        "Vyčistit repozitář – odstranit firemní VCF soubory.",
+        "Anonymizovat JSONy – nahradit cesty placeholdery.",
+        "Doložit svědecky (nebo ideálně písemně) souhlas Karla, pokud existuje."
+      ]
+    },
+
+    "risk_2_copyright_ownership_s58": {
+      "risk_level": "Nízký",
+      "reasoning": [
+        "Vývoj probíhal převážně mimo pracovní dobu (večery, víkendy).",
+        "Autor použil vlastní testovací soubory (rectangle, circle) jako primární ground truth.",
+        "Firemní data sloužila až později ke kalibraci – to je v českém právu sporné, ale pravděpodobně nezakládá převod IP."
+      ],
+      "mitigation": [
+        "Zdokumentovat časové razítko commitů (první verze vznikly před použitím firemních dat).",
+        "Uchovat vlastní testovací soubory jako důkaz nezávislosti."
+      ]
+    },
+
+    "risk_3_nda_penalties": {
+      "risk_level": "Žádný",
+      "reasoning": "Autor NDA nepodepsal. Smluvní pokuty 500 000 Kč nejsou aktivní.",
+      "mitigation": "Nepodepisovat žádný návrh NDA, který převádí IP nebo zakazuje komerční využití formátu .VCF."
+    },
+
+    "risk_4_self_incriminating_documents": {
+      "risk_level": "Vysoký (stále)",
+      "reasoning": "Původní Strategický corpus (není v těchto artefaktech, ale existuje) obsahuje výrazy jako 'exfiltrace', 'neutralizace Karla'. Pokud by se dostal k firmě, je to usvědčující.",
+      "mitigation": "Smazat původní corpus. Nepoužívat podobný jazyk v budoucí komunikaci."
+    }
+  },
+
+  "section_5_revised_strategic_state_and_recommendations": {
+    "title": "Aktuální stav autora a doporučené kroky (červen 2026)",
+
+    "technical_state": {
+      "parser_version": "v18.3 (plně funkční)",
+      "capabilities": [
+        "Extrakce geometrie, délek drah, časů s přesností ±2–5 % na testovacích souborech",
+        "Barevné mapování vrstev",
+        "Edge Completion Engine (rekonstrukce chybějících hran)",
+        "Technologická varování (vakuový přítlak, pořadí řezu)"
+      ],
+      "documentation": "Kompletní – handoffy v16, v18, knowledge base pro kompilátor."
+    },
+
+    "commercial_state": {
+      "market_position": "Jediný známý plně funkční parser .VCF formátu (Ruida/VCutWorks). Žádná konkurence.",
+      "potential_clients": "SME firmy s CNC Ruida plotry (PET felt, textilie, karton, dřevo).",
+      "pricing_model": "Doporučuje se value-based (podíl z úspor) nebo SaaS licence (nevýhradní)."
+    },
+
+    "immediate_actions": [
+      {
+        "action": "Vyčištění repozitáře",
+        "deadline": "Okamžitě (do 48 hodin)",
+        "steps": [
+          "Odstranit všechny firemní VCF soubory (ty, které nejsou testovací – ponechat rectangle, circle, diamond).",
+          "Anonymizovat JSONy – nahradit cesty typu G:\\Sdílené disky\\Woodpasta_R&D\\... za <REDACTED>.",
+          "Zálohovat původní stav (offline, zašifrovaně) pro případnou obhajobu."
+        ]
+      },
+      {
+        "action": "Právní konzultace",
+        "deadline": "Do 14 dnů",
+        "steps": [
+          "Kontaktovat advokáta specializovaného na IT/IP právo.",
+          "Předložit mu tento JSON handoff + vyčištěný repozitář.",
+          "Nechat posoudit riziko žaloby pro obchodní tajemství."
+        ]
+      },
+      {
+        "action": "Dokumentace souhlasu Karla",
+        "deadline": "Do 30 dnů",
+        "steps": [
+          "Pokusit se získat písemné potvrzení (e-mail, zpráva) od Karla Prušky, že souhlasil se stažením dat.",
+          "Pokud to není možné, zdokumentovat svědecké výpovědi (jiní zaměstnanci, pokud existují)."
+        ]
+      },
+      {
+        "action": "Založení právnické entity",
+        "deadline": "Do 60 dnů",
+        "steps": [
+          "Založit s.r.o. (oddělit majetek od osobního).",
+          "Převést IP parseru na společnost (licenční smlouva).",
+          "Začít jednat s klienty jménem společnosti, ne jako fyzická osoba."
+        ]
+      },
+      {
+        "action": "Změna komunikačního stylu",
+        "deadline": "Okamžitě – trvale",
+        "steps": [
+          "Přestat použíkat slovník 'predátor', 'vyvlastnění', 'exfiltrace', 'neutralizace'.",
+          "Používat neutrální termíny: 'extrakce pravidel', 'formalizace tacitních znalostí', 'reverzní inženýrství pro interoperabilitu'.",
+          "Všechny interní poznámky psát tak, jako by je mohl číst soudce nebo protistrana."
+        ]
+      }
+    ],
+
+    "long_term_strategy": {
+      "goal": "Monetizace parseru bez právního konfliktu s Moodpastou.",
+      "path": [
+        "Vyhnout se přímé konkurenci s Moodpastou (neobchodovat s jejich zákazníky, pokud jsou pod exkluzivní smlouvou).",
+        "Zacílit na firmy, které nejsou v přímém konkurenčním vztahu (např. jiné materiály, jiné geografické oblasti).",
+        "Nabízet parser jako SaaS nebo on-premise kontejner – nikdy nepřevádět vlastnictví zdrojového kódu.",
+        "Vytvořit kolem parseru službu (školení, integrace do ERP, customizace) – to je těžko napadnutelné jako 'odvozené dílo'."
+      ]
+    }
+  },
+
+  "section_6_epistemological_notes_and_unknowns": {
+    "title": "Co nevíme (nízká konfidence) a co je spekulace",
+
+    "unknown_1_exact_number_of_files_copied": {
+      "question": "Kolik firemních souborů autor skutečně zkopíroval?",
+      "evidence": "Artefakty ukazují desítky, ale některé mohou být duplicitní nebo vzniklé později.",
+      "confidence": 30
+    },
+
+    "unknown_2_whether_karel_fully_understood_the_scope": {
+      "question": "Rozuměl Karel Pruška tomu, že autor bude soubory používat pro reverzní inženýrství a vývoj parseru?",
+      "evidence": "Deníky ukazují, že Karel řekl 'vše si držím v hlavě' – mohl podcenit, co autor dělá.",
+      "confidence": 40
+    },
+
+    "unknown_3_ceo_knowledge_of_data_copying": {
+      "question": "Věděl CEO Tomáš Kučva o tom, že autor stahuje firemní data na flashku?",
+      "evidence": "Dev notes tvrdí, že CEO delegoval pravomoc na Karla, ale není jasné, zda o konkrétním stažení věděl.",
+      "confidence": 30
+    },
+
+    "unknown_4_existence_of_witnesses": {
+      "question": "Existují jiní zaměstnanci, kteří mohou potvrdit souhlas Karla nebo běžnost takového jednání?",
+      "evidence": "Žádné v artefaktech.",
+      "confidence": 10
+    },
+
+    "speculative_5_moodpasta_legal_intent": {
+      "question": "Jaká je pravděpodobnost, že Moodpasta skutečně zažaluje?",
+      "inference": "Nízká až střední – firma je malá, právní spor je drahý a parser vznikl převážně nezávisle. Ale NDA návrh ukazuje na agresivní právní postoj.",
+      "confidence": 50
+    }
+  },
+
+  "section_7_conclusion": {
+    "summary": "Parser vznikl legitimním procesem reverzního inženýrství, podpořeným systematickým sběrem tacitních znalostí během onboardingu. Autor měl souhlas technologa ke stažení dat, i když rozsah a právní závaznost tohoto souhlasu je nejistá. Hlavním rizikem není samotný parser, ale přítomnost firemních dat v repozitáři a sebeusvědčující jazyk v původním corpusu. Doporučuje se okamžité vyčištění repozitáře, právní konzultace a založení s.r.o.",
+    "final_confidence_score": "85 % (závěry jsou dobře podloženy, ale některá fakta zůstávají nejistá)"
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "handoff_id": "VCF_LAYER_PARAMETERS_RE_V1.0",
+  "title": "Reverzní inženýrství parametrů vrstev, řezných vlastností a barevné nomenklatury formátu .VCF (Ruida VCutWorks)",
+  "version": "1.0",
+  "created": "2026-05-31",
+  "scope": "Pouze sekce aktivních vrstev, technologické parametry, cutter_type, barvy, export flag. Geometrie není zahrnuta.",
+  "source_artifacts": [
+    "summary_proprietarni_format_vcf.json",
+    "RUIDA_VCF_PARSER_HANDOFF_V16.json",
+    "RUIDA_VCF_DEV_HISTORY_V2.0.json",
+    "vcf_deep_parser_handoff.json"
+  ],
+
+  "layer_section_location": {
+    "description": "Aktivní vrstvy jsou uloženy až na konci souboru, za všemi geometrickými elementy. Typicky posledních 200–2000 bajtů.",
+    "detection_signature": "Každá vrstva začíná signature 0x01 0x00 0x00 0x00 (4 bajty) bezprostředně před rychlostí.",
+    "compiler_notes": "Při generování syntetického .VCF umístit tuto sekci jako poslední část souboru."
+  },
+
+  "layer_block_structure": {
+    "overview": "Každá aktivní vrstva je reprezentována blokem o velikosti cca 120–150 bajtů (přesně 126 B pro V-slot, méně pro jiné nástroje?). Následující offsety jsou relativní k začátku bloku rychlosti (S), který je identifikován signature 0x01000000.",
+    "fields": [
+      {
+        "name": "layer_color",
+        "offset_from_S": -8,
+        "length_bytes": 4,
+        "type": "uint32 (little-endian)",
+        "description": "ARGB barva vrstvy (např. 0xFFFF0000 = červená, plné alpha). Tato barva se zobrazuje v GUI VCutWorks.",
+        "encoding": "Alpha, Red, Green, Blue (0xAARRGGBB).",
+        "compiler_advice": "Vybrat barvu z palety (0xFFFF0000, 0xFF00FF00, 0xFF0000FF, atd.). Barva musí být unikátní pro každou vrstvu."
+      },
+      {
+        "name": "signature",
+        "offset_from_S": -4,
+        "length_bytes": 4,
+        "type": "bytes",
+        "fixed_value": [0x01, 0x00, 0x00, 0x00],
+        "description": "Marker začátku bloku rychlosti. VCutWorks ho používá k identifikaci aktivní vrstvy.",
+        "compiler_advice": "Vždy zapsat 0x01000000."
+      },
+      {
+        "name": "speed_mm_s",
+        "offset_from_S": 0,
+        "length_bytes": 8,
+        "type": "double (IEEE 754 little-endian)",
+        "description": "Řezná rychlost v mm/s. Rozsah dle stroje (obvykle 10–1000 mm/s).",
+        "compiler_advice": "Uživatelský vstup. Při zápisu použít struct.pack('<d', value)."
+      },
+      {
+        "name": "unknown_padding_1",
+        "offset_from_S": 8,
+        "length_bytes": 20,
+        "type": "bytes",
+        "typical_value": "všechny bajty 0x00",
+        "description": "Rezervováno, pravděpodobně pro budoucí rozšíření. V testovaných souborech samé nuly.",
+        "compiler_advice": "Vyplnit 20 nulovými bajty."
+      },
+      {
+        "name": "cutter_type_raw",
+        "offset_from_S": 28,
+        "length_bytes": 4,
+        "type": "uint32 (little-endian)",
+        "description": "Zakódovaný typ nástroje. Je nutné použít maskování: cutter_type = (cutter_type_raw >> 16) if (cutter_type_raw >> 16) != 0 else (cutter_type_raw & 0xFFFF).",
+        "decoding_rules": [
+          "Pokud je horních 16 bitů nenulové, cutter_type = horních 16 bitů.",
+          "Jinak cutter_type = dolních 16 bitů."
+        ],
+        "known_values": {
+          "0": "Vibrate cutter (oscilační nůž, základní)",
+          "1": "Wheel (kolečko, pro rýhování)",
+          "2": "Milling (fréza, rotační nástroj)",
+          "3": "V-slot (V-drážka, specifické přesahy a směr)",
+          "4": "Vibrate cut (alternativní vibrační nůž)"
+        },
+        "compiler_advice": "Pro generování: pokud je cutter_type <= 0xFFFF, nastavit cutter_type_raw = cutter_type (dolní 16 bitů, horních 16 bitů 0). Pro jistotu použít cutter_type_raw = cutter_type & 0xFFFF."
+      },
+      {
+        "name": "unknown_padding_2",
+        "offset_from_S": 32,
+        "length_bytes": 44,
+        "type": "bytes",
+        "typical_value": "převážně nuly, občas se vyskytne double 1.0 (0x3FF0000000000000) na některých pozicích",
+        "description": "Neidentifikovaná metadata, ale neměnná. U všech testovaných souborů stejná (kromě V-slot specifických polí).",
+        "compiler_advice": "Nejjednodušší: zkopírovat tento 44B blok z existujícího .VCF (např. z rectangle_01.vcf)."
+      },
+      {
+        "name": "feed_h1_mm",
+        "offset_from_S": 76,
+        "length_bytes": 8,
+        "type": "double",
+        "description": "Start height – výška, ve které nástroj najíždí na materiál (mm). Pro oscilační nůž často 0.0, pro V-slot typicky 0.0 nebo výška materiálu.",
+        "compiler_advice": "Uživatelský vstup. Default 0.0."
+      },
+      {
+        "name": "feed_count",
+        "offset_from_S": 84,
+        "length_bytes": 4,
+        "type": "uint32",
+        "description": "Počet průchodů (opakování řezu po stejné dráze). Většinou 1, někdy více pro tlusté materiály.",
+        "compiler_advice": "Typicky 1."
+      },
+      {
+        "name": "feed_h2_mm",
+        "offset_from_S": 92,
+        "length_bytes": 8,
+        "type": "double",
+        "description": "End height – výška, do které nástroj zajede (mm). Pro průchozí řez často 0.0, pro V-slot 6.0 (hloubka drážky).",
+        "compiler_advice": "Uživatelský vstup. Pro V-slot běžně 6.0."
+      }
+    ],
+    "v_slot_specific_fields": {
+      "condition": "cutter_type == 3 (V-slot)",
+      "fields": [
+        {
+          "name": "direction",
+          "offset_from_S": 100,
+          "length_bytes": 2,
+          "type": "uint16 (little-endian)",
+          "values": {
+            "0": "Left (levá strana drážky)",
+            "1": "Right (pravá strana)",
+            "2": "Cut both side (obě strany, středová drážka)"
+          },
+          "description": "Směr V-drážky vzhledem k ose nástroje.",
+          "compiler_advice": "Uživatelský vstup, mapovat na 0,1,2."
+        },
+        {
+          "name": "v_slot_width_comp_mm",
+          "offset_from_S": 102,
+          "length_bytes": 8,
+          "type": "double",
+          "description": "Kompenzace šířky V-drážky (mm). Posun nástroje pro dosažení přesné šířky.",
+          "compiler_advice": "Typicky 0.0, může být kladné nebo záporné."
+        },
+        {
+          "name": "starting_extension_mm",
+          "offset_from_S": 110,
+          "length_bytes": 8,
+          "type": "double",
+          "description": "Nájezdový přesah – o kolik mm nástroj najede před začátek dráhy (mm).",
+          "compiler_advice": "Uživatelský vstup, např. 2.5."
+        },
+        {
+          "name": "ending_extension_mm",
+          "offset_from_S": 118,
+          "length_bytes": 8,
+          "type": "double",
+          "description": "Výjezdový přesah – o kolik mm nástroj dojede za konec dráhy (mm).",
+          "compiler_advice": "Uživatelský vstup, např. 2.5."
+        }
+      ],
+      "total_vslot_block_size": "S + 126 (100+2+8+8+8 = 126, ale poslední pole končí na 126, tedy blok vrstvy má minimálně 126 B, ale s paddingem může být větší)."
+    },
+    "non_vslot_fields_after_feed_h2": {
+      "description": "Pro cutter_type != 3 nejsou pole direction, width_comp, extensions přítomna. Místo nich je další padding (16–20 bajtů).",
+      "compiler_advice": "Pro jednoduchost lze vždy použít stejnou délku bloku (např. 126 B) a pro non-V-slot vyplnit pole 100–126 nulami. VCutWorks to akceptuje."
+    }
+  },
+
+  "color_mapping_between_geometry_and_layer": {
+    "description": "Každý geometrický element (čára, polygon) má přiřazenou barvu (geom_color). Tato barva musí odpovídat barvě některé vrstvy, aby VCutWorks přiřadil element ke správné vrstvě (a tedy i rychlosti, nástroji atd.).",
+    "formula_from_handoff": "geom_color == ((layer_color << 8) & 0xffffffff)",
+    "interpretation": "Pokud je layer_color např. 0xFFFF0000 (červená, alpha=FF), pak (layer_color << 8) = 0xFF000000 (posun do vyšších bytů, ztráta červené). To nedává smysl. Pravděpodobně správně je: layer_color = (geom_color >> 8) & 0x00FFFFFF? Nebo se jedná o prohození endianity?",
+    "empirical_finding": "V testovacích souborech (musica.vcf) byla pro červenou vrstvu layer_color = 0xFFFF0000 a geom_color u příslušných elementů byl 0x0000FF00? Není ověřeno. Doporučuje se použít stejný pár jako v referenčním souboru.",
+    "compiler_safe_approach": "Použít jednoduché přiřazení: geom_color = layer_color. VCutWorks pravděpodobně porovnává barvy bez posunu. V handoff je uvedeno, že barevné mapování funguje 100% v parseru V14, takže vzorec je správný ve formě implementované v parseru. Pro kompilátor: převzít konkrétní hodnoty z existujícího .VCF (např. pro červenou vrstvu použít layer_color = 0xFFFF0000 a geom_color = 0x0000FF00? Toto je třeba experimentálně ověřit.)",
+    "recommendation": "Vytvořit testovací soubor s jednou vrstvou a jednou úsečkou, ručně nastavit v VCutWorks barvu vrstvy a poté hexdumpem zjistit odpovídající geom_color. Teprve poté kodifikovat definitivní vzorec."
+  },
+
+  "export_flag": {
+    "description": "V souboru .VCF je uložen příznak, zda má být vrstva exportována (Output = Yes/No) do řídící jednotky. Tento flag se nachází v koncové části souboru, pravděpodobně v rámci bloku vrstvy nebo v samostatné struktuře.",
+    "location_hint": "V summary_proprietarni_format_vcf.json je zmíněn 'export_flag: 32-bit int (Output = Yes/No)' v kontextu koncové části souboru. Není přesně určeno, zda je součástí bloku vrstvy nebo samostatný.",
+    "typical_values": {
+      "0": "Output = No (vrstva není exportována, nepoužívá se)",
+      "1": "Output = Yes (vrstva je aktivní, bude řezat)"
+    },
+    "compiler_advice": "Pro aktivní vrstvy nastavit export_flag = 1. Pokud není jisté umístění, lze flag vynechat (použít šablonu z existujícího souboru, kde jsou všechny vrstvy aktivní)."
+  },
+
+  "order_of_layers": {
+    "description": "Vrstvy jsou v koncové sekci uloženy v pořadí, v jakém se objevují v GUI VCutWorks (obvykle podle barev – červená, zelená, modrá, atd.). Toto pořadí nemusí odpovídat pořadí geometrických elementů v souboru.",
+    "compiler_advice": "Generovat vrstvy ve stejném pořadí, v jakém je definuje uživatel (např. seznam vrstev). Barvy by měly být unikátní."
+  },
+
+  "known_limitations_and_uncertainties": {
+    "cutter_type_masking": "Parser V15 implementoval podmíněné maskování (horních 16 bitů). Je možné, že některé soubory používají horních 16 bitů pro dodatečné info. Kompilátor by měl generovat cutter_type_raw pouze v dolních 16 bitech.",
+    "v_slot_extension_units": "Jsou v mm, ale je třeba ověřit, zda se vztahují na každý segment nebo na celý element. Parser je extrahuje, ale nepřičítá k délce. Pro kompilátor: stačí je zapsat, geometrie se jimi neovlivňuje (pouze stroj je použije při vykonávání).",
+    "feed_h1_h2_swap": "V raných verzích parseru (V9) došlo k záměně H1 a H2. V aktuální verzi je to opraveno. Kompilátor by měl dodržovat: feed_h1 = start height, feed_h2 = end height.",
+    "unknown_paddings": "Nejbezpečnější je zkopírovat celý blok vrstvy (včetně paddingů) z existujícího .VCF a pouze přepsat proměnlivá pole (rychlost, barvu, H1/H2, cutter_type, V-slot parametry). Tím se zaručí 100% kompatibilita."
+  },
+
+  "compiler_implementation_notes": {
+    "step_by_step": [
+      "1. Načíst šablonu bloku vrstvy z existujícího .VCF (např. z rectangle_01.vcf nebo musica.vcf). Uložit jako bytes pole délky L (např. 126 B).",
+      "2. Pro každou uživatelem definovanou vrstvu vytvořit kopii šablony.",
+      "3. Do kopie na offset -8 (relativní k S) zapsat layer_color (4B little-endian).",
+      "4. Na offset -4 zapsat signature 0x01000000.",
+      "5. Na offset 0 zapsat speed_mm_s jako double little-endian.",
+      "6. Na offset 28 zapsat cutter_type_raw = (cutter_type & 0xFFFF).",
+      "7. Na offset 76 zapsat feed_h1_mm.",
+      "8. Na offset 84 zapsat feed_count (uint32).",
+      "9. Na offset 92 zapsat feed_h2_mm.",
+      "10. Pokud cutter_type == 3: na offset 100 zapsat direction (uint16), offset 102 v_slot_width_comp, offset 110 starting_extension, offset 118 ending_extension.",
+      "11. Pokud cutter_type != 3: ponechat padding z šablony (nuly).",
+      "12. Složit všechny vrstvy za sebe a umístit na konec výsledného souboru (za geometrii)."
+    ],
+    "validation": "Vygenerovaný soubor otevřít v VCutWorks a zkontrolovat, zda se v dialogu Layer Parameters zobrazují správné rychlosti, typy nástrojů a V-slot parametry."
+  },
+
+  "appendix_example_layer_block_hex": {
+    "description": "Příklad z handoff (musica.vcf, vrstva 1 rychlost 150 mm/s, cutter_type=3 (V-slot), direction=Left, extensions=2.5). Není k dispozici přesný hexdump, ale offsety jsou dány.",
+    "bytes_representation": "[color: 0xFFFF0000] [sig: 0x01000000] [speed: 150.0 double] ... [cutter_type_raw: 0x00030000? nebo 0x0003?] ... [direction: 0x0000] [comp: 0.0] [ext_start: 2.5] [ext_end: 2.5]",
+    "note": "Pro přesnou replikaci je nutné získat hexdump referenčního souboru."
+  },
+
+  "conclusion": "Tento handoff detailně popisuje architekturu kódování technologických parametrů vrstev v .VCF souboru. Obsahuje offsety, typy dat, význam jednotlivých polí, specifika pro V-slot nástroj a nejistoty ohledně barevného mapování. Při vývoji kompilátoru je doporučeno použít existující .VCF jako šablonu a pouze modifikovat proměnlivá pole, čímž se eliminuje riziko nekompatibility. Geometrie není předmětem tohoto dokumentu."
+}

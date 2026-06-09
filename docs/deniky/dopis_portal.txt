@@ -1,0 +1,14 @@
+Dobrý den,
+
+zaujala mě pozice obsluhy CNC řezačky, kterou nabízíte - firma Wynnwood s.r.o. 
+
+Mám přímou praxi s CNC strojem (waterjet, NCstudio 10, G-kód) z výrobního prostředí a souběžně jsem vlastníma rukama postavil off-grid dřevostavbu 35 m² — s důrazením na optimalizaci nákladů, plánů a práci s materiálem (vlastní BOM, vizualizace v CAD atp.).
+
+Nad standardní CNC praxi přináším jeden bonus: orientuji se v Pythonu a jednoduché automatizaci. Pokud by se v budoucnu naskytla příležitost pomoci s optimalizací výrobních dat nebo výtěžností materiálu (skripty pro nesting apod.), klidně bych to zkusil, dělám to již u sebe — ale primárně mám zájem dělat to, co inzerát popisuje: pracovat se strojem a vidět finální produkt - živím se celý život kombinací práce rukou a hlavy.
+
+Díky za posouzení mojí žádosti. Rád přijdu na osobní rozhovor a ukážu konkrétně, co umím.
+
+Ondřej Soušek
+Praha 8 – Dolní Chabry
++420 [735045256]
+github.com/outpost2026

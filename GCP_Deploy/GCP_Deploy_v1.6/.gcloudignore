@@ -1,0 +1,9 @@
+*.md
+diff.txt
+__pycache__/
+*.pyc
+.git/
+readme_dev_v1.5.md
+B2B_MEETING_BRIEF_v1.5.md
+.gcloudignore
+.gitignore

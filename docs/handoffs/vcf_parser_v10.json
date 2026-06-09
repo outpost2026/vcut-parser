@@ -1,0 +1,125 @@
+{
+  "handoff_id": "VCF_PARSER_V10_FINAL",
+  "version": "1.0",
+  "created": "2026-05-17T15:30:00+02:00",
+  "status": "V9 dokončena, V10 připravena k implementaci",
+  "project": "Reverzní inženýrství a finální parser proprietárního CAM formátu .VCF (Shenzhen Ruida Technology / VCutWorks) pro CNC oscilační nůž",
+  "objectives": {
+    "overall": "Vytvořit parser, který z .VCF souboru extrahuje veškeré technologické parametry a exaktně spočítá strojní čas na základě dekódované geometrie.",
+    "current_state": "Parser V9 extrahuje: metadata (jméno DXF, uživatelské tagy, fonty), parametry vrstev (rychlost, typ nástroje, směr řezu, přesahy, V-slot Width Compensation, Tool feeding H1/H2). Predikce času pracuje s empirickým odhadem délky dráhy z počtu instrukcí (instruction_count) a průměrnou rychlostí. Přesnost je orientační, vhodná pro hrubé plánování.",
+    "v10_goal": "Dekódovat geometrická data (souřadnice) pro každou vrstvu, spočítat skutečnou délku dráhy (včetně přesahů) a z přesné rychlosti dané vrstvy odvodit exaktní strojní čas. Odstranit empirický multiplikátor a predikovat čas s přesností na jednotky sekund."
+  },
+  "technical_spec": {
+    "file_format": {
+      "origin": "Shenzhen Ruida Technology, verze hlavičky RDVCUTFILEVER1.0.012 a 1.0.013",
+      "structure": "Binární soubor. Hlavička obsahuje textové řetězce v kódování Windows‑1250 (metadata, cesty k DXF, názvy vrstev, fonty). Následuje sekce s definicemi vrstev (parametry řezu). Poté geometrická data: posloupnost 64bitových little‑endian IEEE 754 double floatů – souřadnice X, Y (případně U). Geometrie je rozdělena po vrstvách, pravděpodobně oddělena barevným kódem nebo jiným identifikátorem vrstvy.",
+      "encoding": "Textová část: Windows‑1250. Binární data: little‑endian."
+    },
+    "parser_capabilities_v9": {
+      "metadata_extraction": [
+        "jméno zdrojového DXF souboru",
+        "verze formátu (RDVCUTFILEVER1.0.01x)",
+        "uživatelské štítky (např. Karel V, Moodpasta_R)",
+        "názvy fontů (Arial Black, FS.SHX, HUGO…)"
+      ],
+      "layer_parameters": {
+        "fields": {
+          "speed_mm_s": "Rychlost řezu v mm/s",
+          "tool_type": "V‑slot nebo Vibrate cutter",
+          "direction": "Left / Cut both side (pro V‑slot)",
+          "starting_extension_mm": "Nájezdový přesah",
+          "ending_extension_mm": "Výjezdový přesah",
+          "vslot_width_comp_mm": "Kompenzace šířky V‑drážky",
+          "tool_feeding_H1_mm": "Výška 1 (start height)",
+          "tool_feeding_H2_mm": "Výška 2 (end height)"
+        },
+        "extraction_method": "Identifikace bloků parametrů v binární struktuře na základě známých markerů a offsetů (podrobnosti v kódu parseru)."
+      },
+      "geometry_estimation": {
+        "instruction_count": "Počet načtených 64bitových floatů (pravděpodobně odpovídá počtu bodů dráhy).",
+        "bounding_box_mm": "Vypočten z min/max hodnot X a Y v souboru."
+      },
+      "time_prediction": "Empirický vzorec: time = (instruction_count * SEGMENT_LENGTH_ESTIMATE) / average_speed, kde SEGMENT_LENGTH_ESTIMATE ≈ 470–530 mm podle charakteru drah."
+    },
+    "pending_v10_implementation": {
+      "geometry_decoding": "Pro každou vrstvu identifikovat blok souřadnic (na základě příznaku vrstvy). Předpokládá se, že každý bod je reprezentován dvěma (X, Y) nebo třemi (X, Y, U) 64bitovými floaty. Sekvence bodů tvoří polygonální čáru.",
+      "path_length_calculation": "Spočítat euklidovskou vzdálenost mezi po sobě jdoucími body a sečíst. K výsledné délce přičíst Starting Extension a Ending Extension (aplikují se na začátek a konec dráhy).",
+      "exact_time": "Pro každou vrstvu: layer_time = (path_length + starting_extension + ending_extension) / speed_mm_s. Celkový čas = suma(layer_time) + případná fixní režie (přejezdy mezi vrstvami, zvedání hlavy). Fixní režii lze odhadnout porovnáním s reálnými časy ze stroje."
+    },
+    "known_offsets_and_markers": {
+      "note": "Detailní offsety a marker byty jsou implementovány v parseru V9. Pro V10 bude nutné rozšířit čtení geometrické sekce a napojit ji na konkrétní vrstvu. Geometrie začíná po sekci parametrů vrstev a je uvozena identifikátorem první vrstvy. Konec geometrie je pravděpodobně určen koncem souboru nebo dalším markerem."
+    }
+  },
+  "sample_data": {
+    "example_file": {
+      "filename": "musica 2790x1200.VCF",
+      "v9_summary": {
+        "predicted_time": "46 min 38 s",
+        "instruction_count": 677,
+        "average_speed": 112.5
+      },
+      "layers": [
+        {
+          "layer": 1,
+          "speed_mm_s": 150,
+          "tool": "V‑slot",
+          "direction": "Left",
+          "ext_start": 0.0,
+          "ext_end": 0.0,
+          "H1": 0.0,
+          "H2": 6.0,
+          "vslot_comp": 0.0
+        },
+        {
+          "layer": 2,
+          "speed_mm_s": 150,
+          "tool": "Vibrate cutter",
+          "direction": null,
+          "ext_start": 0.0,
+          "ext_end": 0.0,
+          "H1": 0.0,
+          "H2": 0.0,
+          "vslot_comp": null
+        },
+        {
+          "layer": 3,
+          "speed_mm_s": 75,
+          "tool": "V‑slot",
+          "direction": "Cut both side",
+          "ext_start": 2.5,
+          "ext_end": 2.5,
+          "H1": 0.0,
+          "H2": 6.0,
+          "vslot_comp": 0.0
+        },
+        {
+          "layer": 4,
+          "speed_mm_s": 75,
+          "tool": "V‑slot",
+          "direction": "Cut both side",
+          "ext_start": 2.0,
+          "ext_end": 2.0,
+          "H1": 0.0,
+          "H2": 6.0,
+          "vslot_comp": 0.0
+        }
+      ]
+    }
+  },
+  "next_steps": [
+    "1. Analyzovat hex dump souboru (např. musica) a identifikovat oddělovače vrstev v geometrické části.",
+    "2. Rozšířit parser o čtení pole souřadnic pro každou vrstvu a uložení do struktury.",
+    "3. Implementovat výpočet délky dráhy (včetně přesahů) pro každou vrstvu.",
+    "4. Spočítat exaktní čas a porovnat s reálným časem ze stroje (jakmile bude k dispozici), doladit fixní režii.",
+    "5. Refaktorovat kód do čisté modulární podoby, přidat dokumentaci a komentáře.",
+    "6. Připravit repozitář pro zveřejnění (po vyřešení souhlasu zaměstnavatele)."
+  ],
+  "context_notes": {
+    "social": "Parser vznikl během zkušebního týdne ve firmě, která .VCF považovala za nečitelný 'black box'. Jakékoli publikování musí počkat na stabilizaci pracovního vztahu a souhlas CEO.",
+    "technical_debt": "Kód parseru obsahuje ad‑hoc heuristiky; při přechodu na V10 je vhodné strukturu pročistit a oddělit čtení hlavičky, parametrů vrstev a geometrie."
+  },
+  "resources": {
+    "previous_handoffs": ["MOODPASTA_VCF_RE_FINAL_SYNTHESIS", "V8 JSON dump", "V9 markdown report"],
+    "data_availability": "Přístup k ~782 .VCF souborům v lokálním repozitáři, včetně testovacích variant s různými rychlostmi a nástroji."
+  }
+}

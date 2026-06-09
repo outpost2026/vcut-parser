@@ -1,0 +1,162 @@
+{
+    "project_name": "VCutWorks (.VCF) Reverse Engineering & Parser",
+    "last_updated": "2026-05-23",
+    "goal": "Vytvořit přesný parser proprietárního formátu .vcf (VCutWorks CAM) pro extrakci vrstev a geometrie k výpočtu ERP obráběcích časů CNC.",
+    "current_version": "V15.0",
+    "key_achievements": [
+        "Plné dešifrování hex struktur pro rychlost a nástroje vrstev (V9).",
+        "Získání specifických parametrů pro V-slot nástroj (směr, šířka a přesahy) (V9).",
+        "Nahrazení chybného čtení délky z float bounding boxu za matematickou rekonstrukci obrysu (V11).",
+        "Zavedení 'Edge Completion Engine' nahrazujícího chybějící CAM hrany pro CNC nulu (V12).",
+        "Pochopení sloučených geometrií (vícenásobné 74bajtové segmentové bloky pod jedním Polygonem s type_id == 1) (V14).",
+        "Úspěšná realizace barevného mapování (Color-to-Layer mapping) drah do příslušných vrstev pomocí bitového posunu (V14).",
+        "Oprava kritické regrese výpočtu kružnic (V15).",
+        "Zavedení robustní detekce cutter_type_id pomocí maskování horních a dolních 16 bitů (V15)."
+    ],
+    "milestones_and_evolution": [
+        {
+            "version": "V9",
+            "date": "2026-05-22",
+            "focus": "Extrakce fyzikálních parametrů vrstev",
+            "milestone": "Dešifrování struktury vrstvy (offsety pro rychlost, typ nástroje, hloubku a parametry V-slotu)."
+        },
+        {
+            "version": "V11",
+            "date": "2026-05-23",
+            "focus": "Geometrický rozbor obrysu",
+            "milestone": "Ukončeno slepé skenování floatů. Zavedeno čtení skutečných X,Y souřadnic z geometrických bloků."
+        },
+        {
+            "version": "V12",
+            "date": "2026-05-23",
+            "focus": "Edge Completion",
+            "milestone": "Zaveden mechanismus uzavírání kontur pro zřetězené čáry vracející se k nule."
+        },
+        {
+            "version": "V13.1",
+            "date": "2026-05-23",
+            "focus": "CAM komprese (Grouping)",
+            "milestone": "První pokus o podporu Grouping režimu zavedením do-while smyčky nad čtením 74B bloků."
+        },
+        {
+            "version": "V14",
+            "date": "2026-05-23",
+            "focus": "Mapování drah do vrstev & Segmentace",
+            "milestone": "Odhalení vztahu barevných kódů drah k barvám vrstev. Oprava fatální desynchronizace offsetů u polygonů."
+        },
+        {
+            "version": "V15",
+            "date": "2026-05-23",
+            "focus": "Stabilizace, oprava regrese kružnice & robustní typy nástrojů",
+            "milestone": "Vyřešena regrese poloměru kružnice. Zavedeno bitové maskování pro cutter_type_id. Převedení barvy vrstvy na legitimní offset 0 celého bloku."
+        }
+    ],
+    "dead_ends_and_mistakes": [
+        {
+            "version": "V10",
+            "issue": "Slepé skenování floatů a falešná detekce bounding boxů",
+            "description": "Prvotní geometrický parser se snažil skenovat 64bitové floaty za statickou signaturou 33 bajtů. Float '1.0' (jako padding) sdílel horní byty `0x3FF00000`, což V10 interpretoval jako extrémně malé délky drah. Parser navíc bral jen první prvek, což byl obvykle netisknutelný bounding box stolu."
+        },
+        {
+            "version": "V12",
+            "issue": "Regrese a 'Off-by-Byte' posun",
+            "description": "Při implementaci Edge Completion došlo k aplikaci offsetu `pos+12` na čáry (`Type 0`), avšak reálný počátek souřadnic pro čáry je na `pos+14`. Tím došlo k rozladění `struct.unpack`, jenž četl jen paddingové nuly `(0, 0) -> (0, 0)`."
+        },
+        {
+            "version": "V13.1",
+            "issue": "Chybná interpretace Grouping funkce (Falešný Grouping)",
+            "description": "Zavedení nekonečné vnitřní smyčky pro čtení drah bezprostředně za sebou. Důvodem bylo, že při chybné délce Polygonu (V13.1 brala polygon jako flat pole double souřadnic) parser desynchronizoval a začal číst zbývající data segmentů jako nezávislé Line (Type 0) prvky. To vedlo k falešnému dojmu, že VCutWorks balí tisíce prvků za sebe pod jedinou hlavičku, a k vygenerování velkého množství neexistujících nulových drah a falešných hran."
+        },
+        {
+            "version": "V14",
+            "issue": "Kritická regrese výpočtu obvodu kružnice",
+            "description": "Při snaze o sjednocení čtení bodů došlo u kružnic k přechodu na `cx, cy` a `px, py` pomocí `math.hypot`. V binárním formátu jsou však u kružnic uloženy pouze X-ové souřadnice středu a bodu na obvodu. Čtení `cy` a `py` tak načítalo nesouvisející data, což nadhodnotilo poloměry (např. poloměr 500 mm byl detekován jako ~707 mm)."
+        }
+    ],
+    "binary_structure_reference": {
+        "geometry_signature": "0x01 0x00 0x01 0x00 0x00 0xFF 0xFF 0xFF (8 bajtů)",
+        "color_offset": "pos + 8 (32-bit uint, barevný kód dráhy)",
+        "type_id_offset": "pos + 45 (32-bit uint)",
+        "types": {
+            "0": {
+                "name": "Line",
+                "length_bytes": 74,
+                "coordinates_relative": {
+                    "X1": "start + 14 (64-bit float)",
+                    "Y1": "start + 22 (64-bit float)",
+                    "X2": "start + 30 (64-bit float)",
+                    "Y2": "start + 38 (64-bit float)"
+                }
+            },
+            "1": {
+                "name": "Polygon / Circle",
+                "point_count_offset": "pos + 49 (32-bit uint)",
+                "subtype_offset": "pos + 53 (32-bit uint)",
+                "subtypes": {
+                    "Circle": {
+                        "condition": "(subtype & 0xffff) == 3",
+                        "coordinates_relative": {
+                            "Center_X": "p + 14 (64-bit float)",
+                            "Point_On_Perimeter_X": "p + 30 (64-bit float)"
+                        },
+                        "math": "radius = abs(Point_On_Perimeter_X - Center_X); length = 2 * pi * radius"
+                    },
+                    "Polygon": {
+                        "condition": "(subtype & 0xffff) != 3",
+                        "structure": "Skládá se z pt_count 74bajtových segmentů hned za sebou (Segment 0 začíná na p).",
+                        "segment_coordinates_relative": {
+                            "X1": "segment_start + 14 (64-bit float)",
+                            "Y1": "segment_start + 22 (64-bit float)",
+                            "X2": "segment_start + 30 (64-bit float)",
+                            "Y2": "segment_start + 38 (64-bit float)"
+                        }
+                    }
+                }
+            }
+        },
+        "layer_structure": {
+            "layer_block_start": "S - 8 (S je start rychlosti)",
+            "color_offset": "S - 8 (32-bit uint, barva vrstvy)",
+            "signature": "S - 4 (0x01 0x00 0x00 0x00)",
+            "speed_offset": "S + 0 (64-bit float)",
+            "cutter_type_offset": "S + 28 (32-bit int) [0=Vibrate, 1=Wheel, 2=Milling, 3=V-slot, 4=Vibrate cut]",
+            "cutter_type_decoding": "cutter_type = (val >> 16) if (val >> 16) != 0 else (val & 0xffff)",
+            "feed_h1_offset": "S + 76 (64-bit float)",
+            "feed_count_offset": "S + 84 (32-bit int)",
+            "feed_h2_offset": "S + 92 (64-bit float)",
+            "v_slot_extensions": {
+                "condition": "cutter_type == 3",
+                "direction_offset": "S + 100 (16-bit uint) [0=Left, 1=Right, 2=Cut both side]",
+                "v_slot_width_comp_offset": "S + 102 (64-bit float)",
+                "starting_extension_offset": "S + 110 (64-bit float)",
+                "ending_extension_offset": "S + 118 (64-bit float)"
+            }
+        },
+        "color_to_layer_mapping_formula": "geom_color_from_header == ((layer_color_from_S_8 << 8) & 0xffffffff)"
+    },
+    "future_roadmap": [
+        {
+            "priority": "High",
+            "task": "Podpora více než 3 vrstev",
+            "challenge": "U některých souborů s velkým počtem vrstev (např. > 3) se v tabulce vrstev na konci souboru mohou vyskytovat nepravidelné delty nebo neaktivní/vypnuté vrstvy. Je potřeba vyvinout dokonalejší algoritmus pro izolaci tabulky vrstev, nezávislý na jednoduchém rozboru delt."
+        },
+        {
+            "priority": "High",
+            "task": "Zlepšení parsování geometrie z hex kódu",
+            "challenge": "U složitějších souborů (jako botanic_vse.VCF s tisíci prvky) se mohou vyskytovat nestandardní tvary (např. elipsy, spline křivky), které mohou mít odlišné type_id nebo strukturu segmentů. Je zapotřebí shromáždit hex dumpy těchto neobvyklých prvků a dešifrovat jejich reprezentaci."
+        },
+        {
+            "priority": "Medium",
+            "task": "Kalkulace času přejezdů (Idle Traversal Time)",
+            "challenge": "ERP predikce času je v současnosti založena pouze na čistém času řezu a fixním overheadu 15 s. Pro reálné nacenění je nutné implementovat výpočet vzdáleností přejezdů (skoků gantry s vypnutým nástrojem) mezi koncovým bodem předchozího prvku a počátečním bodem následujícího prvku."
+        },
+        {
+            "priority": "Medium",
+            "task": "Zahrnutí přesahů (Extensions) do celkové dráhy",
+            "challenge": "U V-slot nástrojů (cutter_type == 3) se uplatňuje 'Starting Extension' a 'Ending Extension'. Tyto hodnoty v milimetrech prodlužují dráhu nástroje (který najíždí před čárou a odjíždí za ní). Tyto přesahy by měly být matematicky přičteny k celkové dráze vrstvy pro dokonalejší časovou predikci."
+        }
+    ],
+    "known_limitations": [
+        "U souborů s extrémně velkým množstvím prvků (např. botanic_vse.VCF s 1091 prvky) jsou některé parametry nástrojů (např. feed_h2) extrémně vysoké hodnoty (overflow floatu), což naznačuje, že u některých typů souborů se struktura bloku vrstvy může mírně lišit nebo obsahovat dodatečné pole."
+    ]
+}

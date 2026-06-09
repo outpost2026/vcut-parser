@@ -1,0 +1,43 @@
+### Pracovní výkaz: Den 3 (moodpasta)
+
+**Zakázka č. 3775 (Vzor: B.cube, Barva: Matcha)**
+
+* **Specifikace:** 2 ks, rozměr 1200 × 2500 mm, V-cut 45°, tloušťka 6 mm.
+* **Provedení:** Hloubka řezu nastavena pouze na svislé fasety.
+* **Technická poznámka:** Deska má atypický formát (oproti standardu). V delší ose je tolerance cca 40 cm, na přesné pozici tedy kriticky nezáleží. Při použití feltu s kratší než standardní délkou je nutné fixovat předpokládaný výsledný profil lepicími páskami.
+
+**Parametry řezu (Software: Vcutworks)**
+Zpracování probíhá ve třech vrstvách s následujícími rychlostmi posuvu (feedu):
+
+1. **Vibrate cut:** 200 mm/s
+2. **V-cut slot (vzor B.cube):** 300 mm/s
+3. **V-cut slot (ořez fasety):** 500 mm/s
+
+**Technologické standardy a doporučení**
+
+* **Geometrie:** Při generování řezných drah je nutné dodržet minimální doporučenou mezeru mezi jednotlivými řezy $\Delta \ge 10\ mm$.
+* **Optimalizace:** Při řezání malých dílů nebo při 100% prořezu materiálem je vhodné snížit rychlost posuvu.
+* *Příklad:* Řez vzorníků (book) moodpasta probíhá při $f = 45\ mm/s$.
+
+
+
+**Kontakty**
+
+* Karel: +420 776 641 154
+
+**Zakázka č. 3727 – 3732 (Objekta / Pendanty – Svítidla)**
+
+* Zpracování tří barevných variant: Terracotta, Foggy, Asphalt.
+
+**Zakázka MTMCO (Manchester)**
+
+* **Poznámka:** Samostatné zpracování (beze změn či dohledu ze strany Karla).
+* **Časový log zpracování jednotlivých feltů:**
+* 1. deska: 14:04 (start) – 14:21 (konec)
+
+
+* 2. deska: 14:30 (start) – 14:46 (konec)
+
+
+* 3. deska: 14:52 (start) – konec zpracování nezapsán.
+

@@ -1,0 +1,84 @@
+# DIFF: v1.6 -> v1.7
+# ===================
+# Datum: 2026-06-06
+# Source: GCP_Deploy_v1.6/
+# Target: GCP_Deploy_v1.7/
+# Popis: Iterace 1 — Kalibracni protokol + Extrakce konfigurace
+
+================================================================================
+NOVE SOUBORY (v1.7)
+================================================================================
+
+[+] src/machine_profile.json
+    - Kalibracni protokol kinematickych konstant stroje
+    - Definuje:
+      * kinematic_speed_ceiling (max linearni rychlost)
+      * corner_brake (rohove zpomaleni, cas prujezdu L-cut)
+      * material_damping (korekcni faktory pro materialy)
+      * kinematic_overheads (t_lift, t_rot, setup, traverse, return)
+      * density_penalties (hustotni penalizace pro organicke drahy)
+    - Kazda konstanta ma validation_status (empirical/calibrated/hypothesis)
+    - OBSAHUJE NAVOD K MERENI (_instructions) pro technologa
+
+[+] src/app_config.json
+    - Obchodni a provozni konfigurace extrahovana z app.py
+    - Obsahuje:
+      * pricing (cena strojni minuty, cena materialu/m2, default marze)
+      * auth (gatekeeper heslo)
+      * panel_formats (definice 6 formatu panelu)
+      * gcp (projektova konfigurace)
+
+[+] readme.txt
+    - Dokumentace zmen, roadmap dalsich iteraci
+  
+[+] diff.txt
+    - Tento soubor
+
+================================================================================
+ZMENENE SOUBORY (v1.6 -> v1.7)
+================================================================================
+
+[m] src/vcf_parser_v20.py
+    - + lines 20-46: _load_machine_profile() + _get_epistemic_index()
+    - ~ lines 978-984: Hardcoded konstanty nahrazeny nacitanim z machine_profile.json
+      * t_corner, t_lift, t_rot_vslot -> mp["corner_brake"], mp["kinematic_overheads"]
+      * vibrate_curve_threshold, vibrate_curve_point_penalty -> mp["density_penalties"]
+      * setup_overhead -> mp["kinematic_overheads"]["setup_overhead_seconds"]
+    - ~ lines 1016-1018: traverse a return time z mp["kinematic_overheads"]
+    - + lines 1136, 1161: "epistemic_confidence_index" v parsed_data
+    - LSP chyby: pre-existing (stejne jako v1.6, nelze opravit bez zmeny API)
+
+[m] src/app.py
+    - + line 7: import json
+    - + lines 7-10: _load_app_config() funkce
+    - ~ line 14: demo_password z APP_CONFIG misto hardcoded
+    - ~ lines 210-211: ceny z APP_CONFIG["pricing"] misto hardcoded
+    - ~ line 223: default_margin z APP_CONFIG misto hardcoded
+    - ~ line 84: 5 KPI sloupcu -> 6 (pridan epistemicky index)
+    - + lines 101-104: kpi6 = epistemicky index (barva, procenta, label)
+
+[m] src/Knowledge_base/models.py
+    - + lines 25-27: EpistemicValidationStatus enum (empirical/calibrated/hypothesis)
+    - + lines 87-112: MachineProfile dataclass + get_epistemic_confidence_index()
+    - + lines 114-118: AppConfig dataclass
+
+[m] Dockerfile
+    - + line 17-18: COPY machine_profile.json . + COPY app_config.json .
+
+[m] deploy.ps1
+    - ~ line 1: komentar v1.6 -> v1.7
+    - ~ line 16: datum a verze
+    - ~ line 23: image tag v1.6-demo -> v1.7
+    - + lines 82-85: validace machine_profile.json a app_config.json
+    - ~ line 70: error hlaska GCP_Deploy_v1.6 -> GCP_Deploy_v1.7
+
+================================================================================
+NEZMENENE SOUBORY
+================================================================================
+    .dockerignore (identicke)
+    .gcloudignore (identicke)
+    requirements.txt (identicke)
+    src/demo_data/* (identicke)
+    src/Knowledge_base/engine.py (identicke)
+    src/Knowledge_base/rules.json (identicke)
+    src/Knowledge_base/__init__.py (identicke)

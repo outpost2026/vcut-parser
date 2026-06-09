@@ -1,0 +1,123 @@
+{
+  "handoff_metadata": {
+    "version": "2.0",
+    "timestamp": "2026-05-31T23:00:00",
+    "author": "opencode (CAM & ML LLM Agent)",
+    "target_version_draft": "v0.7.0",
+    "status": "GROUND_TRUTH_FOR_NEXT_ITERATION",
+    "description": "Analýza selhání v0.6.1, objev duplicitního ukládání parametrů vrstev (rychlost, extenze) ve dvou oblastech VCF a návrh systematického mapování offsetů pro bezpečné parametrické generování. v0.6.2 (globální search & replace) byl zamítnut jako dead end."
+  },
+
+  "current_state": {
+    "active_compiler_version": "v0.6.1",
+    "symptoms": "Syntetický VCF stále nevykazuje vlastnosti vrstev v GUI VCutWorks (---) a chybí Cutting Properties, přestože geometrie se zobrazuje správně.",
+    "root_cause_identified": "Formát VCF ukládá parametry vrstvy (rychlost, extenze, výkon, …) minimálně dvakrát – v hlavičce souboru a v bloku těsně před geometrií. Kompilátor v0.6.1 aktualizuje pouze jednu kopii (blok před geometrií nalezený dynamickým vyhledávačem), čímž vzniká nekonzistence a VCutWorks odmítá načíst parametry vrstvy.",
+    "v062_rejection_reason": "Strategie nahrazení všech výskytů double hodnoty (např. 100.0 → 150.0) byla zamítnuta, protože pro jiné parametry (extenze, výkon) by mohlo dojít ke kolizi s geometrickými souřadnicemi a poškození dat. Je třeba cílený zápis na známé offsety."
+  },
+
+  "new_discovery_from_original_vcutworks_tests": {
+    "test_subjects": [
+      "line_x0_y1000_speed_50.VCF vs line_x0_y1000_speed_150.VCF",
+      "line_x0_y1000_extension_25.VCF vs line_x0_y1000_extension_10.VCF"
+    ],
+    "finding": "Každý testovaný parametr je v souboru uložen ve dvou shodných kopiích: jedné v oblasti hlavičky (offset ~0x1A0 pro rychlost, ~0x215 pro extenze) a druhé v bloku před geometrickou signaturou (offset ~0x263D8 pro rychlost, ~0x2644D pro extenze v šabloně line_x0_y1000.VCF). Obě kopie se musí měnit současně, jinak VCutWorks data odmítne.",
+    "implication": "Jakákoliv modifikace parametrů vrstvy musí zapisovat na všechny známé offsety obou kopií."
+  },
+
+  "proposed_strategy_for_v070": {
+    "title": "Offset mapping & multi‑write safe patcher",
+    "steps": [
+      {
+        "step": "1",
+        "action": "Vytvořit nástroj na extrakci offsetů parametrů vrstvy z referenční šablony.",
+        "detail": "Upravit parser v17 do debug režimu, který pro první aktivní vrstvu (Output YES) vypíše absolutní offsety a datové typy všech čtených polí. Spustit na line_x0_y1000.VCF a uložit jako layer_offset_map.json."
+      },
+      {
+        "step": "2",
+        "action": "Identifikovat duplicitní offsety v hlavičce.",
+        "detail": "Provést binární diff mezi dvěma originály lišícími se pouze jedním parametrem (např. speed_50 vs speed_150) a ověřit, že rozdíly na offsetech nalezených v kroku 1 korespondují s očekávanou hodnotou. Tím potvrdíme, že jde o správné kopie. Zapsat do mapy jako 'header_offsets' a 'layer_block_offsets'."
+      },
+      {
+        "step": "3",
+        "action": "Implementovat univerzální metodu patch_layer_params() do kompilátoru.",
+        "detail": "Načítat mapu offsetů z externího JSON souboru (např. template_name + '_offsets.json'). Pro každý podporovaný parametr (speed_mms, extension_start, extension_end, power, …) zapisovat zadanou hodnotu na všechny offsety uvedené v mapě."
+      },
+      {
+        "step": "4",
+        "action": "Ověřit na testovacích datech.",
+        "detail": "Vygenerovat VCF s --speed 120 --ext-start 15 --ext-end 15 a binárně porovnat s referencí vytvořenou ve VCutWorks se stejnými parametry. Musí být identické až na souřadnice geometrie."
+      },
+      {
+        "step": "5",
+        "action": "Rozšířit mapu o další parametry podle potřeby (cutter_type, feeding, H1/H2, direction, v-slot comp).",
+        "detail": "Postupně, vždy s ověřením pomocí originálních souborů z VCutWorks."
+      }
+    ]
+  },
+
+  "required_offset_mapping": {
+    "note": "Hodnoty offsetů jsou relativní k šabloně line_x0_y1000.VCF (157559 B). Pro jiné šablony se můžou lišit, proto bude mapa vázána ke konkrétní šabloně.",
+    "known_duplications": [
+      {
+        "parameter": "speed_mms",
+        "header_offset": "0x1A0",
+        "layer_block_offset": "0x263D8",
+        "type": "double"
+      },
+      {
+        "parameter": "extension_start_mm",
+        "header_offset": "0x215",
+        "layer_block_offset": "0x2644D",
+        "type": "double"
+      },
+      {
+        "parameter": "extension_end_mm",
+        "header_offset": "0x21D",
+        "layer_block_offset": "0x26455",
+        "type": "double"
+      }
+    ],
+    "to_be_mapped": [
+      "output_flag (uint32)",
+      "cutter_type (uint32)",
+      "number_of_feeding (int32)",
+      "start_height_h1 (double)",
+      "end_height_h2 (double)",
+      "direction (uint16)",
+      "v_slot_width_comp (double)"
+    ]
+  },
+
+  "immediate_actions": [
+    "Vytvořit debug verzi parseru v17 a spustit na line_x0_y1000.VCF -> získat absolutní offsety všech polí první aktivní vrstvy.",
+    "Potvrdit duplicitu pro speed a extensions pomocí diffů originálních souborů (již částečně hotovo).",
+    "Navrhnout strukturu layer_offset_map.json (viz příklad).",
+    "Implementovat novou třídu LayerParamPatcher, která bude akceptovat offset mapu a bezpečně zapisovat hodnoty."
+  ],
+
+  "example_offset_map_json": {
+    "template": "line_x0_y1000.VCF",
+    "block_size": 610,
+    "parameters": {
+      "output_flag": {
+        "type": "uint32",
+        "offsets": ["0x1A4", "0x263DC"]
+      },
+      "speed_mms": {
+        "type": "double",
+        "offsets": ["0x1A0", "0x263D8"]
+      },
+      "extension_start_mm": {
+        "type": "double",
+        "offsets": ["0x215", "0x2644D"]
+      },
+      "extension_end_mm": {
+        "type": "double",
+        "offsets": ["0x21D", "0x26455"]
+      }
+    }
+  },
+
+  "fallback_if_mapping_fails": "Pokud by se nedařilo spolehlivě identifikovat offsety pro všechny parametry, lze přistoupit k částečné strategii: pro parametry, jejichž hodnota je v šabloně unikátní (např. speed 100.0 je v line_x0_y1000.VCF jedinečná), použít globální nahrazení jako dočasné řešení. Pro extenze a další hodnoty, které mohou být nejednoznačné, vždy používat offset mapu."
+
+}

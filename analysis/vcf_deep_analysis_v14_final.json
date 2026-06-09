@@ -1,0 +1,843 @@
+[
+    {
+        "filename": "circle_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\circle_01.VCF",
+        "file_hash": "387f60c1327b010ae9e3b573c280b51c",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4442.88,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 4442.88,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 4442.88,
+            "predicted_time_seconds": 44,
+            "predicted_time_formatted": "0 min 44 s"
+        }
+    },
+    {
+        "filename": "diamond_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\diamond_01.VCF",
+        "file_hash": "cae9b79925cd93f66468b2feed598dbe",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 4000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 4000.0,
+            "predicted_time_seconds": 41,
+            "predicted_time_formatted": "0 min 41 s"
+        }
+    },
+    {
+        "filename": "diamond_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\diamond_02.VCF",
+        "file_hash": "19b1304b580722a10376a2139fb84b15",
+        "warnings": [],
+        "file_size_bytes": 158855,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 3,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26850",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26a69",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 12000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 12000.0,
+            "predicted_time_seconds": 95,
+            "predicted_time_formatted": "1 min 35 s"
+        }
+    },
+    {
+        "filename": "2560x150_s_fazetou_45st_hl6.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\2560x150_s_fazetou_45st_hl6.VCF",
+        "file_hash": "f86986ae0aa1e485b5f6bcc3efd90053",
+        "warnings": [],
+        "file_size_bytes": 55599,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.012"
+        ],
+        "elements_parsed": 3,
+        "elements": [
+            {
+                "offset": "0xd579",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2560.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0xd6b4",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2560.0,
+                "layer_index": 1
+            },
+            {
+                "offset": "0xd7ef",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2560.0,
+                "layer_index": 1
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 500,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 6.0,
+                "total_cut_length_mm": 2560.0,
+                "color_hex": "0x0000ff00",
+                "color_val": 65280,
+                "direction": "Cut both side",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 10.0,
+                "ending_extension_mm": 10.0
+            },
+            {
+                "speed_mms": 200,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": -0.3,
+                "total_cut_length_mm": 5120.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 7680.0,
+            "predicted_time_seconds": 45,
+            "predicted_time_formatted": "0 min 45 s"
+        }
+    },
+    {
+        "filename": "line_05.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\line_05.VCF",
+        "file_hash": "655755e892b33a59e83e58638860bd29",
+        "warnings": [],
+        "file_size_bytes": 157652,
+        "extracted_metadata": [
+            "Arial Black",
+            "Data",
+            "Documents",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "Jobs_aplications",
+            "Ondra_test_data",
+            "RDVCUTFILEVER1.0.013",
+            "Repozitar_Dev",
+            "Users",
+            "Wynwood",
+            "line_01.dxf"
+        ],
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 1000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 1000.0,
+            "predicted_time_seconds": 21,
+            "predicted_time_formatted": "0 min 21 s"
+        }
+    },
+    {
+        "filename": "1ks.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\1ks.VCF",
+        "file_hash": "60e44280ef45b7bf58c9edeb67ec731d",
+        "warnings": [],
+        "file_size_bytes": 169405,
+        "extracted_metadata": [
+            "1ks.dxf",
+            "3931 - Krabi",
+            "Arial Black",
+            "Capexus",
+            "FS.SHX",
+            "Fs.SHX",
+            "Moodpasta_R",
+            "RDVCUTFILEVER1.0.013",
+            "ROBA",
+            "_Karel V",
+            "__Zakazky dle firem",
+            "data CNC",
+            "disky",
+            "fffff",
+            "robn"
+        ],
+        "elements_parsed": 7,
+        "elements": [
+            {
+                "offset": "0x26636",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 24,
+                "length_mm": 512.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26e17",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 28,
+                "length_mm": 784.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27720",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 24,
+                "length_mm": 512.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27f01",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 28,
+                "length_mm": 784.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x2880a",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 12,
+                "length_mm": 440.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x28c73",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 20,
+                "length_mm": 600.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x2932c",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 72.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 200,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": -0.3,
+                "total_cut_length_mm": 3704.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 3704.0,
+            "predicted_time_seconds": 33,
+            "predicted_time_formatted": "0 min 33 s"
+        }
+    },
+    {
+        "filename": "circle_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\circle_02.VCF",
+        "file_hash": "91a9a0af8ebf35ea5f0862ac5872c97e",
+        "warnings": [],
+        "file_size_bytes": 158318,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 2,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4442.88,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26850",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4442.88,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 8885.76,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 8885.76,
+            "predicted_time_seconds": 74,
+            "predicted_time_formatted": "1 min 14 s"
+        }
+    },
+    {
+        "filename": "rectangle_01.vcf",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\rectangle_01.vcf",
+        "file_hash": "81cbefce28ac6438a8e61b311a12cc99",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 4000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 4000.0,
+            "predicted_time_seconds": 41,
+            "predicted_time_formatted": "0 min 41 s"
+        }
+    },
+    {
+        "filename": "line_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\line_01.VCF",
+        "file_hash": "85577dfbc9d8bbff6971b3ac69228e87",
+        "warnings": [],
+        "file_size_bytes": 157652,
+        "extracted_metadata": [
+            "Arial Black",
+            "Data",
+            "Documents",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "Jobs_aplications",
+            "Ondra_test_data",
+            "RDVCUTFILEVER1.0.013",
+            "Repozitar_Dev",
+            "Users",
+            "Wynwood",
+            "line_01.dxf"
+        ],
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 1000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 1000.0,
+            "predicted_time_seconds": 21,
+            "predicted_time_formatted": "0 min 21 s"
+        }
+    },
+    {
+        "filename": "rectangle_02.vcf",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\rectangle_02.vcf",
+        "file_hash": "8c9c933be6a5170c390f7fb253adc9e8",
+        "warnings": [],
+        "file_size_bytes": 158318,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "elements_parsed": 2,
+        "elements": [
+            {
+                "offset": "0x26637",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26850",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 4000.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 8000.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 8000.0,
+            "predicted_time_seconds": 68,
+            "predicted_time_formatted": "1 min 8 s"
+        }
+    },
+    {
+        "filename": "manchester_vse_03.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Source_raw\\Data_moodpasta\\Parser_ruida_vyvoj\\Temp\\manchester_vse_03.VCF",
+        "file_hash": "902b0f57525be3c405fcd15f9f4d1699",
+        "warnings": [],
+        "file_size_bytes": 165446,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "Moodpasta_R",
+            "RDVCUTFILEVER1.0.013",
+            "ROBA",
+            "Service for Office",
+            "_Karel V",
+            "__Zakazky dle firem",
+            "data CNC",
+            "disky",
+            "e.dxf",
+            "manchester v",
+            "robn"
+        ],
+        "elements_parsed": 23,
+        "elements": [
+            {
+                "offset": "0x26898",
+                "geom_type": "Polygon",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 7705.0,
+                "layer_index": 1
+            },
+            {
+                "offset": "0x26ab1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26bec",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26d27",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26e62",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x26f9d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x270d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27213",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x2734e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27489",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x275c4",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x276ff",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x2783a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27975",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27ab0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27beb",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27d26",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27e61",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x27f9c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x280d7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x28212",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x2834d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            },
+            {
+                "offset": "0x28488",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 2790.0,
+                "layer_index": 0
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 400,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 3.0,
+                "end_height_h2_mm": 7.0,
+                "total_cut_length_mm": 61380.0,
+                "color_hex": "0x0000ff00",
+                "color_val": 65280,
+                "direction": "Cut both side",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 10.0,
+                "ending_extension_mm": 10.0
+            },
+            {
+                "speed_mms": 200,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": -0.5,
+                "total_cut_length_mm": 7705.0,
+                "color_hex": "0x00000000",
+                "color_val": 0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "total_path_length_mm": 69085.0,
+            "predicted_time_seconds": 206,
+            "predicted_time_formatted": "3 min 26 s"
+        }
+    }
+]

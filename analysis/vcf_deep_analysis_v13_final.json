@@ -1,0 +1,1536 @@
+[
+    {
+        "filename": "diamond_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\diamond_01.VCF",
+        "file_hash": "cae9b79925cd93f66468b2feed598dbe",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 5,
+        "elements": [
+            {
+                "offset": "0x266b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26744",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2678e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "circle_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\circle_01.VCF",
+        "file_hash": "387f60c1327b010ae9e3b573c280b51c",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 1,
+        "elements": [
+            {
+                "offset": "0x26664",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 3141.59,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 3141.59,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 3141.59,
+            "predicted_time_seconds": 35,
+            "predicted_time_formatted": "0 min 35 s"
+        }
+    },
+    {
+        "filename": "rectangle_02.vcf",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\rectangle_02.vcf",
+        "file_hash": "8c9c933be6a5170c390f7fb253adc9e8",
+        "warnings": [],
+        "file_size_bytes": 158318,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 14,
+        "elements": [
+            {
+                "offset": "0x266b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26744",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2678e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2686c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x268b6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26900",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2694a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x268c9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26913",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2695d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269a7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269f1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "circle_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\circle_02.VCF",
+        "file_hash": "91a9a0af8ebf35ea5f0862ac5872c97e",
+        "warnings": [],
+        "file_size_bytes": 158318,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 2,
+        "elements": [
+            {
+                "offset": "0x26664",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 3141.59,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2687d",
+                "geom_type": "Circle",
+                "type_id": 1,
+                "point_count": 4,
+                "length_mm": 3141.59,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 6283.19,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 6283.19,
+            "predicted_time_seconds": 56,
+            "predicted_time_formatted": "0 min 56 s"
+        }
+    },
+    {
+        "filename": "geometry_dif_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\geometry_dif_01.VCF",
+        "file_hash": "c7ba78cb1d4566faabf74c456a721c43",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 300.0,
+        "elements_parsed": 4,
+        "elements": [
+            {
+                "offset": "0x266b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26744",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 300,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 300.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "echoblock_2790_1200_fasets_new_offsets_speed_100.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\echoblock_2790_1200_fasets_new_offsets_speed_100.VCF",
+        "file_hash": "8e638fd399480dc62477bfbec951b774",
+        "warnings": [],
+        "file_size_bytes": 160612,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 500.0,
+        "elements_parsed": 17,
+        "elements": [
+            {
+                "offset": "0x26b74",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bbe",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c08",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c9c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26d8d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26dd7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26e21",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26eb5",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26fa6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26ff0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2703a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x270ce",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x271bf",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27209",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x27253",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2729d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x272e7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 500,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 6.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "Left",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            },
+            {
+                "speed_mms": 500,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 500.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "line_01.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\line_01.VCF",
+        "file_hash": "85577dfbc9d8bbff6971b3ac69228e87",
+        "warnings": [],
+        "file_size_bytes": 157652,
+        "extracted_metadata": [
+            "Arial Black",
+            "Data",
+            "Documents",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "Jobs_aplications",
+            "Ondra_test_data",
+            "RDVCUTFILEVER1.0.013",
+            "Repozitar_Dev",
+            "Users",
+            "Wynwood",
+            "line_01.dxf"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 5,
+        "elements": [
+            {
+                "offset": "0x26664",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266ae",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266ae_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x266f8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 2180.28,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 2180.28,
+            "predicted_time_seconds": 29,
+            "predicted_time_formatted": "0 min 29 s"
+        }
+    },
+    {
+        "filename": "echoblock_2790_1200_fasets_only_speed_500.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\echoblock_2790_1200_fasets_only_speed_500.VCF",
+        "file_hash": "aa1d250caab54ca8d2a835aef3def232",
+        "warnings": [],
+        "file_size_bytes": 158928,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 500.0,
+        "elements_parsed": 8,
+        "elements": [
+            {
+                "offset": "0x26912",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2695c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269a6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a3a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b2b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b75",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bbf",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c53",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 500,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 6.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "Left",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            },
+            {
+                "speed_mms": 500,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 500.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "line_05.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\line_05.VCF",
+        "file_hash": "f9a54c4ef233b4fc71fa50f8aaff09ab",
+        "warnings": [],
+        "file_size_bytes": 158912,
+        "extracted_metadata": [
+            "Arial Black",
+            "Data",
+            "Documents",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "Jobs_aplications",
+            "Ondra_test_data",
+            "RDVCUTFILEVER1.0.013",
+            "Repozitar_Dev",
+            "Users",
+            "Wynwood",
+            "line_01.dxf"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 25,
+        "elements": [
+            {
+                "offset": "0x26664",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266ae",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266ae_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x266f8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2679f",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267e9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267e9_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x26833",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x268da",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26924",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26924_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x2696e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x26a15",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a5f",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a5f_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x26aa9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x26b50",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b9a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b9a_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 1000.0,
+                "reconstructed": true
+            },
+            {
+                "offset": "0x26be4",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "End_of_Group_recon",
+                "geom_type": "Reconstructed Edge",
+                "type_id": -1,
+                "point_count": 2,
+                "length_mm": 90.14,
+                "reconstructed": true
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 10901.39,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 10901.39,
+            "predicted_time_seconds": 87,
+            "predicted_time_formatted": "1 min 27 s"
+        }
+    },
+    {
+        "filename": "echoblock_2790_1200_fasets_only.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\echoblock_2790_1200_fasets_only.VCF",
+        "file_hash": "249d8a928a759e2f39d6af2e100069d1",
+        "warnings": [],
+        "file_size_bytes": 158928,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 175.0,
+        "elements_parsed": 8,
+        "elements": [
+            {
+                "offset": "0x26912",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2695c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269a6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a3a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b2b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b75",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bbf",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c53",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 200,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 6.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "Left",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            },
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 175.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "diamond_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\diamond_02.VCF",
+        "file_hash": "19b1304b580722a10376a2139fb84b15",
+        "warnings": [],
+        "file_size_bytes": 158855,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 20,
+        "elements": [
+            {
+                "offset": "0x266b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26744",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2678e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2686c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x268b6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26900",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2694a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a72",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x268c9",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26913",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2695d",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269a7",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269f1",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26ae2",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b2c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b76",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bc0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c0a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "rectangle_01.vcf",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\rectangle_01.vcf",
+        "file_hash": "81cbefce28ac6438a8e61b311a12cc99",
+        "warnings": [],
+        "file_size_bytes": 157781,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 150.0,
+        "elements_parsed": 5,
+        "elements": [
+            {
+                "offset": "0x266b0",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x266fa",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26744",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2678e",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x267d8",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 150,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 0,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 150.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    },
+    {
+        "filename": "geometry_dif_02.VCF",
+        "filepath": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\Jobs_aplications\\Wynwood\\Data\\Ondra_test_data\\geometry_dif_02.VCF",
+        "file_hash": "b5e45b7fd38368d5bb71be7f1a3ea7eb",
+        "warnings": [],
+        "file_size_bytes": 158928,
+        "extracted_metadata": [
+            "Arial Black",
+            "FS.SHX",
+            "Fs.SHX",
+            "HUGO",
+            "RDVCUTFILEVER1.0.013"
+        ],
+        "calculated_average_speed": 250.0,
+        "elements_parsed": 8,
+        "elements": [
+            {
+                "offset": "0x26912",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x2695c",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x269a6",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26a3a",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b2b",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26b75",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26bbf",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            },
+            {
+                "offset": "0x26c53",
+                "geom_type": "Line",
+                "type_id": 0,
+                "point_count": 2,
+                "length_mm": 0.0,
+                "reconstructed": false
+            }
+        ],
+        "layers": [
+            {
+                "speed_mms": 300,
+                "cutter_type": "Vibrate cutter",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 8.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "N/A",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            },
+            {
+                "speed_mms": 200,
+                "cutter_type": "V-slot",
+                "number_of_feeding": 1,
+                "start_height_h1_mm": 0.0,
+                "end_height_h2_mm": 6.0,
+                "total_cut_length_mm": 0.0,
+                "direction": "Left",
+                "v_slot_width_comp_mm": 0.0,
+                "starting_extension_mm": 0.0,
+                "ending_extension_mm": 0.0
+            }
+        ],
+        "erp_time_prediction": {
+            "base_speed_used_for_calc": 250.0,
+            "total_path_length_mm": 0.0,
+            "predicted_time_seconds": 15,
+            "predicted_time_formatted": "0 min 15 s"
+        }
+    }
+]

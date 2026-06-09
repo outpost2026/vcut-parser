@@ -1,0 +1,32 @@
+Poznámky OCR přepis: Zde je přepis psaného textu (ruční poznámky ze sešitu)
+12/5/2026
+ECHOBLOCK - fyzické založení desky => offset cca 25 cm od hrany plotteru, měření (Karel) svinovacím metrem (2 kóty na delší straně echoblocku = korekce zarovnání delší hrany do vzdálenosti 25 cm fyzicky od hrany stolu plotteru, poté fixace papírovou páskou (rohy, středy delší hrany desky), vložení korekčního přípravku do nulového bodu, srovnání laserového kříže v hlavě plotteru s přípravkem => osy laseru se shodují s arbitrárními liniemi na přípravku v bodě nula > vizuální kontrola, načtení odpovídajícího souboru z Vcutworks (funkce download - pojmenování vcf souboru (defaultní název "default"), upload/export do CNC plotteru/zásobníku > obsluha na dotykovém displeji CNC (mode: debugg, tlačítko files > volba vhodného programu z vcutworks) => start obrábění (dotykový displej "start"). Doba běhu u normalizované, bežné echoblock desky při zakázce s dekorem typu "manchaster" cca 10-15 minut. První fáze obrábění: Vcut nůž provede 45° lineární řezy/křivky > otočení nože o 180° > stejné vektory = výřez V cut (po dokončení ručně odstraněn odpad (liniové výřezy V profil).
+Druhá fáze: V cut nůž 45° (provede ořez delších hran stále v těle desky > pouze jeden pojezd, není nutný V profil, pouze vnější fazeta 45° na delší hraně)
+Třetí fáze: spuštěn vibrační/oscilační nůž > rychlý kolmý 0° ořez surové desky echoblock do standardizované geometricky přesné podoby (normovaný rozměr, čistý obdelník), CNC ukončuje obrábění, pojezd do referenčního bodu (golocate kóta) > konec obrábění
+Čtvrtá fáze: odstranění zpracované desky, papírových fixačních pásek, eventuální očištění pracovního flatbed od prachu > k dispozici stlačený vzduch > expedice na pracovní stůl vně pracovní buňky, příprava dalšího kusu, opakování procesu
+ * VCUTWORKS - obslužný program (V2.00.34)
+ * barevná nomenklatura:
+Standardně v prog. vcutworks:
+• ŽLUTÁ - vcut
+• ZELENÁ - vcut (odlišný charakter řezu => tvorba fazet)
+• ČERNÁ - vibrační nůž
+ * při prořezu materiálu je možné jít pod Z osu = nulu, cca 0,5 mm, materiál na flatbed cnc je spotřební textilie, kterou je možné pravidelně nahrazovat (cca karel s jednou vydrží i > 5 měsíců). Mimochodem, na muj komentář, že stejný flatbed je na waterjet, ale jde o systém železných roštů, které jsou rovněž spotřební materiál, odvětil, že to nelze srovnávat
+ * tj: Z - 0,5 mm
+• Úpravy vrstev v programu Vcutworks
+ * vrstvy jsou barevně odlišeny, jejich pořadí lze
+   měnit => lze měnit sekvenci řezných drah
+ * pro editaci je třeba vybrat celou konkrétní
+   vrstvu (autogroup funkce)
+ * Light Burn - editační graf. program pro jednoduché
+   vzory -> většinou liniové, geometricky
+   LightBurnCore 2.0.05                  symetrické
+# PRVNÍ ŘEZÁNÍ SAMOSTATNĚ; T=14.50
+ * zakázka: MTMCO - Oneplay         Dořezat: 23 ks
+ * vzor: Manchaster                 15.05 - 22
+ * barva: Dark Knight               15.20 - 21 ks
+ * ks: 33
+ * š x d: 1200 x 2850
+ * v-cut: 45°
+---
+Vytvořil jsem OCR přepis ručních poznámek z deníku, které jsem zaznamenal během prvního dne stínování Karla. Mimochodem, řekl že on si vše potřebné drží v hlavě. Poznámky jsem psal organicky během zácviku. Pro mne jsou to data, lepší než jen paměť, ta mně může zradit.
+- úkol: integruj nová data a volně navaž na předchozí iteraci 

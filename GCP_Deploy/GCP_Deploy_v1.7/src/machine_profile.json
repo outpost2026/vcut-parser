@@ -1,0 +1,74 @@
+{
+  "_schema": "machine_calibration_v1.0",
+  "_description": "Kalibracni protokol kinematickych konstant stroje. BEZ TOHOTO SOUBORU NENI PARSER PRODEJNY ENTERPRISE ZAKAZNIKOVI.",
+  "machine_id": "Ruida_CNC_01",
+  "calibration_date": "2026-06-06",
+  "calibrated_by": "Jmeno technologa",
+
+  "kinematic_speed_ceiling": {
+    "description": "Mereni maximalni linearni rychlosti pohybem hlavy po usecce 1000 mm bez zateze.",
+    "measurement_distance_mm": 1000.0,
+    "measured_time_seconds": 0.0,
+    "max_speed_mms": 800.0,
+    "validation_status": "empirical",
+    "_instructions": "Spust pohyb hlavy po ose X na vzdalenost 1000 mm na max rychlost. Zmer stopkami. max_speed_mms = distance / time."
+  },
+
+  "corner_brake": {
+    "description": "Mereni realneho casu prujezdu pravo uhle zatacky (L-cut). Zpresnuje rohovy koeficient zpomaleni.",
+    "measured_time_per_corner_seconds": 0.66,
+    "t_corner_organic_seconds": 0.30,
+    "validation_status": "empirical",
+    "_instructions": "Nakresli 10x L-cut (pravy uhel, 100 mm rameno). Zmer celkovy cas, odecti linearni slozku, vydel 10."
+  },
+
+  "material_damping": {
+    "description": "Korekcni faktory rychlosti rezu pro ruzne materialy (odpor cepel).",
+    "materials": {
+      "pet_felt_12mm": {
+        "speed_multiplier": 1.0,
+        "validation_status": "empirical"
+      },
+      "pet_felt_24mm": {
+        "speed_multiplier": 0.85,
+        "validation_status": "hypothesis"
+      },
+      "plywood_6mm": {
+        "speed_multiplier": 0.70,
+        "validation_status": "hypothesis"
+      },
+      "acrylic_3mm": {
+        "speed_multiplier": 0.60,
+        "validation_status": "hypothesis"
+      }
+    }
+  },
+
+  "kinematic_overheads": {
+    "description": "Mechanicka rezie stroje nezavisla na delce rezu.",
+    "t_lift_seconds": 2.2,
+    "t_rot_vslot_seconds": 1.5,
+    "setup_overhead_seconds": 50.0,
+    "traverse_speed_mms": 500.0,
+    "traverse_distance_between_elements_mm": 150.0,
+    "return_home_time_seconds": 15.0,
+    "validation_status": "calibrated"
+  },
+
+  "density_penalties": {
+    "description": "Hustotni penalizace pro slozite organicke drahy. Simuluje akceleraci stroje pri kratsich segmentech.",
+    "vibrate_curve_threshold_mm": 0.2,
+    "vibrate_curve_point_penalty_seconds": 1.2,
+    "vslot_preserves_full_speed": false,
+    "validation_status": "hypothesis",
+    "_instructions": "Zmer cas rezu organicke krivky (napr. kruh s prumerem 100 mm) a porovnej s predikci. Kalibruj threshold."
+  },
+
+  "epistemic_confidence_index": {
+    "description": "Podil empiricky overenych konstant vuci vsem. Vypocitava se automaticky pri startu parseru.",
+    "empirical_count": 0,
+    "total_count": 0,
+    "index": 0.0,
+    "_note": "Tento blok je automaticky prepisovan parserem. Nemanualne upravovat."
+  }
+}

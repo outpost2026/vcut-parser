@@ -1,0 +1,19 @@
+Předmět: CNC operátor s přesahem do automatizace
+
+Dobrý den Tomáši,
+
+píšu vám přímo, protože mě zaujal váš přístup, geneze vzniku vaší firmy, trochu se to podobá mému vývoji, avšak k věci - reaguji na Vaši poptávku na pracovním serveru Prace.cz, hovoříte zde o "lidech, kteří chtějí vidět výsledek vlastní práce". Níže jsou základní data. 
+
+Mám přímou praxi s CNC (waterjet, NCstudio 10, G-kód) z výroby Japs elements, paralelně jsem postavil off-grid dřevostavbu 35 m² od základů po vytápění, elektro, — práce s materiálem, řezné plány, BOM. Vím, jak se ke stroji postavit a co se děje, když se materiál nechová podle výkresu.
+
+Nad rámec toho: poslední rok jsem se naučil psát v Pythonu a pracuji s cloudovými nástroji — ne proto, abych dělal IT, ale proto, abych automatizoval věci, které je jinak nudné dělat ručně. V kontextu výroby mě zajímá například optimalizace výtěžnosti materiálu nebo generování výrobních dat z objednávek, automatizace, tato tendence k úspornosti/efektivitě z offgrid je moje pracovní znamení. 
+
+Nehledám únik od CNC k počítači. Hledám místo, kde tyto dvě věci dávají smysl zároveň — a váš inzerát mě přesvědčil, že Moodpasta k takovému místu má blízko -a tak píši přimo Vám.
+
+Pokud by vás můj profil zaujmul, rád se přizpůsobím vašemu termínu.
+(V příloze emailu je moje CV)
+
+S pozdravem,
+Ondřej Soušek
+Praha 8 / +420 [735045256]
+https://github.com/outpost2026

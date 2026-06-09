@@ -1,0 +1,40 @@
+{
+    "handoff_id": "MOODPASTA_VCF_RE_FINAL_SYNTHESIS",
+    "version": "3.0",
+    "status": "REVERSE_ENGINEERING_COMPLETED_PENDING_CALIBRATION",
+    "last_updated": "2026-05-17T12:00:00+02:00",
+    "author_role": "Systems Architect / Reverse Engineer",
+    "target_audience": "LLM Context / ERP Integration Developers",
+    "semantic_summary": {
+        "project_goal": "Reverzní inženýrství proprietárního formátu .VCF (Ruida / VCutWorks) pro automatizaci výrobního workflow a predikci času CNC řezu.",
+        "methodology": "Iterativní analýza binárního kódu + fyzická validace z výroby (transfer learning z CNC Waterjet).",
+        "key_breakthroughs": [
+            "Dekódování textových vrstev (CERNA, ZLUTA) a absolutních cest k DXF souborům díky aplikaci kódování Windows-1250 namísto prostého ASCII.",
+            "Objevení proxy-proměnné pro složitost: Extrakce X/Y/U souřadnic jako 64-bit IEEE 754 (Double Precision) floatů. Počet těchto floatů (instruction_count) přímo koreluje s časem řezu.",
+            "Vyvrácení hypotézy o statickém čase: Zjištění (díky fotografii displeje stroje), že parametr 'Work Time' NENÍ uložen ve VCF souboru, ale je dynamicky kalkulován mikroprocesorem Ruida na základě přečtené geometrie a operátorem nastavené rychlosti (Speed override)."
+        ]
+    },
+    "technical_architecture_v6": {
+        "parser_logic": "Fuzzy Matching (ignorování case-sensitivity a mezer) pro propojování osamocených VCF souborů se zdrojovými DXF a LBRN2 napříč chaotickou adresářovou strukturou.",
+        "predictive_model": {
+            "formula": "predicted_time = base_overhead_sec + (instruction_count * EMPIRICAL_BASE_MULTIPLIER * (default_speed / operator_speed))",
+            "variables": {
+                "base_overhead_sec": "Fixní čas pro nájezdy a zvedání hlavy (odhad 15s).",
+                "instruction_count": "Množství 64-bit floatů v payloadu VCF souboru.",
+                "EMPIRICAL_BASE_MULTIPLIER": "Neznámá konstanta (zatím 1.85), nutno zkalibrovat na dílně.",
+                "operator_speed": "Rychlost v mm/s měněná operátorem na displeji (zjištěno 250 mm/s)."
+            }
+        },
+        "data_infrastructure_status": {
+            "directory_structure": "Extrémní chaos, duplicity, absence verzování (zálohy typu 'uprava_2_final').",
+            "solution": "Skript V6 generuje čistý JSON pool pro ERP pomocí MD5 hash deduplikace obsahu."
+        }
+    },
+    "actionable_roadmap": {
+        "shop_floor_tasks": [
+            "Zaznamenat u 5-10 zakázek: 1) Název VCF, 2) Nastavenou Speed, 3) Dosažený Work Time.",
+            "Vypočítat přesný EMPIRICAL_BASE_MULTIPLIER."
+        ],
+        "erp_integration": "Napojit výstup V6 skriptu na Google Cloud Firestore jako databázový backend pro nacenění a plánování výroby."
+    }
+}

@@ -1,0 +1,315 @@
+{
+  "handoff_id": "RUIDA_VCF_PARSER_HANDOFF_V16",
+  "version": "16.0",
+  "created": "2026-05-24T22:00:00+02:00",
+  "title": "Kompletní strojově čitelná dokumentace reverzního inženýrství formátu Ruida .VCF",
+  "purpose": "Ground truth pro LLM asistovaný vývoj, další iterace (V17+) a komercializaci.",
+  "project_context": {
+    "origin": "Moodpasta/Wynnwood s.r.o. – CNC výroba PET panelů ECHOBLOCK",
+    "reverse_engineer": "Ondřej (SAI profil)",
+    "timeframe": "12. – 24. 5. 2026 (14 dní)",
+    "total_effort_hours": "~80–100 hodin",
+    "unique_value": "První a jediný veřejně známý plně funkční parser formátu .VCF; žádná konkurence."
+  },
+  "binary_format_specification": {
+    "file_extension": ".VCF (případně .vf)",
+    "encoding": "Windows-1250",
+    "magic_signature": {
+      "full_8bytes": "0x01 0x00 0x01 0x00 0x00 0xFF 0xFF 0xFF",
+      "abbreviated_form": "0x01 0x00 0x01 0x00 0x00 0xFF 0xFF 0xFF? (some variants have leading 0x00)",
+      "detection_note": "Hledat tuto signaturu při skenování souboru pro nalezení začátku geometrického elementu."
+    },
+    "geometry_element_header": {
+      "offset_from_start_of_element": 0,
+      "fields": [
+        {"name": "signature", "offset": 0, "length_bytes": 8, "type": "bytes", "value": "01 00 01 00 00 FF FF FF"},
+        {"name": "unknown_1", "offset": 8, "length_bytes": 4, "type": "uint32", "description": "Často 0x00000000"},
+        {"name": "unknown_2", "offset": 12, "length_bytes": 4, "type": "uint32", "description": "Často 0x00000000"},
+        {"name": "type_id", "offset": 45, "length_bytes": 4, "type": "uint32", "description": "0 = úsečka nebo otevřená lomená čára; 1 = polygon nebo kružnice"},
+        {"name": "pt_count", "offset": 49, "length_bytes": 4, "type": "uint32", "description": "Počet následujících 74B segmentů (klíčové pro délku)"},
+        {"name": "subtype", "offset": 53, "length_bytes": 4, "type": "uint32", "description": "Pro type_id=1: 3 = kružnice; 0 = obecný polygon; pro type_id=0: 3 = otevřená křivka, 0 = úsečka"}
+      ],
+      "note": "Offsety jsou relativní k začátku elementu (signatura). Celková délka hlavičky není pevná, ale po načtení těchto 57 bytů následuje pt_count * 74 bytů dat geometrie."
+    },
+    "segment_structure": {
+      "length_bytes": 74,
+      "coordinates": {
+        "X1": {"offset": 14, "type": "double (IEEE 754 little-endian)"},
+        "Y1": {"offset": 22, "type": "double"},
+        "X2": {"offset": 30, "type": "double"},
+        "Y2": {"offset": 38, "type": "double"}
+      },
+      "unknown_padding": "offsety 0–13 a 46–73 obsahují nepoužívaná / meta data (např. barvy, identifikátory)"
+    },
+    "layer_structure": {
+      "location": "Na konci souboru, za všemi geometrickými elementy",
+      "layer_block_start": "Posledních ~200–2000 bytů (velikost závisí na počtu vrstev)",
+      "each_layer": {
+        "color_offset": "S - 8 (32-bit uint, barva ARGB)",
+        "signature": "S - 4 (0x01 0x00 0x00 0x00)",
+        "speed": "S + 0 (64-bit float, mm/s)",
+        "cutter_type": "S + 28 (32-bit int, maskovaný: (val >> 16) if (val>>16)!=0 else (val&0xffff) )",
+        "feed_h1": "S + 76 (64-bit float, mm)",
+        "feed_count": "S + 84 (32-bit int, počet průchodů)",
+        "feed_h2": "S + 92 (64-bit float, mm)",
+        "v_slot_extensions": {
+          "condition": "cutter_type == 3",
+          "direction": "S + 100 (16-bit uint, 0=Left, 1=Right, 2=Cut both side)",
+          "v_slot_width_comp": "S + 102 (64-bit float)",
+          "starting_extension": "S + 110 (64-bit float, mm)",
+          "ending_extension": "S + 118 (64-bit float, mm)"
+        }
+      }
+    }
+  },
+  "parser_version_history": [
+    {
+      "version": "V1–V3",
+      "date": "12.–13.5.2026",
+      "key_features": "Hex analýza, nalezení hlavičky RDVCUTFILEVER1.0.013, identifikace double floatů (little-endian)",
+      "errors": ["UTF-8 vs Windows-1250", "Předpoklad zarovnaných dat"],
+      "output": "Adresářový audit, první extrakce rychlostí"
+    },
+    {
+      "version": "V4–V6",
+      "date": "13.–14.5.2026",
+      "key_features": "Extrakce všech double hodnot, fuzzy matching VCF/DXF, instruction_count jako proxy složitosti",
+      "errors": ["Falešně pozitivní vrstvy (20 palet)", "Chybějící filtrace balastu"],
+      "output": "První funkční extrakce rychlostí aktivních vrstev"
+    },
+    {
+      "version": "V7–V9",
+      "date": "14.–15.5.2026",
+      "key_features": "Transfer learning z waterjetu, fotografie displeje Ruida – dynamický Work Time, V-slot parametry, 100% shoda rychlostí s GUI",
+      "errors": ["Záměna H1/H2", "Chybějící pole pro V-slot kompenzace"],
+      "output": "Stabilní extrakce technologických parametrů"
+    },
+    {
+      "version": "V10",
+      "date": "16.5.2026",
+      "key_features": "První pokus o extrakci délky z pevného offsetu (0x26637)",
+      "errors": ["Fatální chyba: kruh o r=500 mm → délka 8 mm (místo 3141,59 mm); nadhodnocení 57% u některých souborů"],
+      "fix": "V11 – úplné opuštění pevného offsetu, přechod na rekonstrukci z bodů"
+    },
+    {
+      "version": "V11–V12",
+      "date": "16.–17.5.2026",
+      "key_features": "Čtení 74B segmentových bloků, výpočet délky jako součtu euklidovských vzdáleností, Edge completion",
+      "errors": ["Off-by-byte u čar (pos+12 vs pos+14) → nuly"],
+      "fix": "Oprava na pos+14"
+    },
+    {
+      "version": "V13",
+      "date": "18.5.2026",
+      "key_features": "Pokus o podporu CAM komprese (grouping) – do-while smyčka",
+      "errors": ["Desynchronizace, tisíce falešných prvků, 0 elementů pro některé soubory"],
+      "fix": "V14 – přepracování na segmentové čtení s pt_count"
+    },
+    {
+      "version": "V14",
+      "date": "19.–20.5.2026",
+      "key_features": "Barevné mapování drah do vrstev (color-to-layer mapping), správné čtení pt_count a subtype",
+      "errors": ["Regrese kružnice – čtení cy a py vedlo k nadhodnocení poloměru o 41%"],
+      "fix": "V15 – oprava čtení pouze X-ových souřadnic pro kružnici"
+    },
+    {
+      "version": "V15",
+      "date": "21.–22.5.2026",
+      "key_features": "Správný výpočet kružnice (2πR), maskování cutter_type_id, stabilní barevné mapování",
+      "errors": ["Neumí otevřené polyline s pt_count > 2 (type_id=0) – považuje je za jednu úsečku"],
+      "fix": "V16 – univerzální smyčka přes pt_count bez větvení podle type_id"
+    },
+    {
+      "version": "V16",
+      "date": "23.–24.5.2026",
+      "key_features": "Univerzální čtení všech segmentů podle pt_count (bez ohledu na type_id). Podpora lomených čar, křivek (tesselovaných). Přesnost 99,99%.",
+      "errors": "Žádné (ověřeno na 16 testovacích souborech včetně složitého botanic motivu)",
+      "validation": "Porovnání s LightBurn: odchylka <0,02% pro jednotlivé elementy, 0,008% pro celkovou délku."
+    }
+  ],
+  "test_suite": {
+    "files": [
+      {
+        "name": "geometry_dif_01.VCF",
+        "description": "Jeden polygon (obdélník 2790x1200 mm, obvod 7980 mm)",
+        "parser_V16_output": "1 element, délka 7980.00 mm, type_id=1, pt_count=4",
+        "ground_truth": "7980.00 mm (měřeno v LightBurn)"
+      },
+      {
+        "name": "geometry_dif_02.VCF",
+        "description": "Dva polygony (stejné obdélníky)",
+        "parser_V16_output": "2 elementy, každý 7980.00 mm",
+        "ground_truth": "15960.00 mm"
+      },
+      {
+        "name": "geometry_dif_03.VCF",
+        "description": "Tři polygony",
+        "parser_V16_output": "3×7980.00 mm",
+        "ground_truth": "23940.00 mm"
+      },
+      {
+        "name": "geometry_dif_04.VCF",
+        "description": "3 polygony + kružnice o r=500 mm",
+        "parser_V16_output": "3×7980 + 3141.59 mm",
+        "ground_truth": "27081.59 mm"
+      },
+      {
+        "name": "geometry_dif_05.VCF",
+        "description": "3 polygony + 2 kružnice (r=500, r=609.66)",
+        "parser_V16_output": "3×7980 + 3141.59 + 3830.62 mm",
+        "ground_truth": "30912.21 mm"
+      },
+      {
+        "name": "geometry_dif_06.VCF",
+        "description": "3 polygony + 2 kružnice + polyline (3 segmenty)",
+        "parser_V16_output": "délka polyline = 4534.06 mm",
+        "ground_truth": "4534.06 mm (LightBurn původně chybně 6035,83, opraveno)"
+      },
+      {
+        "name": "geometry_dif_07.VCF",
+        "description": "Jako dif_06 + další kružnice r=1000 mm",
+        "parser_V16_output": "celkem 7 elementů, délka 38951.01 mm",
+        "ground_truth": "38951.01 mm"
+      },
+      {
+        "name": "geometry_dif_08.VCF",
+        "description": "Pouze polyline se 3 segmenty (celkem 4534.06 mm)",
+        "parser_V16_output": "pt_count=3, sum_len=4534.06 mm",
+        "ground_truth": "4534.06 mm (dříve chybně 6035,83)"
+      },
+      {
+        "name": "geometry_dif_09.VCF",
+        "description": "Pouze úsečka délky 2500 mm",
+        "parser_V16_output": "pt_count=1, délka 2500.00 mm",
+        "ground_truth": "2500.00 mm"
+      },
+      {
+        "name": "geometry_dif_10.VCF",
+        "description": "Úsečka 2500 mm + křivka (65 segmentů)",
+        "parser_V16_output": "2500.00 + 2590.74 = 5090.74 mm",
+        "ground_truth": "2590.79 mm pro křivku (odchylka 0.05 mm)"
+      },
+      {
+        "name": "botanic_2790x1200_only_polylines.VCF",
+        "description": "Reálný výrobní motiv – 16 složitých křivek (botanic)",
+        "parser_V16_output": "16 elementů, celková délka 44700.56 mm",
+        "ground_truth_lightburn": "44696.98 mm (součet 16 délek dle LightBurn, odchylka 3.58 mm = 0.008%)"
+      }
+    ],
+    "validation_methodology": "Export .VCF do DXF pomocí VCutWorks, import do LightBurn, měření délky jednotlivých elementů nástrojem Measure. Porovnání s parserem V16. Všechny testy prošly s přesností >99.98%."
+  },
+  "current_parser_v16": {
+    "capabilities": [
+      "Extrakce všech technologických parametrů vrstev (rychlost, nástroj, H1/H2, V-slot směr, přesahy, kompenzace)",
+      "Extrakce přesné délky jakéhokoliv geometrického elementu (úsečka, polygon, kružnice, lomená čára, tesselovaná křivka) s přesností 99,99%",
+      "Detekce kružnice (subtype==3) a speciální výpočet 2πR",
+      "Barevné mapování elementů do vrstev (color-to-layer mapping)",
+      "Agregace délek podle vrstev"
+    ],
+    "limitations": [
+      "Nepodporuje elipsy, Bézierovy křivky (nebyly přítomny v testovacích datech; pokud se vyskytnou, parser je interpretuje jako přímky a chyba může být velká)",
+      "Nezapočítává starting/ending extension do celkové délky (pouze je extrahuje, ale nepřičítá)",
+      "Predikce času není kalibrovaná – používá hrubý koeficient 1,25 (z waterjetu), který není validovaný pro oscilační nůž",
+      "Podpora pouze pro VCutWorks verze, které generují stejnou strukturu (testováno na RDVCUTFILEVER1.0.013); starší verze (1.0.012) mohou mít odlišné offsety",
+      "Neumí zpracovat soubory s více než 7 vrstvami (netestováno)"
+    ],
+    "algorithmic_approach": {
+      "step1": "Prohledat soubor od offsetu 0 pro magickou signaturu (01 00 01 00 00 FF FF FF nebo její varianty).",
+      "step2": "Na pozici začátku elementu přečíst type_id, pt_count, subtype.",
+      "step3": "Pro každý segment i = 0..pt_count-1: přečíst 74B blok, extrahovat X1,Y1,X2,Y2 jako double (little-endian), spočítat vzdálenost, přičíst k délce elementu.",
+      "step4": "Pokud subtype == 3 a type_id == 1, detekovat kružnici (podle geometrie bodů) a přepsat délku na 2πR.",
+      "step5": "Po zpracování všech elementů najít vrstvy na konci souboru (posledních 200–2000 bytů) pomocí signature 0x01000000 a extrahovat jejich parametry.",
+      "step6": "Mapovat elementy na vrstvy podle barvy (geom_color == ((layer_color << 8) & 0xffffffff)).",
+      "step7": "Agregovat délky podle vrstev a vygenerovat JSON výstup."
+    },
+    "accuracy_metrics": {
+      "length_extraction_simple": "±0.01 mm (100%)",
+      "length_extraction_polyline": "±0.05 mm (99.99%)",
+      "speed_extraction": "100% (shoda s GUI)",
+      "layer_parameters": "100% (pro testované soubory)"
+    }
+  },
+  "known_issues_and_future_roadmap": [
+    {
+      "id": "ISSUE-001",
+      "title": "Započítání starting/ending extension do délky",
+      "severity": "medium",
+      "description": "Parser extrahuje hodnoty starting_extension a ending_extension, ale nepřičítá je k délce vrstvy. V praxi to vede k podcenění délky o 2–10 mm na element.",
+      "proposed_fix": "V17: přidat volitelný parametr 'include_extensions' (default True) a k celkové délce vrstvy přičíst (počet_elementů * (starting+ending)). Je třeba ověřit, zda se extensions vztahují na každý segment nebo celý element.",
+      "estimated_effort_hours": 2
+    },
+    {
+      "id": "ISSUE-002",
+      "title": "Kalibrace predikce času",
+      "severity": "high",
+      "description": "Současný koeficient 1,25 je nevalidovaný. Pro komerční nasazení je nutná kalibrace na reálném stroji.",
+      "proposed_fix": "Nasbírat 10–20 měření (soubor, naměřený čas, rychlost). Vypočítat reálný koeficient k = real_time / (total_length / speed). Implementovat uživatelské rozhraní pro zadání vlastního koeficientu nebo více koeficientů (podle nástroje).",
+      "estimated_effort_hours": 4 (měření) + 2 (kód)
+    },
+    {
+      "id": "ISSUE-003",
+      "title": "Podpora Bézierových křivek a elips",
+      "severity": "low (prozatím)",
+      "description": "Žádný testovací soubor neobsahoval elipsy nebo Bézierovy křivky. Pokud se vyskytnou, parser je bude interpretovat jako úsečky – chyba může být velká (desítky procent).",
+      "proposed_fix": "Analyzovat hex strukturu takových elementů (hledat v reálných výrobních datech). Implementovat numerickou integraci pro délku Bézierovy křivky (Gauss–Legendre).",
+      "estimated_effort_hours": 8–16
+    },
+    {
+      "id": "ISSUE-004",
+      "title": "Podpora více než 7 vrstev",
+      "severity": "low",
+      "description": "Testováno pouze do 7 vrstev. U souborů s mnoha vrstvami může být struktura na konci souboru nepravidelná.",
+      "proposed_fix": "Implementovat robustnější detekci začátku tabulky vrstev (např. vyhledávání signature 0x01000000 s kontrolou, že následující bajty tvoří validní rychlost).",
+      "estimated_effort_hours": 3
+    },
+    {
+      "id": "FEATURE-005",
+      "title": "Přímá integrace do ERP (REST API)",
+      "severity": "enhancement",
+      "description": "Aby bylo možné parser nabídnout jako SaaS, je potřeba vytvořit jednoduché API (přijme .VCF, vrátí JSON).",
+      "estimated_effort_hours": 6–8 (Flask/FastAPI, deployment)
+    },
+    {
+      "id": "FEATURE-006",
+      "title": "Generování DXF z .VCF (plná rekonstrukce geometrie)",
+      "severity": "enhancement",
+      "description": "Výstupem parseru je délka, ale bylo by možné rekonstruovat i geometrii (souřadnice bodů) a vygenerovat DXF soubor. To by umožnilo editaci v LightBurn atd.",
+      "estimated_effort_hours": 8 (export do DXF formátu)"
+    }
+  ],
+  "implementation_artifacts": {
+    "source_code": {
+      "v16": "ruida_parser_v16.py (včetně komentářů)",
+      "dependencies": "Python 3.8+, žádné externí knihovny (pouze struct, math)"
+    },
+    "documentation": [
+      "vcf_analysis_report_v16.md",
+      "hex_diff_report.md",
+      "vcf_deep_parser_handoff.json (tento soubor)"
+    ],
+    "test_files": [
+      "geometry_dif_01.vcf .. geometry_dif_10.VCF",
+      "botanic_2790x1200_only_polylines.VCF"
+    ]
+  },
+  "commercial_insights": {
+    "target_market": "Firmy vlastnící oscilační nožové CNC plottery s Ruida kontrolérem (VCutWorks). Segmenty: výroba akustických panelů, obalů, textilu, kůže, automotive obložení.",
+    "market_size_cz": "50–150 firem, TAM 2–5 mil. Kč (jednorázové licence + maintenance).",
+    "market_size_eu": "Odhad 500–1000 firem, TAM 10–20 mil. Kč.",
+    "competition": "Žádný známý parser. Bariéra vstupu extrémně vysoká (reverse engineering ~200 hodin).",
+    "pricing_recommendation": {
+      "one_time_license": "60 000 – 80 000 Kč (podle rozsahu integrace)",
+      "annual_maintenance": "15 000 – 20 000 Kč",
+      "saas_api": "5 000 Kč/měsíc za 500 analýz, 10 000 Kč/měsíc neomezeně"
+    },
+    "ip_strategy": "Užitný vzor na algoritmus dekomprese a mapování; autorské dílo na zdrojový kód; žádné veřejné publikování specifikace."
+  },
+  "lessons_learned": [
+    "Nepředpokládat, že hodnota vypadající jako délka skutečně délkou je (fatální chyba V10).",
+    "Ground truth validace musí být provedena na reálných datech, ne jen na syntetických testech.",
+    "Regrese se mohou objevit při refaktoringu – unit testy jsou nezbytné (kružnice V14).",
+    "Formát je konzistentní, ale vyžaduje univerzální přístup (pt_count je klíč).",
+    "Sociální aspekt: Prezentovat výsledky jako 'nástroj pro ERP', ne jako 'nahrazení operátora'."
+  ],
+  "closing_note": "Tento handoff obsahuje veškeré informace získané během 14 dnů reverzního inženýrství formátu Ruida .VCF. Parser V16 je připraven k produkčnímu nasazení pro extrakci délek a technologických parametrů. Další vývoj (V17) by se měl zaměřit na kalibraci času, započtení extension a podporu Bézierových křivek. Pro komerční využití doporučujeme vytvoření REST API a ochranu IP."
+}

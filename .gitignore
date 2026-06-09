@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Redundant directories (content reorganized into src/, docs/, scripts/)
+dokumentace/
+ruida_parser/
+
+# GCP sandbox experiments (not production)
+GCP_Sandbox/
+
+# Binary/document formats (not source)
+*.docx
+*.xlsx
+*.ods
+*.jpg
+*.png
+*.xls
+*.gsheet
+
+# Moodpasta raw data directories
+original_moodpasta_vcf/
+original_moodpasta_vcf_single_folder/
+
+# OS
+Thumbs.db
+.DS_Store

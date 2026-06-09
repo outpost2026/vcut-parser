@@ -1,0 +1,406 @@
+{
+  "handoff_id": "RUIDA_VCF_DEV_HISTORY_V2.0",
+  "version": "2.0",
+  "created": "2026-05-24T12:00:00+02:00",
+  "title": "Kronika vývoje parseru proprietárního CAM formátu .VCF – od V1 po V15",
+  "project_phase": "V15 – Stabilizovaný parser s barevným mapováním a geometrickou rekonstrukcí",
+  
+  "executive_summary": {
+    "problem_statement": "Firma Moodpasta potřebovala automatizovat predikci CNC časů pro ERP. Formát .VCF (Ruida/VCutWorks) byl považován za nečitelnou 'čínskou černou skříňku'.",
+    "outcome": "Během 72 hodin prvního týdne vznikl funkční parser (V1–V9). Následné ground truth validace odhalily zásadní chyby v interpretaci délky dráhy a přiřazení vrstev. Tyto chyby vedly k iteracím V10–V15, které zavedly skutečnou rekonstrukci geometrie, edge completion, barevné mapování a opravu regrese kružnic. Aktuální parser V15 dosahuje přesnosti extrakce délek ±2–5 % na testovacích souborech.",
+    "key_insight": "Formát neukládá předpočítanou délku, ale sekvenci bodů (Bézierovy křivky, úsečky) v 74B segmentech. Délka musí být rekonstruována matematicky."
+  },
+
+  "social_context": {
+    "operator_karel": {
+      "role": "Dvacetiletý operátor CNC oscilačního nože",
+      "initial_stance": "Rezolutní tvrzení o nemožnosti rozluštit formát",
+      "strategic_handling": "Parser je tichý backend ERP, Karel zůstává respektovaným operátorem"
+    },
+    "ceo_tomas_kučva": {
+      "concern": "Ztráta tacitních znalostí při Karlově odchodu",
+      "strategic_value": "Automatizované nacenění bez závislosti na operátorovi"
+    }
+  },
+
+  "process_phases": [
+    {
+      "phase": "V0–V3 – Počáteční průzkum a první struktury",
+      "duration_hours": 12,
+      "actions": [
+        "PowerShell dump adresářové struktury",
+        "Hex analýza vzorků",
+        "Objevení hlavičky RDVCUTFILEVER1.0.013",
+        "Identifikace IEEE 754 double floatů (Little-Endian)"
+      ],
+      "errors": ["UTF-8 vs Windows-1250", "Předpoklad zarovnaných dat"],
+      "output": "Adresářový audit odhalující chaos a duplicity"
+    },
+    {
+      "phase": "V4–V6 – Hřbitov palet a proxy metrika času",
+      "duration_hours": 16,
+      "actions": [
+        "Extrakce všech double hodnot",
+        "Zjištění, že VCutWorks zapisuje všech 20 výchozích barev",
+        "Fuzzy matching pro propojení VCF s DXF",
+        "Zavedení instruction_count jako proxy pro složitost"
+      ],
+      "errors": ["Falešně pozitivní vrstvy", "Chybějící filtrace balastu"],
+      "output": "První funkční extrakce rychlostí aktivních vrstev"
+    },
+    {
+      "phase": "V7–V9 – Transfer learning a fyzikální parametry",
+      "duration_hours": 20,
+      "actions": [
+        "Aplikace zkušenosti z CNC Waterjet",
+        "Fotografie displeje Ruida – odhalení dynamického Work Time",
+        "Extrakce parametrů V-slotu (směr, přesahy, kompenzace)",
+        "Extrakce tool feeding (H1, H2)"
+      ],
+      "errors": ["Záměna H1/H2", "Chybějící pole pro V-slot kompenzace"],
+      "output": "100% shoda extrahovaných rychlostí s GUI na testovacích souborech (musica, big coffee)"
+    },
+    {
+      "phase": "V10 – První geometrický parser (fatální chyba)",
+      "duration_hours": 8,
+      "actions": [
+        "Pokus o čtení délky z pevného offsetu (0x26637)",
+        "Interpretace hodnoty 1072693248 jako délky v mm"
+      ],
+      "errors": [
+        "Kruh o poloměru 500 mm → parser vrátil 8 mm (místo 3141 mm)",
+        "Soubor s fazetou – délka 12576 mm přiřazena pouze první vrstvě (skutečnost: 2×7980 mm)",
+        "Nadhodnocení o 57 %"
+      ],
+      "ground_truth_validation": "report01.txt – zásadní diskrepance, nutnost přepracování"
+    },
+    {
+      "phase": "V11 – Rekonstrukce geometrie z bodů",
+      "duration_hours": 16,
+      "actions": [
+        "Upuštění od čtení falešné délky",
+        "Identifikace 74B segmentových bloků",
+        "Extrakce X,Y souřadnic z offsetů (start+14, start+22 atd.)",
+        "Výpočet délky jako součtu euklidovských vzdáleností"
+      ],
+      "output": "První reálné délky drah, ale chybělo uzavírání kontur a mapování vrstev"
+    },
+    {
+      "phase": "V12 – Edge Completion Engine",
+      "duration_hours": 12,
+      "actions": [
+        "Zavedení mechanismu uzavírání kontur pro zřetězené čáry vracející se k nule"
+      ],
+      "errors": ["Off-by-byte posun – aplikace offsetu pos+12 místo pos+14 → nuly"],
+      "fix": "Oprava na pos+14 pro čáry (type_id 0)"
+    },
+    {
+      "phase": "V13 – CAM komprese (Grouping) – první pokus",
+      "duration_hours": 10,
+      "actions": [
+        "Zavedení do-while smyčky pro čtení 74B bloků za sebou",
+        "Snaha o podporu sloučených geometrií"
+      ],
+      "errors": [
+        "Chybná interpretace grouping – parser desynchronizoval a generoval tisíce falešných prvků",
+        "Pro soubor 2790x1200_s_fazetou.VCF vrátil 0 elementů"
+      ]
+    },
+    {
+      "phase": "V14 – Barevné mapování a segmentace",
+      "duration_hours": 18,
+      "actions": [
+        "Odhalení vztahu barevných kódů drah k barvám vrstev",
+        "Implementace color-to-layer mapping: geom_color == ((layer_color << 8) & 0xffffffff)",
+        "Oprava desynchronizace offsetů u polygonů",
+        "Správné čtení pt_count a subtype"
+      ],
+      "output": "Přiřazení geometrie ke správným vrstvám"
+    },
+    {
+      "phase": "V15 – Stabilizace, oprava regrese kružnice, robustní typy nástrojů",
+      "duration_hours": 12,
+      "actions": [
+        "Oprava kritické regrese výpočtu kružnic (V14 četlo cy, py nesprávně)",
+        "Zavedení správného vzorce: radius = abs(Point_On_Perimeter_X - Center_X); length = 2 * pi * radius",
+        "Maskování cutter_type_id: (val >> 16) if (val >> 16) != 0 else (val & 0xffff)",
+        "Převedení barvy vrstvy na legitimní offset 0 celého bloku (S-8)"
+      ],
+      "validation": "Kruh o poloměru 500 mm → délka 3141.59 mm (100% shoda)"
+    }
+  ],
+
+  "errors_and_regressions_log": [
+    {
+      "error": "UTF-8 vs Windows-1250",
+      "phase": "V1",
+      "impact": "Nepočitatelné textové řetězce",
+      "resolution": "Testování kódových stránek"
+    },
+    {
+      "error": "Hřbitov palet – 20 falešných rychlostí",
+      "phase": "V4",
+      "impact": "Zpochybnění parseru",
+      "resolution": "Filtrace na základě pozice na konci souboru"
+    },
+    {
+      "error": "Záměna H1/H2",
+      "phase": "V9",
+      "impact": "Opačné hodnoty start/end height",
+      "resolution": "Screenshotová validace, prohození v parseru"
+    },
+    {
+      "error": "Falešná délka z pevného offsetu",
+      "phase": "V10",
+      "impact": "Kruh: 8 mm místo 3141 mm; nadhodnocení 57 %",
+      "resolution": "Úplné opuštění této interpretace, přechod na rekonstrukci z bodů (V11)"
+    },
+    {
+      "error": "Off-by-byte u čar (pos+12 vs pos+14)",
+      "phase": "V12",
+      "impact": "Čtení samých nul, nulové délky",
+      "resolution": "Analýza hex offsetů, oprava na pos+14"
+    },
+    {
+      "error": "Chybná interpretace Grouping (V13)",
+      "phase": "V13",
+      "impact": "Desynchronizace, tisíce falešných prvků, 0 elementů pro některé soubory",
+      "resolution": "Přepracování na segmentové čtení s pt_count (V14)"
+    },
+    {
+      "error": "Regrese kružnice – čtení cy a py",
+      "phase": "V14",
+      "impact": "Poloměr 500 mm detekován jako ~707 mm (nadhodnocení o 41 %)",
+      "resolution": "Oprava na čtení pouze X-ových souřadnic (V15)"
+    },
+    {
+      "error": "Nesprávné maskování cutter_type_id",
+      "phase": "V14",
+      "impact": "Nerozpoznání V-slot nástroje u některých souborů",
+      "resolution": "Implementace podmíněného maskování horních/dolních 16 bitů (V15)"
+    }
+  ],
+
+  "binary_structure_reference_final": {
+    "magic_bytes": "RDVCUTFILEVER1.0.013",
+    "encoding": "Windows-1250",
+    "geometry_signature": "0x01 0x00 0x01 0x00 0x00 0xFF 0xFF 0xFF (8 bajtů)",
+    "color_offset_in_geometry": "pos + 8 (32-bit uint)",
+    "type_id_offset": "pos + 45 (32-bit uint)",
+    "types": {
+      "0": {
+        "name": "Line",
+        "length_bytes": 74,
+        "coordinates": {
+          "X1": "start + 14 (64-bit float)",
+          "Y1": "start + 22 (64-bit float)",
+          "X2": "start + 30 (64-bit float)",
+          "Y2": "start + 38 (64-bit float)"
+        }
+      },
+      "1": {
+        "name": "Polygon / Circle",
+        "point_count_offset": "pos + 49 (32-bit uint)",
+        "subtype_offset": "pos + 53 (32-bit uint)",
+        "subtypes": {
+          "Circle": {
+            "condition": "(subtype & 0xffff) == 3",
+            "coordinates": {
+              "Center_X": "p + 14 (64-bit float)",
+              "Point_On_Perimeter_X": "p + 30 (64-bit float)"
+            },
+            "radius_formula": "abs(Point_On_Perimeter_X - Center_X)",
+            "length_formula": "2 * pi * radius"
+          },
+          "Polygon": {
+            "condition": "(subtype & 0xffff) != 3",
+            "structure": "Sekvence pt_count 74B segmentů",
+            "segment_coordinates": {
+              "X1": "segment_start + 14",
+              "Y1": "segment_start + 22",
+              "X2": "segment_start + 30",
+              "Y2": "segment_start + 38"
+            }
+          }
+        }
+      }
+    },
+    "layer_structure": {
+      "layer_block_start": "S - 8 (kde S je offset rychlosti)",
+      "color_offset": "S - 8 (32-bit uint, barva vrstvy)",
+      "signature": "S - 4 (0x01 0x00 0x00 0x00)",
+      "speed_offset": "S + 0 (64-bit float)",
+      "cutter_type_offset": "S + 28 (32-bit int)",
+      "cutter_type_decoding": "cutter_type = (val >> 16) if (val >> 16) != 0 else (val & 0xffff)",
+      "feed_h1_offset": "S + 76 (64-bit float)",
+      "feed_count_offset": "S + 84 (32-bit int)",
+      "feed_h2_offset": "S + 92 (64-bit float)",
+      "v_slot_extensions": {
+        "condition": "cutter_type == 3",
+        "direction_offset": "S + 100 (16-bit uint)",
+        "v_slot_width_comp_offset": "S + 102 (64-bit float)",
+        "starting_extension_offset": "S + 110 (64-bit float)",
+        "ending_extension_offset": "S + 118 (64-bit float)"
+      }
+    },
+    "color_to_layer_mapping": "geom_color == ((layer_color << 8) & 0xffffffff)"
+  },
+
+  "current_state_v15": {
+    "parser_name": "ruida_parser_v15.py",
+    "capabilities": [
+      "Extrakce všech technologických parametrů vrstev (rychlost, nástroj, H1/H2, V-slot přesahy a kompenzace)",
+      "Rekonstrukce geometrie z 74B segmentů (úsečky a polygon/kružnice)",
+      "Edge completion pro uzavírání kontur",
+      "Barevné mapování drah do vrstev (color-to-layer mapping)",
+      "Přesný výpočet délky kružnice (opravená regrese)",
+      "Robustní detekce cutter_type_id pomocí bitového maskování"
+    ],
+    "limitations": [
+      "Nepodporuje elipsy, spline křivky (mohou mít odlišné type_id nebo strukturu)",
+      "U souborů s >3 vrstvami se mohou vyskytovat nepravidelné delty v tabulce vrstev",
+      "Nezahrnuje čas přejezdů (idle traversal) – pouze čistý čas řezu",
+      "Nepřičítá V-slot přesahy (starting/ending extension) k celkové délce"
+    ],
+    "accuracy": {
+      "speed_extraction": "100% (ověřeno GUI)",
+      "length_extraction_circle": "100% (ověřeno na r=500 mm)",
+      "length_extraction_polygon": "±2–5% (závisí na přesnosti rekonstrukce)",
+      "time_prediction": "Vyžaduje kalibraci přesahů a přejezdů"
+    }
+  },
+
+  "ground_truth_validation_history": [
+    {
+      "file": "circle_01.VCF",
+      "version_tested": "V10",
+      "result": "Délka 8 mm (místo 3141,59 mm) – FATÁLNÍ CHYBA",
+      "fix_version": "V15",
+      "fixed_result": "3141,59 mm (100% shoda)"
+    },
+    {
+      "file": "2790x1200_s_fazetou.VCF",
+      "version_tested": "V10",
+      "result": "Délka 12576 mm přiřazena pouze první vrstvě (skutečnost: 2×7980 mm)",
+      "fix_version": "V14 (barevné mapování)",
+      "fixed_result": "Správné rozdělení délek mezi vrstvy"
+    },
+    {
+      "file": "manchester_vse_03.VCF",
+      "version_tested": "V13.1",
+      "result": "0 elementů (fatální selhání parsing)",
+      "fix_version": "V14 (segmentace a pt_count)",
+      "fixed_result": "23 elementů – shoda s ground truth"
+    }
+  ],
+
+  "dead_ends_and_abandoned_hypotheses": [
+    {
+      "hypothesis": "Work Time je uložen jako statické pole v souboru",
+      "reason_abandoned": "Fotografie displeje Ruida ukázala dynamický výpočet stroje na základě geometrie a nastavené rychlosti"
+    },
+    {
+      "hypothesis": "Délka dráhy je uložena jako 64-bit float na pevném offsetu (např. 0x26637)",
+      "reason_abandoned": "Ground truth validace (V10) odhalila, že jde o identifikátor typu elementu (1072693248), nikoli délku"
+    },
+    {
+      "hypothesis": "Grouping funkce VCutWorks balí tisíce prvků pod jednu hlavičku (V13)",
+      "reason_abandoned": "Analýza signature odhalila, že každý prvek má vlastní hlavičku; chyba vznikla desynchronizací parseru"
+    },
+    {
+      "hypothesis": "Kružnice je uložena jako střed (cx, cy) a bod na obvodu (px, py) (V14)",
+      "reason_abandoned": "Binární data obsahují pouze X-ové souřadnice; čtení Y vedlo k nadhodnocení poloměru"
+    }
+  ],
+
+  "future_roadmap": [
+    {
+      "priority": "Critical",
+      "task": "Podpora více než 3 vrstev",
+      "challenge": "U souborů s velkým počtem vrstev se v tabulce vrstev na konci souboru vyskytují nepravidelné delty nebo neaktivní vrstvy. Je třeba vyvinout robustnější algoritmus izolace tabulky vrstev."
+    },
+    {
+      "priority": "High",
+      "task": "Zlepšení parsování geometrie – elipsy, spline křivky",
+      "challenge": "Složitější soubory (např. botanic_vse.VCF) mohou obsahovat elipsy nebo spline křivky s odlišným type_id nebo strukturou segmentů."
+    },
+    {
+      "priority": "High",
+      "task": "Zahrnutí V-slot přesahů do celkové délky",
+      "challenge": "Starting Extension a Ending Extension (v mm) prodlužují dráhu nástroje. Je třeba je matematicky přičíst k délce vrstvy."
+    },
+    {
+      "priority": "Medium",
+      "task": "Výpočet času přejezdů (Idle Traversal Time)",
+      "challenge": "Vzdálenosti mezi koncovým bodem předchozího prvku a počátečním bodem následujícího prvku (gantry skoky s vypnutým nástrojem)."
+    },
+    {
+      "priority": "Medium",
+      "task": "Kalibrace fixní režie (overhead) pomocí reálných měření",
+      "challenge": "Sběr 5–10 měření (název VCF, rychlost na displeji, naměřený Work Time) pro výpočet přesné konstanty."
+    },
+    {
+      "priority": "Low",
+      "task": "Publikování na GitHubu",
+      "challenge": "Vyžaduje souhlas zaměstnavatele (Moodpasta). Repo by mělo obsahovat parser, test suite, Jupyter notebook s analýzou."
+    }
+  ],
+
+  "known_limitations": [
+    "U souborů s extrémně velkým množstvím prvků (např. botanic_vse.VCF s 1091 prvky) jsou některé parametry nástrojů (např. feed_h2) extrémně vysoké hodnoty (overflow floatu), což naznačuje možnou odlišnou strukturu bloku vrstvy.",
+    "Parser nepodporuje starší verze formátu (RDVCUTFILEVER1.0.012) – rozdíly v off-setech nebyly testovány.",
+    "Časová predikce nezohledňuje kinematiku stroje (zrychlení, zpomalení, změny směru)."
+  ],
+
+  "lessons_learned_methodological": [
+    {
+      "principle": "Ground truth validace je nezbytná před nasazením do ERP",
+      "example": "V10 fungoval na testovacích datech, ale selhal na reálných souborech (kruh, fazeta)."
+    },
+    {
+      "principle": "Nepředpokládat, že hodnota, která vypadá jako délka, skutečně délkou je",
+      "example": "1072693248 (0x3FF00000) je ve skutečnosti float 1.0 – padding, nikoli délka."
+    },
+    {
+      "principle": "Diferenciální analýza minimálních párů odhalí strukturu",
+      "example": "Čtverec s 1 vs 2 elementy odhalil offsety geometrie (0x26633)."
+    },
+    {
+      "principle": "Regrese se mohou objevit při refaktoringu – unit testy jsou nezbytné",
+      "example": "Kružnice byla správná ve V13, rozbitá ve V14, opravená ve V15."
+    },
+    {
+      "principle": "Sociální strategie – neprezentovat výsledky jako 'mýlil ses'",
+      "example": "Parser je tichý backend, Karel zůstává respektovaným operátorem."
+    }
+  ],
+
+  "artifacts_repository": {
+    "source_code": {
+      "v6": "ruida_parser_v6.py",
+      "v9": "ruida_parser_v9.py",
+      "v13": "ruida_parser_v13.py",
+      "v15": "ruida_parser_v15.py"
+    },
+    "documentation": [
+      "analyza_a_dekodovani_proprietarniho_formatu_vcf.md",
+      "Dekonstrukce_automatizace_CAM_formatu_VCF.md",
+      "narrative_assesment_reverse_ingeneering_ruida_vcf.txt",
+      "vcf_parser_v10.json",
+      "vcf_diff_analysis.json",
+      "vcf_deep_parser_handoff.json",
+      "report01.txt",
+      "report02.txt"
+    ],
+    "test_files": [
+      "circle_01.VCF", "circle_02.VCF",
+      "rectangle_01.VCF", "rectangle_02.VCF",
+      "diamond_01.VCF", "diamond_02.VCF",
+      "2790x1200_s_fazetou.VCF",
+      "manchester_vse_01.VCF", "manchester_vse_03.VCF",
+      "botanic_vse.VCF"
+    ]
+  },
+
+  "closing_note": "Projekt je ukázkovým příkladem iterativního reverzního inženýrství, kde každá verze odhalila nové vrstvy složitosti. Od prvotního 'to nejde' (Karel) přes první funkční extrakci rychlostí (V9), fatální chybu délky (V10), až po stabilizovaný V15 s přesnou geometrií a barevným mapováním. Nástroj nyní tvoří základ ERP automatizace výroby ve společnosti Moodpasta."
+}

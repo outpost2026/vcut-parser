@@ -1,0 +1,58 @@
+**STATUS REPORT: OPERAČNÍ ASIMILACE A R&D VÝVOJ**
+**Subjekt:** Technolog / Integrátor
+**Organizace:** Moodpasta
+**Časový rámec:** T0 (12. 5. 2026) – T+6 (18. 5. 2026)
+**Typ reportu:** Empirický stav, kvantitativní a procesuální data (Ground Truth)
+
+---
+
+### 1. Fáze asimilace a operační status (On-site)
+
+**Výchozí stav (T0 - 12. 5. 2026):**
+*   **Role:** Zácvik, pasivní stínování.
+*   **Míra autonomie:** 0 %.
+*   **Supervize (Karel):** 100 %.
+
+**Současný stav (T+6 - 18. 5. 2026):**
+*   **Role:** Aktivní operátor, příprava dat.
+*   **Míra autonomie:** Zvýšena na úroveň samostatného provádění definovaných úloh.
+*   **Supervize (Karel):** Redukována z řídící na konzultační/asistenční úroveň.
+*   **Zaznamenaný výkon (18. 5. 2026):**
+    *   **Úloha:** Příprava řezného plánu a exekuce na CNC plotteru.
+    *   **Specifikum:** Nesting dílců na nestandardním formátu (materiálové odřezky).
+    *   **Procesní kroky realizované subjektem:** Mapování dílů v softwaru VCutWorks -> definice technologických parametrů řezu -> fyzická operace CNC stroje.
+    *   **Chybovost (Scrap rate):** 0 % (100% úspěšnost exekuce na první pokus).
+
+### 2. Vývojový a integrační status (Off-site / Sandbox)
+
+**Projekt:** `moodpasta-integrator` (Automatizační middleware)
+**Kódová báze:** Python (lokální repozitář)
+**Iterace:** Verze 5 (V5)
+
+**Dosažené technologické milníky:**
+1.  **Datová extrakce (VCF):** 
+    *   Úspěšné reverzní inženýrství binárního formátu Ruida V9.
+    *   Izolace paměťových ofsetů pro rychlost (mm/s), typ nástroje (V-slot, Vibrate), počet zanoření a fyzikální modifikátory (Start/End Extensions).
+2.  **Geometrická analýza (DXF):** 
+    *   Implementace parseru pro extrakci matematických dat z CAD entit (`POLYLINE`, `LWPOLYLINE`, `SPLINE`).
+    *   Aplikována dekompozice křivek (flattening s přesností 0.1 mm) pro exaktní výpočet celkové dráhy nástroje.
+3.  **Architektonická korekce (Alignment):** 
+    *   Identifikována chyba v počáteční hypotéze párování dat (řazení dle barvy/rychlosti).
+    *   Aplikována oprava: VCF ustanoveno jako absolutní "Ground Truth" pro technologii. DXF ustanoveno výhradně jako "Ground Truth" pro geometrii.
+    *   Párovací mechanismus změněn na *Insertion Order* (sekvenční mapování vrstev 1:1), což odpovídá nativnímu chování softwaru VCutWorks.
+4.  **Výstup:** Generování strukturovaných databázových souborů (JSON) a vizualizačních reportů (Markdown) v dávkovém režimu (`--batch`).
+
+### 3. Agregovaná data systému (Metriky skriptu V5)
+*   **Příklad vzorku:** `small fishbone 2790x1200`
+*   **Naměřená celková dráha (DXF):** 62 596.28 mm
+*   **Identifikované vrstvy (VCF):** 3
+*   **Typy identifikovaných operací:** V-slot (oboustranný řez), Vibrate cutter (hloubka -0.5 mm), V-slot (jednostranný řez).
+*   **Stav algoritmu predikce času:** Algoritmus je aktuálně nastaven na teoretický výpočet `(Délka / Rychlost) * Konstanta 1.25`.
+
+### 4. Plánovaný vývojový vektor (Next Steps)
+1.  **Fáze sběru empirických dat (Data Logging):** Zahájení fyzického měření (Time Studies) na CNC plotteru.
+2.  **Proměnné k měření:** Skutečný čas stroje (Machine Runtime) vs. Teoretický čas predikovaný integrátorem.
+3.  **Cíl:** Korekce fixní konstanty `1.25` a zavedení dynamického výpočtu zohledňujícího vliv počtu entit (uzlů) na reálnou akceleraci/deceleraci CNC hlavy.
+
+---
+**Konec reportu.**

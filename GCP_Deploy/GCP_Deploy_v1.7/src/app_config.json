@@ -1,0 +1,33 @@
+{
+  "_schema": "app_config_v1.0",
+  "_description": "Obchodni, provozni a ERP konfigurace Moodpasta parseru. Extrahovano z hardcoded hodnot v app.py (v1.6).",
+
+  "pricing": {
+    "machine_minute_cost_czk": 18.5,
+    "material_cost_per_m2_czk": 420.0,
+    "default_margin_percent": 45
+  },
+
+  "auth": {
+    "gatekeeper_enabled": true,
+    "demo_password": "moodpasta-demo-2026",
+    "_warning": "Pro produkci nahradit GCP Identity-Aware Proxy (IAP) misto hesla v kodu."
+  },
+
+  "panel_formats": [
+    {"name": "1200x2790 mm (Standardni Echoblock)", "width_mm": 1200, "height_mm": 2790},
+    {"name": "1200x2800 mm (Echoblock nominalni)", "width_mm": 1200, "height_mm": 2800},
+    {"name": "600x2800 mm (Polovicni panel)", "width_mm": 600, "height_mm": 2800},
+    {"name": "1220x2900 mm (Plst Savanna surova)", "width_mm": 1220, "height_mm": 2900},
+    {"name": "1200x2500 mm (Atypicka zakazka Capexus)", "width_mm": 1200, "height_mm": 2500},
+    {"name": "600x1200 mm (Obkladovy dlazdicovy format)", "width_mm": 600, "height_mm": 1200}
+  ],
+
+  "gcp": {
+    "project_id": "project-4ac30110-41b1-4783-a5d",
+    "project_number": "537446704644",
+    "region": "europe-west1",
+    "service_name": "vcf-parser-demo",
+    "image": "europe-west1-docker.pkg.dev/project-4ac30110-41b1-4783-a5d/moodpasta/vcf-parser:v1.7"
+  }
+}

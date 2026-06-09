@@ -1,0 +1,59 @@
+{
+  "document_title": "Proprietární formát .VCF — Kompletní technická dokumentace a status projektu (květen 2026)",
+  "version": "V16.1+",
+  "last_updated": "2026-05-25",
+  "author": "Ondřej",
+  "format": {
+    "name": ".VCF",
+    "full_name": "Ruida VCut File",
+    "vendor": "Shenzhen Ruida Technology",
+    "software": "VCutWorks",
+    "type": "Proprietární binární serializace (C/C++)",
+    "endianness": "Little-endian",
+    "encoding": "Windows-1250 (textová metadata)"
+  },
+  "structure": {
+    "header": "ASCII signatura RDVCUTFILEVER1.0.xxx + metadata",
+    "palette_graveyard": "20 výchozích systémových palet (balast)",
+    "geometry_payload": "IEEE 754 double souřadnice, 74B segmenty (Line/Polyline/Polygon)",
+    "layer_mapping": "geom_color == (layer_color << 8)",
+    "active_layers_section": "Koncová část souboru — pouze použité vrstvy + technologické parametry",
+    "export_flag": "32-bit int (Output = Yes/No)"
+  },
+  "capabilities": {
+    "extracted_data": [
+      "Názvy vrstev a metadata",
+      "Řezné rychlosti (mm/s) aktivních vrstev",
+      "Tool feeding, Start/End height",
+      "V-slot parametry (směr, width compensation, extensions)",
+      "Kompletní geometrie (délky drah, počet segmentů)",
+      "Export status vrstev"
+    ]
+  },
+  "parser": {
+    "name": "RuidaVcfDeepParser",
+    "latest_version": "V16.1",
+    "geometric_accuracy": "99.998 % (vs LightBurn)",
+    "status": "Produkčně použitelný"
+  },
+  "kinematic_model": {
+    "accuracy": "98–99.8 % oproti reálnému času stroje",
+    "key_factors": [
+      "Akcelerační/decelerační rampy",
+      "Rotace hlavy v ostrých úhlech (0.66 s)",
+      "Interpolace křivek (0.15 s)",
+      "V-slot dvojřezy + 180° rotace (2.5 s)",
+      "Zdvihy a zanoření (1.5 s)"
+    ]
+  },
+  "innovation_status": {
+    "public_existence": "Žádný veřejný parser .VCF neexistuje (k 25. 5. 2026)",
+    "related_projects": "Pouze .rd formát (RDWorks laser) — jiná doména",
+    "assessment": "Projekt autora je průkopnický a unikátní"
+  },
+  "business_impact": {
+    "erp_integration": "Plná automatizace nacenění a plánování",
+    "tacit_knowledge": "Eliminace závislosti na operátorovi (Karel)",
+    "data_quality": "Řešení duplicit a orphan souborů"
+  }
+}

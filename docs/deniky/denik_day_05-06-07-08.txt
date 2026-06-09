@@ -1,0 +1,110 @@
+Zde je redakčně upravený text vašich poznámek. Úpravy se zaměřily na sjednocení terminologie, opravu gramatiky a stylistické vyhlazení při striktním zachování obsahu a struktury.
+
+---
+
+# Znalostní databáze: Provozní záznamy CNC (Moodpasta)
+
+**Datum záznamů:** 20. 05. 2026 – 21. 05. 2026
+
+---
+
+## 1. Provozní záznamy (deníkové listy)
+
+### Den 6 (26. 01. 2026)
+
+* **Šarže PCB dekor / zakázka 3873 (Albatros team):**
+* Strojní čas (machine time): 23 min 37 s (A); 20 min 51 s (C).
+
+
+* **Nová zakázka 3871 (3 ks, camel, manchester) / šarže 260131 (Service for office):**
+* Deska 1: 7 min 27 s (Hotovo)
+* Deska 2: 8 min 24 s (Hotovo)
+* Deska 3: Hotovo
+
+
+* **Zakázka 3780:**
+* Kus 2: Hotovo (5 min 21 s), M 2.40
+* Kus 2: Hotovo (6 min 36 s), M 2.23
+* Kus 3: Hotovo (6 min 16 s)
+
+
+
+### Den 7 (20. 05. 2026)
+
+* **Zakázka 3822 (materiál Dune, vzor B.Coffee):**
+* Zpracování 6 ks desek (formát 1200 x 2790 mm) = 12 ks výrobků (600 x 2790 mm).
+* V-slot 45°, fazety: ano.
+* Čas: 6 min 28 s (opracování 1 ks).
+
+
+* **Samostatné zadání zakázky (barva Savanna):**
+* Příprava řezných plánů, seskupení.
+* Zakázka 3931 (Capexus – krabičky, 210 ks, spotřeba cca 9 feltů).
+* Čas 12 min 36 s, start řezání cca v 15:00.
+
+
+
+### Den 8 (21. 05. 2026)
+
+* **Logo Moodpasta:** Předána informace od Kristýny pro Karla (v metrovém rozměru, styl „jako Bonami“).
+* **Zakázka 3931 (Capexus):** Hotovo 31 ks, zbývá 179 ks.
+* Výtěžnost: 1 felt = 26 ks (celkem cca 6,9 ks feltu Savanna 2900 x 1220 mm).
+* Čas řezání: 1 hod 16 min / ks.
+
+
+* **Nová zakázka 3824 (Arbyd):**
+* 29 ks lamel (3798 x 200 x 12 mm), skládáno ze dvou kusů (1894 mm).
+* Zakázka Parapanel (barva Duna).
+
+
+* **Realizace (Arbyd):**
+* 1. deska: 9 min 38 s (Hotovo).
+
+
+* 4. deska: 11 min 00 s (Hotovo).
+
+
+* 7. deska: Vnitřní část (rozpracováno).
+
+
+
+
+* **Aktualizace 3931 (Krabičky):** Hotovo 35 + 26 ks.
+
+---
+
+## 2. Technologické postupy a tacitní znalosti
+
+### Nastavení stroje a SW (V-cutworks)
+
+* **Position (Kotevní bod/Nula):**
+* Existují 4 volby: *Anchor point* (vždy používat), *Current position*, *Machine zero*, *Absolute coordinate*. Ostatní nepoužívat.
+* **Pravidlo:** Vždy mít nastaveno „Position“ = ANCHOR POINT.
+* **Incident:** Při chybě v nastavení na „Current position“ došlo k posunu řezu mimo desku (znehodnocen 1 ks).
+* **Postup fixace nuly:** Při každém založení desky srovnat materiál s L-dorazem, najet šipkami na nulu a fixovat stiskem *X,Y coordinates* na displeji.
+
+
+
+### Specifika řezání a přípravy
+
+* **Nesting (pravidla drah):**
+* Priorita: řezat nejprve menší díly, poté větší.
+* Sekvence: řadit dráhy logicky od nuly plotteru (elementy nejblíže stroji jako první) – důvodem je optimalizace pojezdových drah.
+
+
+* **Podélné dělení s fasetou (rozměr 2x600 mm):**
+* V softwaru (V-cutworks/LightBurn) nutno oddělit díly minimálně o 5 mm.
+* **Kalibrace:** U této zakázky aretovat laser v ose X k rysce 5 mm na L-dorazu (standardně u ostatních zakázek k rysce 10 mm).
+
+
+* **Řezání log a textů:**
+* Vždy řezat nejprve vnitřní části, až poté vnější (zamezení uvolnění materiálu a nepřesnostem).
+* Feed: 45 mm/s.
+* Řezání zrcadlené (z rubové strany) – eliminuje vstupy nože na pohledové straně.
+
+
+
+### Práce se soubory (Cloud/Drive)
+
+* **Konfekční vzory:** Složka „Echoblock staré vzory“ – soubory se neukládají ani needitují. V případě zakázky z nich se použije soubor `.vcf` bez modifikace a ukládání.
+* **Workflow:** Najít soubor dle firmy, editovat ve V-cutworks, namnožit (1 řádek = 7 ks).
