@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from vcf_parser_v20 import RuidaVcfEngineV20
-import os
+import os, io, json
 
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
@@ -39,6 +39,8 @@ st.markdown("""
     .stTabs [aria-selected="true"] { color: #10B981 !important; }
     .stButton > button { background-color: #10B981; color: #0F172A; font-weight: 700; border: none; border-radius: 8px; }
     .stButton > button:hover { background-color: #059669; }
+    .section-header { font-size: 14px; font-weight: 700; color: #94A3B8; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .download-section { margin-top: 24px; padding: 16px; background: #111827; border-radius: 10px; border: 1px solid #1E293B; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,6 +104,42 @@ if uploaded_file is not None:
             area_m2 = (width * height) / 1000000.0
             cas_min = item["erp_time_prediction"]["predicted_time_seconds"] / 60.0
 
+            # ── Pre-render PNG for 2D viz + download ──
+            png_bytes = None
+            fig_viz = None
+            elements_all = item.get("elements", [])
+            if elements_all:
+                aspect = width / height if height > 0 else 1.0
+                if aspect > 1.5:
+                    fig_w = min(14, max(8, aspect * 3.5))
+                    fig_h = fig_w / aspect
+                elif aspect < 0.67:
+                    fig_h = min(14, max(8, 4 / aspect))
+                    fig_w = fig_h * aspect
+                else:
+                    fig_w = fig_h = 8
+
+                fig_viz, ax = plt.subplots(figsize=(fig_w, fig_h), facecolor="#1E293B")
+                ax.set_facecolor("#0F172A")
+                color_map = {1: "#F43F5E", 5: "#F43F5E", 4: "#3B82F6", 3: "#10B981"}
+                for el in elements_all[:400]:
+                    vertices = el.get("vertices", [])
+                    if vertices:
+                        xs = [v[0] for v in vertices]
+                        ys = [v[1] for v in vertices]
+                        col = color_map.get(el.get("geom_type_id", 1), "#64748B")
+                        ax.plot(xs, ys, color=col, linewidth=1.2, alpha=0.8)
+                ax.set_title(f"Vizualizace: {uploaded_file.name}", color="#F8FAFC", fontsize=12)
+                ax.tick_params(colors="#94A3B8")
+                for spine in ax.spines.values():
+                    spine.set_color("#334155")
+                ax.set_aspect('equal', 'box')
+                buf = io.BytesIO()
+                fig_viz.savefig(buf, format='png', dpi=100, facecolor="#1E293B")
+                png_bytes = buf.getvalue()
+            else:
+                fig_viz = None
+
             st.markdown("### Sémantický audit a analýza rizik (Gatekeeper)")
 
             if criticals:
@@ -148,34 +186,8 @@ if uploaded_file is not None:
                 col_plot, col_check = st.columns([3, 2])
                 with col_plot:
                     st.markdown("#### Digitální model drah")
-                    elements = item.get("elements", [])
-                    if elements:
-                        aspect = width / height if height > 0 else 1.0
-                        if aspect > 1.5:
-                            fig_w = min(14, max(8, aspect * 3.5))
-                            fig_h = fig_w / aspect
-                        elif aspect < 0.67:
-                            fig_h = min(14, max(8, 4 / aspect))
-                            fig_w = fig_h * aspect
-                        else:
-                            fig_w = fig_h = 8
-
-                        fig, ax = plt.subplots(figsize=(fig_w, fig_h), facecolor="#1E293B")
-                        ax.set_facecolor("#0F172A")
-                        color_map = {1: "#F43F5E", 5: "#F43F5E", 4: "#3B82F6", 3: "#10B981"}
-                        for el in elements[:400]:
-                            vertices = el.get("vertices", [])
-                            if vertices:
-                                xs = [v[0] for v in vertices]
-                                ys = [v[1] for v in vertices]
-                                col = color_map.get(el.get("geom_type_id", 1), "#64748B")
-                                ax.plot(xs, ys, color=col, linewidth=1.2, alpha=0.8)
-                        ax.set_title(f"Vizualizace: {uploaded_file.name}", color="#F8FAFC", fontsize=12)
-                        ax.tick_params(colors="#94A3B8")
-                        for spine in ax.spines.values():
-                            spine.set_color("#334155")
-                        ax.set_aspect('equal', 'box')
-                        st.pyplot(fig)
+                    if fig_viz:
+                        st.pyplot(fig_viz)
 
                 with col_check:
                     st.markdown("#### Kontrola před řezem")
@@ -276,6 +288,35 @@ if uploaded_file is not None:
                     file_name=f"report_v20_{uploaded_file.name.split('.')[0]}.md",
                     mime="text/markdown"
                 )
+
+            # ── DOWNLOAD SECTION (všechny role) ──
+            st.markdown("---")
+            st.markdown("<div class='download-section'>", unsafe_allow_html=True)
+            st.markdown("<p class='section-header'>Stáhnout artefakty parseru</p>", unsafe_allow_html=True)
+
+            stem = uploaded_file.name.split('.')[0]
+
+            json_str = json.dumps(item, indent=2, ensure_ascii=False, default=str)
+
+            csv_layers_buf = io.StringIO()
+            csv_layers_buf.write("vrstva,nastroj,rychlost_mm_s,h1_mm,h2_mm,start_ext_mm,end_ext_mm,delka_mm,operace\n")
+            for idx, layer in enumerate(item["layers"]):
+                csv_layers_buf.write(f"{idx+1},{layer['cutter_type']},{layer['speed_mms']},{layer['travel_safety_height_mm']},{layer['end_height_h2_mm']},{layer.get('starting_extension_mm',0.0)},{layer.get('ending_extension_mm',0.0)},{layer['total_cut_length_mm']},{layer['operation_type']}\n")
+            csv_layers_str = csv_layers_buf.getvalue()
+
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.download_button("📦 JSON (plný export)", json_str, f"{stem}_v20.json", "JSON — kompletní parsovaná data", type="primary")
+            with col2:
+                md_report = engine.generate_markdown_output()
+                st.download_button("📝 Markdown report", md_report, f"report_v20_{stem}.md", "MD — technická zpráva")
+            with col3:
+                st.download_button("📊 CSV (vrstvy)", csv_layers_str, f"{stem}_vrstvy.csv", "CSV — technická specifikace vrstev")
+            with col4:
+                if png_bytes:
+                    st.download_button("🖼 PNG (2D Viz)", png_bytes, f"{stem}_2d.png", "PNG — vizualizace drah")
+
+            st.markdown("</div>", unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Chyba při vizualizaci dat: {str(e)}")
