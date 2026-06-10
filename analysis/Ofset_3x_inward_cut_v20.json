@@ -1,0 +1,565 @@
+{
+  "filename": "Ofset_3x_inward_cut.VCF",
+  "file_hash": "17b5b05e9c0681e788c8e58858951571",
+  "manufacturing_intelligence": {
+    "enabled": true,
+    "semantic_warnings": [
+      {
+        "rule_id": "RULE_H2_VIBRATE_12MM",
+        "rule_class": "CLASS_B",
+        "severity": "CRITICAL",
+        "code": "H2_NO_CUT_THROUGH",
+        "message": "Kritické riziko: Nástroj 'Vibrate cutter' má výšku hrotu H2=12.0 mm. Hloubka řezu pouze 0.0 mm do materiálu o tloušťce 12.0 mm.",
+        "confidence": 0.95,
+        "traceable_context": {
+          "layer_index": null,
+          "h2": 12.0,
+          "estimated_thickness": 12.0
+        }
+      },
+      {
+        "rule_id": "RULE_SEQ_OUTER_LAST_NESTING_OFFSET",
+        "rule_class": "CLASS_A",
+        "severity": "WARNING",
+        "code": "SEQUENCE_NESTING_ERROR",
+        "message": "Riziko posunu: Vnitřní prvek (Element_2) se řeže PO svém vnějším obvodu (Element_1).",
+        "confidence": 0.891,
+        "traceable_context": {
+          "element_id": "Element_2",
+          "parent_id": "Element_1",
+          "element_offset": "0x26a69",
+          "parent_offset": "0x26850"
+        }
+      }
+    ],
+    "risk_score": 0.7,
+    "material_thickness_confidence": "LOW"
+  },
+  "warnings": [
+    "⚠️ Varování – riziko posunu u 1 skupin prvků (celkem 1 vnitřních prvků).",
+    "⚠️ Kritické riziko: Nástroj 'Vibrate cutter' má výšku hrotu H2=12.0 mm. Hloubka řezu pouze 0.0 mm do materiálu o tloušťce 12.0 mm."
+  ],
+  "tech_notes": [
+    "📝 [CRITICAL] Kritické riziko: Nástroj 'Vibrate cutter' má výšku hrotu H2=12.0 mm. Hloubka řezu pouze 0.0 mm do materiálu o tloušťce 12.0 mm."
+  ],
+  "file_size_bytes": 158855,
+  "extracted_metadata": [
+    "Arial Black",
+    "FS.SHX",
+    "Fs.SHX",
+    "HUGO",
+    "RDVCUTFILEVER1.0.013"
+  ],
+  "elements_parsed": 3,
+  "elements": [
+    {
+      "offset": "0x26637",
+      "geom_type": "Polygon",
+      "geom_type_id": 4,
+      "type_id": 1,
+      "point_count": 4,
+      "length_mm": 6825.62,
+      "layer_index": 0,
+      "is_output_yes": true,
+      "bbox": [
+        113.42,
+        -0.0,
+        1123.86,
+        2402.37
+      ],
+      "centroid": [
+        618.64,
+        1201.18
+      ],
+      "vertices": [
+        [
+          113.4166030883789,
+          2402.36962890625
+        ],
+        [
+          1123.8553466796875,
+          2402.36962890625
+        ],
+        [
+          1123.8553466796875,
+          -4.589843683788786e-06
+        ],
+        [
+          113.4166030883789,
+          -4.589843683788786e-06
+        ],
+        [
+          113.4166030883789,
+          2402.36962890625
+        ]
+      ],
+      "is_closed_loop": true,
+      "complexity": {
+        "avg_segment_length_mm": 1706.4,
+        "curvature_index": 0.0007,
+        "sharp_corners_count": 3,
+        "total_direction_changes": 0
+      },
+      "bbox_norm": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "centroid_norm": [
+        0.5,
+        0.5
+      ],
+      "element_id": "Element_0",
+      "parent_id": "Element_2",
+      "children_ids": []
+    },
+    {
+      "offset": "0x26850",
+      "geom_type": "Polygon",
+      "geom_type_id": 4,
+      "type_id": 1,
+      "point_count": 4,
+      "length_mm": 6025.62,
+      "layer_index": 0,
+      "is_output_yes": true,
+      "bbox": [
+        213.42,
+        100.0,
+        1023.86,
+        2302.37
+      ],
+      "centroid": [
+        618.64,
+        1201.18
+      ],
+      "vertices": [
+        [
+          213.41659545898438,
+          2302.36962890625
+        ],
+        [
+          1023.8553466796875,
+          2302.36962890625
+        ],
+        [
+          1023.8553466796875,
+          99.99999237060547
+        ],
+        [
+          213.41659545898438,
+          99.99999237060547
+        ],
+        [
+          213.41659545898438,
+          2302.36962890625
+        ]
+      ],
+      "is_closed_loop": true,
+      "complexity": {
+        "avg_segment_length_mm": 1506.4,
+        "curvature_index": 0.0008,
+        "sharp_corners_count": 3,
+        "total_direction_changes": 0
+      },
+      "bbox_norm": [
+        0.099,
+        0.0416,
+        0.901,
+        0.9584
+      ],
+      "centroid_norm": [
+        0.5,
+        0.5
+      ],
+      "element_id": "Element_1",
+      "parent_id": "Element_2",
+      "children_ids": [
+        "Element_2"
+      ]
+    },
+    {
+      "offset": "0x26a69",
+      "geom_type": "Polygon",
+      "geom_type_id": 4,
+      "type_id": 1,
+      "point_count": 4,
+      "length_mm": 5225.62,
+      "layer_index": 0,
+      "is_output_yes": true,
+      "bbox": [
+        313.42,
+        200.0,
+        923.86,
+        2202.37
+      ],
+      "centroid": [
+        618.64,
+        1201.18
+      ],
+      "vertices": [
+        [
+          313.4165954589844,
+          2202.36962890625
+        ],
+        [
+          923.8553466796875,
+          2202.36962890625
+        ],
+        [
+          923.8553466796875,
+          200.0
+        ],
+        [
+          313.4165954589844,
+          200.0
+        ],
+        [
+          313.4165954589844,
+          2202.36962890625
+        ]
+      ],
+      "is_closed_loop": true,
+      "complexity": {
+        "avg_segment_length_mm": 1306.4,
+        "curvature_index": 0.0009,
+        "sharp_corners_count": 3,
+        "total_direction_changes": 0
+      },
+      "bbox_norm": [
+        0.1979,
+        0.0833,
+        0.8021,
+        0.9167
+      ],
+      "centroid_norm": [
+        0.5,
+        0.5
+      ],
+      "element_id": "Element_2",
+      "parent_id": "Element_1",
+      "children_ids": [
+        "Element_0",
+        "Element_1"
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "speed_mms": 100,
+      "cutter_type": "Vibrate cutter",
+      "cutter_type_id": 1,
+      "number_of_feeding": 1,
+      "start_height_h1_mm": 0.0,
+      "travel_safety_height_mm": 0.0,
+      "end_height_h2_mm": 12.0,
+      "total_cut_length_mm": 18076.86,
+      "color_hex": "0x00000000",
+      "color_val": 0,
+      "color_rgb": [
+        0,
+        0,
+        0
+      ],
+      "direction": "N/A",
+      "direction_id": 0,
+      "v_slot_width_comp_mm": 0.0,
+      "starting_extension_mm": 0.0,
+      "ending_extension_mm": 0.0,
+      "is_output_yes": true,
+      "operation_type": "Mělké řezání / kiss-cut / gravírování",
+      "complexity": {
+        "avg_segment_length_mm": 1506.4,
+        "curvature_index": 0.0008,
+        "sharp_corners_count": 9,
+        "total_direction_changes": 0
+      }
+    }
+  ],
+  "fail_safe_flag": false,
+  "canvas_width_mm": 1010.4,
+  "canvas_height_mm": 2402.4,
+  "canvas_bbox": [
+    113.42,
+    -0.0,
+    1123.86,
+    2402.37
+  ],
+  "shape_groups": [
+    {
+      "id": "Group_1",
+      "geom_type": "Polygon",
+      "point_count": 4,
+      "length_mm": 6825.6,
+      "count": 1,
+      "instances": [
+        {
+          "centroid": [
+            618.64,
+            1201.18
+          ],
+          "bbox": [
+            113.42,
+            -0.0,
+            1123.86,
+            2402.37
+          ]
+        }
+      ],
+      "total_instances_count": 1,
+      "bbox_size": [
+        1010.4,
+        2402.4
+      ]
+    },
+    {
+      "id": "Group_2",
+      "geom_type": "Polygon",
+      "point_count": 4,
+      "length_mm": 6025.6,
+      "count": 1,
+      "instances": [
+        {
+          "centroid": [
+            618.64,
+            1201.18
+          ],
+          "bbox": [
+            213.42,
+            100.0,
+            1023.86,
+            2302.37
+          ]
+        }
+      ],
+      "total_instances_count": 1,
+      "bbox_size": [
+        810.4,
+        2202.4
+      ]
+    },
+    {
+      "id": "Group_3",
+      "geom_type": "Polygon",
+      "point_count": 4,
+      "length_mm": 5225.6,
+      "count": 1,
+      "instances": [
+        {
+          "centroid": [
+            618.64,
+            1201.18
+          ],
+          "bbox": [
+            313.42,
+            200.0,
+            923.86,
+            2202.37
+          ]
+        }
+      ],
+      "total_instances_count": 1,
+      "bbox_size": [
+        610.4,
+        2002.4
+      ]
+    }
+  ],
+  "detected_panel_format_name": "Atypický formát (1010.4 x 2402.4 mm)",
+  "detected_panel_width_mm": 1010.4,
+  "detected_panel_height_mm": 2402.4,
+  "symmetry": {
+    "has_vertical": false,
+    "vertical_score_percent": 0,
+    "has_horizontal": false,
+    "horizontal_score_percent": 0,
+    "summary": "Symetrie nebyla detekována"
+  },
+  "density_grid": {
+    "grid_data": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "summary": "Nejvyšší koncentrace prvků je ve vertikální zóně 4/8 a horizontálním sloupci 5/8.",
+    "cell_size_mm": [
+      300.3,
+      126.3
+    ]
+  },
+  "layout_type": "freeform",
+  "material_thickness_mm": 12.0,
+  "operation_sequence": {
+    "layer_order": [
+      0
+    ],
+    "first_cut_type": "Vibrate cutter",
+    "last_cut_type": "Vibrate cutter",
+    "sequence_is_correct": true
+  },
+  "technological_classification": "Standardní celoplošný panel",
+  "normalized_coords_included": true,
+  "is_aggregated_job": false,
+  "spatial_arrangement_description": "",
+  "sub_jobs": [],
+  "topology_tree": [],
+  "proximity_matrix": {
+    "Group_1": {
+      "Group_2": 0.0,
+      "Group_3": 0.0
+    },
+    "Group_2": {
+      "Group_1": 0.0,
+      "Group_3": 0.0
+    },
+    "Group_3": {
+      "Group_1": 0.0,
+      "Group_2": 0.0
+    }
+  },
+  "ml_features": {
+    "total_length_mm": 18076.86,
+    "num_layers": 1,
+    "num_elements": 3,
+    "num_shape_groups": 3,
+    "max_group_repetitions": 1,
+    "vertical_symmetry_score": 0,
+    "horizontal_symmetry_score": 0,
+    "density_grid_mean": 0.0469,
+    "density_grid_std": 0.3721,
+    "has_warning": 0,
+    "material_thickness_mm": 12.0,
+    "panel_width_mm": 1010.4,
+    "panel_height_mm": 2402.4,
+    "is_aggregated_job": 0,
+    "num_sub_jobs": 1,
+    "layer0_speed_mms": 100.0,
+    "layer0_length_mm": 18076.86,
+    "layer0_cutter_type_id": 1,
+    "layer0_end_height_h2_mm": 12.0,
+    "layer0_has_extension": 0,
+    "layer0_complexity_avg_seg": 1506.4,
+    "layer0_complexity_curvature": 0.0008,
+    "layer0_complexity_corners": 9,
+    "layer0_complexity_dir_changes": 0,
+    "layer1_speed_mms": 0.0,
+    "layer1_length_mm": 0.0,
+    "layer1_cutter_type_id": 0,
+    "layer1_end_height_h2_mm": 0.0,
+    "layer1_has_extension": 0,
+    "layer1_complexity_avg_seg": 0.0,
+    "layer1_complexity_curvature": 0.0,
+    "layer1_complexity_corners": 0,
+    "layer1_complexity_dir_changes": 0,
+    "layer2_speed_mms": 0.0,
+    "layer2_length_mm": 0.0,
+    "layer2_cutter_type_id": 0,
+    "layer2_end_height_h2_mm": 0.0,
+    "layer2_has_extension": 0,
+    "layer2_complexity_avg_seg": 0.0,
+    "layer2_complexity_curvature": 0.0,
+    "layer2_complexity_corners": 0,
+    "layer2_complexity_dir_changes": 0,
+    "layer3_speed_mms": 0.0,
+    "layer3_length_mm": 0.0,
+    "layer3_cutter_type_id": 0,
+    "layer3_end_height_h2_mm": 0.0,
+    "layer3_has_extension": 0,
+    "layer3_complexity_avg_seg": 0.0,
+    "layer3_complexity_curvature": 0.0,
+    "layer3_complexity_corners": 0,
+    "layer3_complexity_dir_changes": 0,
+    "layer4_speed_mms": 0.0,
+    "layer4_length_mm": 0.0,
+    "layer4_cutter_type_id": 0,
+    "layer4_end_height_h2_mm": 0.0,
+    "layer4_has_extension": 0,
+    "layer4_complexity_avg_seg": 0.0,
+    "layer4_complexity_curvature": 0.0,
+    "layer4_complexity_corners": 0,
+    "layer4_complexity_dir_changes": 0
+  },
+  "complexity_index": "Střední průmyslová složitost (Standardní)",
+  "erp_time_prediction": {
+    "total_path_length_mm": 18076.86,
+    "predicted_time_seconds": 260,
+    "predicted_time_formatted": "4 min 20 s"
+  }
+}

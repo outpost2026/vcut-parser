@@ -29,84 +29,84 @@ st.markdown("""
 <style>
     /* Skrýt Streamlit nativní header/footer, aby custom header byl vidět */
     header[data-testid="stHeader"] { display: none !important; }
-    .stApp { background-color: #0a0e14; color: #e2e8f0; margin-top: 0 !important; padding-top: 0 !important; }
+    .stApp { background-color: #0a0e14; color: #F1F5F9; margin-top: 0 !important; padding-top: 0 !important; }
     .main > div { margin-top: 0 !important; padding-top: 0 !important; }
     #MainMenu { display: none !important; }
     footer { display: none !important; }
     .stApp > header { display: none !important; }
     div[data-testid="stToolbar"] { display: none !important; }
     .stDeployButton { display: none !important; }
-    h1, h2, h3, h4 { font-family: 'Inter', -apple-system, sans-serif !important; font-weight: 700 !important; color: #e2e8f0 !important; }
+    h1, h2, h3, h4 { font-family: 'Inter', -apple-system, sans-serif !important; font-weight: 700 !important; color: #F1F5F9 !important; }
 
-    /* ── HEADER BAR — zvětšeno 130 %, doraženo k hornímu okraji ── */
+    /* ── HEADER BAR — +20 % (výjimka z +40 %) ── */
     .systeq-header {
         display: flex; align-items: center; justify-content: space-between;
         padding: .8rem 0; border-bottom: 1px solid rgba(255,255,255,.055);
         background: rgba(10,14,20,.94); backdrop-filter: blur(10px);
         position: sticky; top: 0; z-index: 200;
     }
-    .sh-logo { font-size: 1.3rem; font-weight: 700; letter-spacing: .12em; display: flex; align-items: center; text-decoration: none; }
+    .sh-logo { font-size: 1.56rem; font-weight: 700; letter-spacing: .12em; display: flex; align-items: center; text-decoration: none; }
     .sh-logo-sys { color: #0d9488; font-weight: 700; }
     .sh-logo-teq { color: #D35400; font-weight: 700; }
-    .sh-logo-tag { font-size: .85rem; color: #64748b; font-weight: 400; letter-spacing: .08em; margin-left: .5rem; padding-left: .5rem; border-left: 1px solid rgba(255,255,255,.1); }
+    .sh-logo-tag { font-size: 1.02rem; color: #94A3B8; font-weight: 400; letter-spacing: .08em; margin-left: .5rem; padding-left: .5rem; border-left: 1px solid rgba(255,255,255,.1); }
     .sh-nav { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .sh-pill { display: flex; align-items: center; gap: .4rem; font-size: .68rem; letter-spacing: .1em; color: #64748b; border: 1px solid rgba(255,255,255,.055); padding: .25rem .65rem; border-radius: 4px; }
-    .sh-link { color: #64748b; text-decoration: none; font-size: .75rem; letter-spacing: .07em; transition: color .2s; display: flex; align-items: center; gap: .3rem; }
-    .sh-link:hover { color: #e2e8f0; }
+    .sh-pill { display: flex; align-items: center; gap: .4rem; font-size: .82rem; letter-spacing: .1em; color: #94A3B8; border: 1px solid rgba(255,255,255,.055); padding: .25rem .65rem; border-radius: 4px; }
+    .sh-link { color: #94A3B8; text-decoration: none; font-size: .9rem; letter-spacing: .07em; transition: color .2s; display: flex; align-items: center; gap: .3rem; }
+    .sh-link:hover { color: #F1F5F9; }
     .sh-link svg { flex-shrink: 0; }
-
-    /* ── METRICS MINI ── */
-    .metrics-mini { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.055); margin-bottom: 0; }
-    .m-item { background: #0e1320; padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: .2rem; }
-    .m-val { font-size: 1.4rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
-    .m-val span { color: #0d9488; }
-    .m-label { font-size: .65rem; color: #64748b; font-weight: 300; letter-spacing: .05em; line-height: 1.4; }
-    .m-note { font-size: .6rem; color: #2e3d52; margin-top: .1rem; }
 
     /* ── KPI SYSTEM ── */
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
-    .kpi-card { background: #111827; border: 1px solid #1E293B; border-radius: 10px; padding: 16px; }
+    .kpi-card { background: #111827; border: 1px solid #334155; border-radius: 10px; padding: 16px; }
     .kpi-card.t1 { border-left: 3px solid #10B981; }
     .kpi-card.t2 { border-left: 3px solid #F59E0B; }
-    .kpi-value { font-size: 26px; font-weight: 800; color: #10B981; }
-    .kpi-value-sm { font-size: 22px; font-weight: 800; color: #F59E0B; }
-    .kpi-label { font-size: 11px; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
-    .kpi-sub { font-size: 12px; color: #9CA3AF; margin-top: 2px; }
-    .tier-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    .kpi-value { font-size: 36px; font-weight: 800; color: #10B981; }
+    .kpi-value-sm { font-size: 31px; font-weight: 800; color: #F59E0B; }
+    .kpi-label { font-size: 18px; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+    .kpi-sub { font-size: 20px; color: #CBD5E1; margin-top: 2px; }
+    .tier-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 17px; font-weight: 700; text-transform: uppercase; }
     .tier-badge.t1 { background: #064E3B; color: #10B981; }
     .tier-badge.t2 { background: #451A03; color: #F59E0B; }
 
-    /* ── RIZIKA (zmenšeno 50 %) ── */
+    /* ── ROLE SWITCHER ── */
+    .role-switcher { display: flex; gap: 8px; margin: 8px 0; }
+    .role-btn {
+        flex: 1; padding: 10px 20px; border-radius: 20px; border: 1px solid #334155;
+        font-size: 16px; font-weight: 600; cursor: pointer; transition: all .2s;
+        text-align: center; background: #111827; color: #94A3B8;
+    }
+    .role-btn:hover { border-color: #0d9488; color: #F1F5F9; }
+    .role-btn.active { background: #0d9488; color: #0F172A; border-color: #0d9488; }
+
+    /* ── RIZIKA ── */
     .riz-ok { background-color: #064E3B; border-left: 4px solid #10B981; border-radius: 6px; padding: 10px; margin-bottom: 12px; }
     .riz-warn { background-color: #1E2030; border-left: 4px solid #F59E0B; border-radius: 6px; padding: 10px; margin-bottom: 12px; }
     .riz-critical { background-color: #1E2030; border-left: 4px solid #F43F5E; border-radius: 6px; padding: 10px; margin-bottom: 12px; }
-    .riz-critical h4, .riz-warn h4, .riz-ok h4 { font-size: 13px !important; margin-top: 0 !important; margin-bottom: 4px !important; }
-    .riz-critical p, .riz-warn p, .riz-ok p { font-size: 11px !important; color: #94A3B8 !important; }
-    .riz-warn-text, .riz-critical-text { font-size: 11px !important; }
+    .riz-critical h4, .riz-warn h4, .riz-ok h4 { font-size: 22px !important; margin-top: 0 !important; margin-bottom: 4px !important; }
+    .riz-critical p, .riz-warn p, .riz-ok p { font-size: 18px !important; color: #CBD5E1 !important; }
+    .riz-warn-text, .riz-critical-text { font-size: 18px !important; }
 
     .stTabs [data-baseweb="tab-list"] { gap: 24px; }
-    .stTabs [data-baseweb="tab"] { color: #94A3B8; font-weight: 600; }
+    .stTabs [data-baseweb="tab"] { color: #CBD5E1; font-weight: 600; }
     .stTabs [aria-selected="true"] { color: #10B981 !important; }
     .stButton > button { background-color: #0d9488; color: #0F172A; font-weight: 700; border: none; border-radius: 8px; }
     .stButton > button:hover { background-color: #0f9f92; }
 
-    /* ── HASH BOX (zmenšen) ── */
-    .hash-box { background: #0F172A; border: 1px solid #1E293B; border-radius: 6px; padding: 6px 10px; font-family: monospace; font-size: 10px; color: #94A3B8; word-break: break-all; }
+    /* ── HASH BOX ── */
+    .hash-box { background: #0F172A; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; font-family: monospace; font-size: 17px; color: #CBD5E1; word-break: break-all; }
 
-    /* ── DOWNLOAD TLAČÍTKA (zmenšeno 30 %) ── */
-    .section-header { font-size: 12px; font-weight: 600; color: #94A3B8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
-    .download-section { margin-top: 16px; padding: 10px; background: #111827; border-radius: 8px; border: 1px solid #1E293B; }
+    /* ── DOWNLOAD ── */
+    .section-header { font-size: 20px; font-weight: 600; color: #CBD5E1; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .download-section { margin-top: 16px; padding: 10px; background: #111827; border-radius: 8px; border: 1px solid #334155; }
     div[data-testid="stDownloadButton"] button {
-        font-size: 11px !important; padding: 2px 10px !important; min-height: 28px !important;
+        font-size: 18px !important; padding: 3px 14px !important; min-height: 36px !important;
     }
-    div[data-testid="stDownloadButton"] button p {
-        font-size: 11px !important;
-    }
+    div[data-testid="stDownloadButton"] button p { font-size: 18px !important; }
 
     /* ── HERO BLOCK (HUD Level 0) ── */
     .hero-block {
         background: linear-gradient(135deg, #111827 0%, #0F172A 100%);
-        border: 1px solid #1E293B;
+        border: 1px solid #334155;
         border-radius: 12px;
         padding: 20px 24px;
         margin: 16px 0;
@@ -120,23 +120,41 @@ st.markdown("""
     }
     .hero-time-group {
         display: flex;
+        align-items: center;
+        gap: 24px;
+    }
+    .hero-time-main {
+        display: flex;
         flex-direction: column;
-        flex: 1;
     }
     .hero-time {
-        font-size: 48px;
+        font-size: 67px;
         font-weight: 800;
         color: #0d9488;
         line-height: 1;
         letter-spacing: -0.02em;
     }
     .hero-time-label {
-        font-size: 11px;
-        color: #64748b;
+        font-size: 18px;
+        color: #94A3B8;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        margin-top: 4px;
+        margin-top: 6px;
     }
+    .hero-time-side {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-left: 24px;
+        border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-time-side-item {
+        font-size: 18px;
+        color: #94A3B8;
+        line-height: 1.4;
+    }
+    .hero-time-side-item span { color: #CBD5E1; font-weight: 600; }
+    .hero-time-side-label { font-size: 12px; color: #64748b; }
     .hero-status-group {
         display: flex;
         align-items: center;
@@ -147,9 +165,9 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 14px;
+        padding: 8px 18px;
         border-radius: 20px;
-        font-size: 12px;
+        font-size: 17px;
         font-weight: 600;
         white-space: nowrap;
     }
@@ -170,7 +188,7 @@ st.markdown("""
     }
     .hero-stats {
         display: flex;
-        gap: 24px;
+        gap: 28px;
         margin-top: 16px;
         padding-top: 16px;
         border-top: 1px solid rgba(255,255,255,0.06);
@@ -182,15 +200,19 @@ st.markdown("""
         gap: 2px;
     }
     .hero-stat-value {
-        font-size: 18px;
+        font-size: 25px;
         font-weight: 700;
-        color: #e2e8f0;
+        color: #F1F5F9;
     }
     .hero-stat-label {
-        font-size: 10px;
-        color: #64748b;
+        font-size: 17px;
+        color: #94A3B8;
         text-transform: uppercase;
         letter-spacing: 0.06em;
+    }
+    .hero-stat-sub {
+        font-size: 13px;
+        color: #64748b;
     }
 
     /* ── HUD → MFD SEPARATOR ── */
@@ -203,18 +225,18 @@ st.markdown("""
     .yield-bar { height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin: 8px 0; }
     .yield-fill { height: 100%; background: linear-gradient(90deg, #10B981, #3B82F6); border-radius: 4px; }
 
-    /* ── FOOTER — zesvětleno + zvětšeno 130 % ── */
+    /* ── FOOTER — +20 % (výjimka z +40 %) ── */
     .systeq-footer {
         display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem;
         border-top: 1px solid rgba(255,255,255,.08); padding: 1.4rem 0; margin-top: 2rem;
     }
-    .sf-logo { font-size: 1.05rem; font-weight: 700; letter-spacing: .12em; color: #94A3B8; }
+    .sf-logo { font-size: 1.26rem; font-weight: 700; letter-spacing: .12em; color: #CBD5E1; }
     .sf-logo .sf-sys { color: #0d9488; font-weight: 700; }
     .sf-logo .sf-teq { color: #D35400; font-weight: 700; }
-    .sf-meta { font-size: .85rem; color: #64748b; letter-spacing: .04em; }
-    .sf-motto { font-size: .88rem; color: #64748b; font-style: italic; font-weight: 300; letter-spacing: .06em; }
-    .sf-contact { font-size: .85rem; color: #64748b; letter-spacing: .04em; }
-    .sf-contact a { color: #94A3B8; text-decoration: none; }
+    .sf-meta { font-size: 1.02rem; color: #94A3B8; letter-spacing: .04em; }
+    .sf-motto { font-size: 1.06rem; color: #94A3B8; font-style: italic; font-weight: 300; letter-spacing: .06em; }
+    .sf-contact { font-size: 1.02rem; color: #94A3B8; letter-spacing: .04em; }
+    .sf-contact a { color: #CBD5E1; text-decoration: none; }
     .sf-contact a:hover { color: #0d9488; }
 </style>
 """, unsafe_allow_html=True)
@@ -245,14 +267,23 @@ st.markdown(f"""
 
 # ── HEADLINE ──
 st.markdown("<h1 style='text-align: center; margin-bottom: 5px;'>CAM Automation Platform</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #64748b; font-size: 14px; margin-bottom: 10px;'>Deterministický parser proprietárních CNC formátů.<br>VCF → DXF → strukturovaná CSV &amp; JSON data pro ERP/AI integraci</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94A3B8; font-size: 18px; margin-bottom: 10px;'>Deterministický parser CNC formátů. VCF → DXF → ERP/AI</p>", unsafe_allow_html=True)
 
-ROLE_SELECT = st.selectbox(
-    "Přepínač rolí",
-    options=["Dílna / CNC", "Obchodní", "MES"],
-    index=0,
-    label_visibility="collapsed"
-)
+if "role" not in st.session_state:
+    st.session_state.role = "Dílna / CNC"
+
+col_r1, col_r2 = st.columns(2)
+with col_r1:
+    if st.button("Dílna / CNC", key="role_cnc", use_container_width=True,
+                 type="primary" if st.session_state.role == "Dílna / CNC" else "secondary"):
+        st.session_state.role = "Dílna / CNC"
+with col_r2:
+    if st.button("Obchodní", key="role_obchod", use_container_width=True,
+                 type="primary" if st.session_state.role == "Obchodní" else "secondary"):
+        st.session_state.role = "Obchodní"
+
+ROLE_SELECT = st.session_state.role
+st.markdown("<style>.stButton button[data-testid='baseButton-secondary'] { border-radius: 20px !important; } .stButton button[data-testid='baseButton-primary'] { border-radius: 20px !important; }</style>", unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader("Nahrajte výrobní soubor .VCF", type=["vcf"], label_visibility="collapsed")
 
@@ -383,20 +414,21 @@ if uploaded_file is not None:
 
 ## 5. OPERATION SEQUENCE
 - Correct Order: {seq_ok}
-
-## INSTRUCTION for Multimodal LLM:
-You are analyzing a VCF CNC cutting file rendered as a 2D PNG visualization.
-Use the numerical data ABOVE as ground truth.
-Describe what you SEE in the PNG — spatial layout, color patterns,
-element distribution, risk zones, anomalies.
-DO NOT infer. DO NOT assign tools. DO NOT estimate time.
-Only describe observable facts that are directly supported by the
-numerical data above or visible in the PNG.
 """
 
             # ═══════════════════════════════════════════════════════════
             # HUD (Level 0) — Head-Up Display, <2s scanning
             # ═══════════════════════════════════════════════════════════
+
+            # ── Active layer/element filtering ──
+            active_layers = [l for l in layers if l.get("is_output_yes", True)]
+            inactive_count = len(layers) - len(active_layers)
+            layer_count_display = f"{len(active_layers)}/{len(layers)}" if inactive_count > 0 else str(len(layers))
+            active_elements = [el for el in elements_all if el.get("is_output_yes", True)]
+            active_vslot = [l for l in active_layers if l.get("cutter_type") == "V-slot"]
+            max_vslot_depth = max((l.get("end_height_h2_mm", 0) for l in active_vslot), default=0)
+            vslot_layers = len(active_vslot)
+            sub_label = f"{sub_jobs_count} panelů" if is_aggregated and sub_jobs_count > 0 else "1 panel"
 
             # ── HERO BLOCK: dominantní cut time + compact stats + status badge ──
             if criticals:
@@ -416,8 +448,14 @@ numerical data above or visible in the PNG.
 <div class="hero-block">
   <div class="hero-main">
     <div class="hero-time-group">
-      <div class="hero-time">{time_formatted}</div>
-      <div class="hero-time-label">Cut time prediction · ±2–5 %</div>
+      <div class="hero-time-main">
+        <div class="hero-time">{time_formatted}</div>
+        <div class="hero-time-label">Predikce času řezu · ±2–5 %</div>
+      </div>
+      <div class="hero-time-side">
+        <div class="hero-time-side-item">Elementy: <span>{len(active_elements)}</span></div>
+        <div class="hero-time-side-item">Panelů: <span>{sub_label}</span></div>
+      </div>
     </div>
     <div class="hero-status-group">
       <div class="hero-status-badge {status_class}">{status_text}</div>
@@ -434,20 +472,22 @@ numerical data above or visible in the PNG.
       <div class="hero-stat-label">Rozměry (mm)</div>
     </div>
     <div class="hero-stat">
-      <div class="hero-stat-value">{len(layers)}</div>
+      <div class="hero-stat-value">{layer_count_display}</div>
       <div class="hero-stat-label">Vrstvy</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-value">{len(elements_all)}</div>
-      <div class="hero-stat-label">Elementy</div>
     </div>
     <div class="hero-stat">
       <div class="hero-stat-value">{area_m2:.3f} m²</div>
       <div class="hero-stat-label">Plocha</div>
     </div>
     <div class="hero-stat">
-      <div class="hero-stat-value">{complexity}</div>
-      <div class="hero-stat-label">Složitost</div>
+      <div class="hero-stat-value">{thickness:.0f} mm</div>
+      <div class="hero-stat-label">Tloušťka</div>
+      <div class="hero-stat-sub">conf: {mi.get('material_thickness_confidence', 'LOW')}</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">{max_vslot_depth:.0f} mm</div>
+      <div class="hero-stat-label">V-slot hloubka</div>
+      <div class="hero-stat-sub">{'aktivních {}'.format(vslot_layers) if vslot_layers > 1 else 'řez do materiálu'}</div>
     </div>
   </div>
 </div>
@@ -460,8 +500,8 @@ numerical data above or visible in the PNG.
             else:
                 st.warning("Žádná geometrie k vizualizaci.")
 
-            # ── RIZIKA (conditional — only when risk exists, normalization of deviance fix per Challenger case study) ──
-            if risk_score > 0 or criticals or warnings_w:
+            # ── RIZIKA (pouze CNC; conditional — only when risk exists) ──
+            if ROLE_SELECT == "Dílna / CNC" and (risk_score > 0 or criticals or warnings_w):
                 st.markdown("### Rizika")
                 if criticals:
                     st.markdown(f"""<div class="riz-critical"><h4 style="color: #F43F5E !important;">Kritická rizika (Index: {risk_score:.2f})</h4><p>Nalezené anomálie vyžadují zásah operátora.</p></div>""", unsafe_allow_html=True)
@@ -492,7 +532,7 @@ numerical data above or visible in the PNG.
             # ═══════════════════════════════════════════════════════════
 
             # ── TIER 2 KPI (v expanderu, mimo Level 0) ──
-            with st.expander("TIER 2 — Sekundární parametry (feature engineering & speed modulation)", expanded=False):
+            with st.expander("TIER 2 — Sekundární parametry", expanded=False):
                 conf_color = "#10B981" if mi.get("material_thickness_confidence") == "HIGH" else "#F59E0B"
                 sub_label = f"{sub_jobs_count} panelů" if is_aggregated and sub_jobs_count > 0 else "1 panel"
                 st.markdown(f"""
@@ -525,30 +565,31 @@ numerical data above or visible in the PNG.
 </div>
 """, unsafe_allow_html=True)
 
-            # ── LAYER CARD (v expanderu) ──
-            with st.expander("Layer Card — CAM nástroje per vrstva", expanded=False):
-                lc_rows = []
-                for idx, layer in enumerate(layers):
-                    ct = layer.get("cutter_type", "?")
-                    ops = layer.get("operation_type", "?")
-                    spd = layer.get("speed_mms", 0)
-                    h1 = layer.get("travel_safety_height_mm", 0)
-                    h2 = layer.get("end_height_h2_mm", 0)
-                    llen = layer.get("total_cut_length_mm", 0)
-                    sext = layer.get("starting_extension_mm", 0.0)
-                    eext = layer.get("ending_extension_mm", 0.0)
-                    lc_rows.append({
-                        "Vrstva": idx + 1,
-                        "Nástroj": ct,
-                        "Operace": ops,
-                        "Rychlost (mm/s)": spd,
-                        "H1 (mm)": h1,
-                        "H2 (mm)": h2,
-                        "Start Ext (mm)": sext,
-                        "End Ext (mm)": eext,
-                        "Délka (mm)": round(llen, 1)
-                    })
-                st.dataframe(pd.DataFrame(lc_rows), use_container_width=True, hide_index=True)
+            # ── LAYER CARD (pouze CNC) ──
+            if ROLE_SELECT == "Dílna / CNC":
+                with st.expander("Layer Card — Nástroje per vrstva", expanded=False):
+                    lc_rows = []
+                    for idx, layer in enumerate(active_layers):
+                        ct = layer.get("cutter_type", "?")
+                        ops = layer.get("operation_type", "?")
+                        spd = layer.get("speed_mms", 0)
+                        h1 = layer.get("travel_safety_height_mm", 0)
+                        h2 = layer.get("end_height_h2_mm", 0)
+                        llen = layer.get("total_cut_length_mm", 0)
+                        sext = layer.get("starting_extension_mm", 0.0)
+                        eext = layer.get("ending_extension_mm", 0.0)
+                        lc_rows.append({
+                            "Vrstva": idx + 1,
+                            "Nástroj": ct,
+                            "Operace": ops,
+                            "Rychlost (mm/s)": spd,
+                            "H1 (mm)": h1,
+                            "H2 (mm)": h2,
+                            "Start Ext (mm)": sext,
+                            "End Ext (mm)": eext,
+                            "Délka (mm)": round(llen, 1)
+                        })
+                    st.dataframe(pd.DataFrame(lc_rows), use_container_width=True, hide_index=True)
 
             # ── METADATA (v expanderu) ──
             with st.expander("Metadata & integrita", expanded=False):
@@ -589,7 +630,7 @@ numerical data above or visible in the PNG.
                     st.error("**ZÁSADNÍ RIZIKO!** Před řezem konzultuj s technologem.")
 
             elif ROLE_SELECT == "Obchodní":
-                st.markdown("#### Margin & Cost Calculator")
+                st.markdown("#### Kalkulátor Nákladů & Marže na zakázku")
                 col_cost1, col_cost2, col_cost3 = st.columns(3)
                 strojni_minuta_kc = 18.5
                 cena_material_m2 = 420.0
@@ -608,7 +649,7 @@ numerical data above or visible in the PNG.
                 prodejni_cena = celkove_naklady * (1 + marze / 100)
                 zisk = prodejni_cena - celkove_naklady
 
-                st.markdown(f"""<div class="kpi-card t1" style="margin-top: 20px;"><div class="kpi-label">Doporučená prodejní cena ({marze}% marže)</div><div class="kpi-value" style="color: #10B981;">{prodejni_cena:,.0f} Kč</div><div style="color: #94A3B8; font-size: 14px;">Zisk: {zisk:,.0f} Kč</div></div>""", unsafe_allow_html=True)
+                st.markdown(f"""<div class="kpi-card t2" style="margin-top: 20px; border-left: 3px solid #F59E0B;"><div class="kpi-label" style="color: #F59E0B;">Doporučená prodejní cena ({marze}% marže)</div><div class="kpi-value-sm" style="color: #F59E0B; font-size: 52px;">{prodejni_cena:,.0f} Kč</div><div style="color: #CBD5E1; font-size: 20px;">Zisk: {zisk:,.0f} Kč</div></div>""", unsafe_allow_html=True)
 
                 st.markdown("#### Odoo ERP Import")
                 odoo_data = {
@@ -630,33 +671,12 @@ numerical data above or visible in the PNG.
                     mime="text/csv"
                 )
 
-            else:
-                st.markdown("#### GDrive Monitor (simulace)")
-                st.info("Automatické sledování sdíleného disku `gdrive_moodpasta_RnD` je aktivní.")
-                st.markdown("#### Historická kalibrace (Historical Calibration Engine)")
-                dummy_history = pd.DataFrame({
-                    "Datum": ["2026-05-28", "2026-05-29", "2026-05-30", "2026-05-31", "2026-06-01"],
-                    "Predikovaný čas (min)": [12.5, 8.3, 15.1, 6.2, cas_min],
-                    "Skutečný čas (min)": [13.1, 8.8, 14.7, 6.0, None],
-                    "Odchylka (%)": [4.8, 6.0, -2.7, -3.2, None]
-                })
-                st.dataframe(dummy_history, use_container_width=True, hide_index=True)
-                st.markdown("#### Manufacturing Intelligence Log")
-                if warnings_list:
-                    for w in warnings_list[:20]:
-                        icon = "CRIT" if w["severity"] == "CRITICAL" else ("WARN" if w["severity"] == "WARNING" else "INFO")
-                        st.text(f"[{icon}] [{w['rule_id']}] {w['message']}")
-                    if len(warnings_list) > 20:
-                        st.text(f"... a dalších {len(warnings_list) - 20} záznamů")
-                else:
-                    st.success("Žádné sémantické anomálie v logu.")
-
             # ═══════════════════════════════════════════════════════════
             # LLM PROMPT GENERATOR (náhled v expanderu)
             # ═══════════════════════════════════════════════════════════
             st.markdown("---")
-            st.markdown("<p class='section-header'>LLM Prompt — strukturovaná data pro multimodální AI</p>", unsafe_allow_html=True)
-            with st.expander("🔍 Náhled LLM promptu", expanded=False):
+            st.markdown("<p class='section-header'>LLM Prompt — strukturovaná data pro AI</p>", unsafe_allow_html=True)
+            with st.expander("🔍 Náhled — strukturovaná data AI", expanded=False):
                 st.code(llm_prompt[:6000], language="markdown")
                 if len(llm_prompt) > 6000:
                     st.caption(f"... a {len(llm_prompt) - 6000} dalších znaků")
@@ -664,14 +684,14 @@ numerical data above or visible in the PNG.
             # ═══════════════════════════════════════════════════════════
             # DOWNLOAD ARTIFACTS (až po všech datech — Fitts' Law, Gestalt proximity)
             # ═══════════════════════════════════════════════════════════
-            st.markdown("<p class='section-header' style='margin-top:16px;'>Stáhnout artefakty parseru</p>", unsafe_allow_html=True)
+            st.markdown("<p class='section-header' style='margin-top:16px;'>Stáhnout výstup</p>", unsafe_allow_html=True)
             stem = uploaded_file.name.split('.')[0]
 
             json_str = json.dumps(item, indent=2, ensure_ascii=False, default=str)
 
             csv_layers_buf = io.StringIO()
             csv_layers_buf.write("vrstva,nastroj,rychlost_mm_s,h1_mm,h2_mm,start_ext_mm,end_ext_mm,delka_mm,operace\n")
-            for idx, layer in enumerate(layers):
+            for idx, layer in enumerate(active_layers):
                 csv_layers_buf.write(f"{idx+1},{layer['cutter_type']},{layer['speed_mms']},{layer['travel_safety_height_mm']},{layer['end_height_h2_mm']},{layer.get('starting_extension_mm',0.0)},{layer.get('ending_extension_mm',0.0)},{layer['total_cut_length_mm']},{layer['operation_type']}\n")
             csv_layers_str = csv_layers_buf.getvalue()
 
@@ -689,37 +709,10 @@ numerical data above or visible in the PNG.
 
             col_dl5, col_dl6, _, _ = st.columns(4)
             with col_dl5:
-                st.download_button("🧠 TXT Prompt", llm_prompt, f"{stem}_embedding_prompt.txt", "TXT — strukturovaný prompt pro multimodální LLM")
+                st.download_button("🧠 TXT výrobní data", llm_prompt, f"{stem}_vyrobni_data.txt", "TXT — strukturovaná data pro AI")
             with col_dl6:
                 if png_bytes:
                     st.download_button("📦 ZIP", "ZIP dostupný v deploy verzi", f"{stem}_placeholder.zip", disabled=True)
-
-            # ═══════════════════════════════════════════════════════════
-            # SYSTEM METRICS + FOOTER
-            # ═══════════════════════════════════════════════════════════
-            st.markdown("""
-<div class="metrics-mini">
-  <div class="m-item">
-    <div class="m-val">33<span>+</span></div>
-    <div class="m-label">VCF souborů<br>parsováno</div>
-  </div>
-  <div class="m-item">
-    <div class="m-val">100<span>%</span></div>
-    <div class="m-label">RPA automatizace</div>
-    <div class="m-note">zero manuálního přepisu</div>
-  </div>
-  <div class="m-item">
-    <div class="m-val">86<span>%</span></div>
-    <div class="m-label">přesnost odhadu<br>strojového času</div>
-    <div class="m-note">± 19 % CI · vzorec z dat</div>
-  </div>
-  <div class="m-item">
-    <div class="m-val">0<span>%</span></div>
-    <div class="m-label">halucinací<br>geometrických dat</div>
-    <div class="m-note">deterministický výstup</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
 
             # ── FOOTER ──
             st.markdown(f"""
