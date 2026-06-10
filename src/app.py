@@ -375,7 +375,15 @@ if uploaded_file is not None:
             layer_card_str = "\n".join(lc_lines) if lc_lines else "  (žádné vrstvy)"
 
             warning_summary = "\n".join(f"  - [{w['severity']}] {w['message']}" for w in warnings_list[:15]) if warnings_list else "  (žádné anomálie)"
-            seq_ok = item["operation_sequence"]["sequence_is_correct"]
+            seq = item["operation_sequence"]
+            seq_ok = seq["sequence_is_correct"]
+            element_seq_violations = seq.get("element_sequence_violations", [])
+            element_seq_str = ""
+            if element_seq_violations:
+                for v in element_seq_violations:
+                    element_seq_str += f"  - Layer {v['layer_index']+1} ({v['layer_cutter']}): wrong order — areas: {[f'{a:.0f}' for a in v['bbox_areas']]}\n"
+            else:
+                element_seq_str = "  (all layers: outer→inner)"
 
             llm_prompt = f"""# SEMANTIC EMBEDDING — VCF Deterministic Data Audit
 
@@ -414,6 +422,8 @@ if uploaded_file is not None:
 
 ## 5. OPERATION SEQUENCE
 - Correct Order: {seq_ok}
+- Element Cut Order:
+{element_seq_str}
 """
 
             # ═══════════════════════════════════════════════════════════
@@ -590,6 +600,19 @@ if uploaded_file is not None:
                             "Délka (mm)": round(llen, 1)
                         })
                     st.dataframe(pd.DataFrame(lc_rows), use_container_width=True, hide_index=True)
+                    element_seq = item.get("operation_sequence", {}).get("element_sequence", [])
+                    if len(element_seq) > 1:
+                        st.markdown("**Sekvence řezu elementů:**")
+                        seq_rows = []
+                        for es in element_seq:
+                            seq_rows.append({
+                                "Pořadí": es["cut_order"] + 1,
+                                "ID": es["element_id"],
+                                "Typ": es["geom_type"],
+                                "Délka (mm)": round(es["length_mm"], 1),
+                                "Vrstva": es["layer_index"] + 1
+                            })
+                        st.dataframe(pd.DataFrame(seq_rows), use_container_width=True, hide_index=True)
 
             # ── METADATA (v expanderu) ──
             with st.expander("Metadata & integrita", expanded=False):
@@ -609,10 +632,18 @@ if uploaded_file is not None:
             if ROLE_SELECT == "Dílna / CNC":
                 st.markdown("#### Kontrola před řezem")
                 seq = item["operation_sequence"]
+                element_violations = seq.get("element_sequence_violations", [])
                 if seq["sequence_is_correct"]:
                     st.success("**Pořadí vrstev v pořádku.** Obvodový ořez je na konci.")
                 else:
-                    st.error("**CHYBA SEKVENCE!** Ořez probíhá před dekorativními operacemi.")
+                    st.error("**CHYBA SEKVENCE VRSTEV!** Ořez probíhá před dekorativními operacemi.")
+                if element_violations:
+                    for v in element_violations:
+                        st.error(f"**CHYBA SEKVENCE ELEMENTŮ** ve vrstvě {v['layer_index']+1} ({v['layer_cutter']}): "
+                                 f"řez od vnitřního k vnějšímu (plochy: {', '.join(f'{a:.0f}' for a in v['bbox_areas'])})")
+                else:
+                    if not element_violations and seq.get("element_sequence"):
+                        st.success("**Elementy ve vrstvách řazeny správně** (vnější → vnitřní).")
                 if area_m2 < 1.67:
                     st.warning(f"**Malá plocha ({area_m2:.2f} m²):** Nutno olepit okraje páskou.")
                 else:

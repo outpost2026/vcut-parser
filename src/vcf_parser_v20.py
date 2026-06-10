@@ -753,11 +753,66 @@ class RuidaVcfEngineV20:
                         else:
                             tech_notes.append("📝 Sémantická sekvence: Výkres správně fasetuje hrany před zahájením vnitřního dekoru.")
 
+                # ── Element-level cut sequence detection ──
+                element_sequence = []
+                element_sequence_violations = []
+                layer_element_order = {}
+                for idx, el in enumerate(elements):
+                    if not el.get("is_output_yes"):
+                        continue
+                    el["cut_order"] = idx
+                    layer_i = el.get("layer_index", -1)
+                    if layer_i not in layer_element_order:
+                        layer_element_order[layer_i] = []
+                    layer_element_order[layer_i].append({
+                        "cut_order": idx,
+                        "offset": el["offset"],
+                        "bbox": el.get("bbox"),
+                        "length_mm": el.get("length_mm", 0),
+                        "geom_type": el.get("geom_type", "?"),
+                        "element_id": el.get("element_id", f"Element_{idx}")
+                    })
+                    element_sequence.append({
+                        "cut_order": idx,
+                        "element_id": el.get("element_id", f"Element_{idx}"),
+                        "layer_index": layer_i,
+                        "offset": el["offset"],
+                        "geom_type": el.get("geom_type", "?"),
+                        "length_mm": el.get("length_mm", 0)
+                    })
+
+                for layer_i, elist in layer_element_order.items():
+                    if len(elist) < 2:
+                        continue
+                    bbox_areas = []
+                    for e in elist:
+                        b = e.get("bbox")
+                        if b:
+                            area = (b[2] - b[0]) * (b[3] - b[1])
+                            bbox_areas.append(area)
+                        else:
+                            bbox_areas.append(e["length_mm"])
+                    decreasing = all(bbox_areas[i] >= bbox_areas[i+1] for i in range(len(bbox_areas)-1))
+                    if not decreasing:
+                        sequence_is_correct = False
+                        layer_name = layers_details[layer_i]["cutter_type"] if layer_i < len(layers_details) else "?"
+                        msg = f"⚠️ Kritická chyba sekvence elementů ve vrstvě {layer_i+1} ({layer_name}): Elementy jsou řazeny od vnitřního k vnějšímu (zvyšující se plocha)! Hrozí poškození materiálu."
+                        if msg not in warnings: warnings.append(msg)
+                        if msg not in tech_notes: tech_notes.append(msg)
+                        element_sequence_violations.append({
+                            "layer_index": layer_i,
+                            "layer_cutter": layer_name,
+                            "element_order": [e["element_id"] for e in elist],
+                            "bbox_areas": bbox_areas
+                        })
+
                 operation_sequence_info = {
                     "layer_order": layer_order,
                     "first_cut_type": first_cut_type,
                     "last_cut_type": last_cut_type,
-                    "sequence_is_correct": sequence_is_correct
+                    "sequence_is_correct": sequence_is_correct,
+                    "element_sequence": element_sequence,
+                    "element_sequence_violations": element_sequence_violations
                 }
 
                 max_dim = max(canvas_width, canvas_height)
@@ -1039,7 +1094,7 @@ class RuidaVcfEngineV20:
                     )
 
                     nesting_errs = [r for r in kb_results if r.code == "SEQUENCE_NESTING_ERROR"]
-                    if nesting_errs:
+                    if nesting_errs and operation_sequence_info.get("element_sequence_violations"):
                         parent_ids = {r.traceable_context.get("parent_id") for r in nesting_errs if r.traceable_context and r.traceable_context.get("parent_id")}
                         warnings.append(f"⚠️ Varování – riziko posunu u {len(parent_ids)} skupin prvků (celkem {len(nesting_errs)} vnitřních prvků).")
 
