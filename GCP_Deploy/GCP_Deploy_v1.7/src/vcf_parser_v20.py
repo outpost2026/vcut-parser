@@ -85,21 +85,6 @@ class RuidaVcfEngineV20:
         return sorted(list(decoded))
 
     def _extract_active_layers_details(self, binary_data: bytes) -> list:
-        sig = b'\x01\x00\x01\x00\x00\xff\xff\xff'
-        offset = 0
-        geom_colors = set()
-        first_geometry_pos = len(binary_data)
-
-        while True:
-            pos = binary_data.find(sig, offset)
-            if pos == -1:
-                break
-            if first_geometry_pos == len(binary_data):
-                first_geometry_pos = pos
-            geom_color = struct.unpack_from('<I', binary_data, pos + 8)[0]
-            geom_colors.add(geom_color)
-            offset = pos + 1
-
         version = "1.0.013"
         for s in [b"RDVCUTFILEVER1.0.012", b"VER1.0.012"]:
             if s in binary_data:
@@ -107,94 +92,95 @@ class RuidaVcfEngineV20:
                 break
 
         block_size = 610 if version == "1.0.013" else 210
+        header_size = 54
         active_layers = []
         cutter_map = {0: "Vibrate cutter", 1: "Wheel", 2: "Milling cutter", 3: "V-slot", 4: "Vibrate cut"}
         dir_map = {0: "Left", 1: "Right", 2: "Cut both side"}
         cutter_id_map = {"Vibrate cutter": 1, "Wheel": 2, "Milling cutter": 3, "V-slot": 4, "Vibrate cut": 5}
         dir_id_map = {"Left": 1, "Right": 2, "Cut both side": 3, "N/A": 0}
 
-        for k in range(1, 32):
-            pos = first_geometry_pos - k * block_size
-            if pos < 0:
-                break
+        max_blocks = min((len(binary_data) - header_size) // block_size, 257)
 
-            S = pos + 4
+        for block_idx in range(max_blocks):
+            pos = header_size + block_idx * block_size
+
             try:
-                speed = struct.unpack('<d', binary_data[S:S+8])[0]
-                color_val = struct.unpack_from('<I', binary_data, S-8)[0]
-                expected_geom_color = (color_val << 8) & 0xffffffff
-                if 1.0 <= speed <= 2000.0 and speed.is_integer() and speed % 5 == 0:
-                    if (not geom_colors) or (expected_geom_color in geom_colors):
-                        output_flag = struct.unpack_from('<I', binary_data, pos)[0]
-                        is_output_yes = (output_flag == 1)
+                output_flag = struct.unpack_from('<I', binary_data, pos)[0]
+                if output_flag != 1:
+                    continue
 
-                        cutter_type_raw = struct.unpack('<i', binary_data[S+28:S+32])[0]
-                        cutter_type = cutter_type_raw & 0xffff
+                speed = struct.unpack('<d', binary_data[pos + 4:pos + 12])[0]
+                if not (1.0 <= speed <= 2000.0 and speed.is_integer() and speed % 5 == 0):
+                    continue
 
-                        feed_num = struct.unpack('<i', binary_data[S+84:S+88])[0]
-                        start_height_h1 = struct.unpack('<d', binary_data[S+76:S+84])[0]
-                        end_height_h2 = struct.unpack('<d', binary_data[S+92:S+100])[0]
+                color_val = struct.unpack_from('<I', binary_data, pos + 12)[0]
 
-                        b_comp = color_val & 0xff
-                        g_comp = (color_val >> 8) & 0xff
-                        r_comp = (color_val >> 16) & 0xff
+                cutter_type_raw = struct.unpack('<i', binary_data[pos + 32:pos + 36])[0]
+                cutter_type = cutter_type_raw & 0xffff
 
-                        cutter_name = cutter_map.get(cutter_type, "Unknown")
+                feed_num = struct.unpack('<i', binary_data[pos + 84:pos + 88])[0]
+                start_height_h1 = struct.unpack('<d', binary_data[pos + 76:pos + 84])[0]
+                end_height_h2 = struct.unpack('<d', binary_data[pos + 92:pos + 100])[0]
 
-                        layer_info = {
-                            "speed_mms": int(speed),
-                            "cutter_type": cutter_name,
-                            "cutter_type_id": cutter_id_map.get(cutter_name, 0),
-                            "number_of_feeding": feed_num,
-                            "start_height_h1_mm": round(start_height_h1, 3),
-                            "travel_safety_height_mm": round(start_height_h1, 3),
-                            "end_height_h2_mm": round(end_height_h2, 3),
-                            "total_cut_length_mm": 0.0,
-                            "color_hex": f"0x{color_val:08x}",
-                            "color_val": color_val,
-                            "color_rgb": [r_comp, g_comp, b_comp],
-                            "direction": "N/A",
-                            "direction_id": 0,
-                            "v_slot_width_comp_mm": 0.0,
-                            "starting_extension_mm": 0.0,
-                            "ending_extension_mm": 0.0,
-                            "is_output_yes": is_output_yes,
-                            "operation_type": "N/A",
-                            "complexity": {
-                                "avg_segment_length_mm": 0.0,
-                                "curvature_index": 0.0,
-                                "sharp_corners_count": 0,
-                                "total_direction_changes": 0
-                            }
-                        }
+                b_comp = color_val & 0xff
+                g_comp = (color_val >> 8) & 0xff
+                r_comp = (color_val >> 16) & 0xff
 
-                        try:
-                            start_ext = struct.unpack('<d', binary_data[S+110:S+118])[0]
-                            end_ext = struct.unpack('<d', binary_data[S+118:S+126])[0]
-                            if not (math.isnan(start_ext) or math.isinf(start_ext)):
-                                layer_info["starting_extension_mm"] = round(start_ext, 3)
-                            if not (math.isnan(end_ext) or math.isinf(end_ext)):
-                                layer_info["ending_extension_mm"] = round(end_ext, 3)
-                        except:
-                            pass
+                cutter_name = cutter_map.get(cutter_type, "Unknown")
 
-                        if cutter_type == 3:
-                            try:
-                                direction_raw = struct.unpack('<H', binary_data[S+100:S+102])[0]
-                                v_slot_comp = struct.unpack('<d', binary_data[S+102:S+110])[0]
-                                dir_name = dir_map.get(direction_raw, "Unknown")
-                                layer_info["direction"] = dir_name
-                                layer_info["direction_id"] = dir_id_map.get(dir_name, -1)
-                                if not (math.isnan(v_slot_comp) or math.isinf(v_slot_comp)):
-                                    layer_info["v_slot_width_comp_mm"] = round(v_slot_comp, 3)
-                            except:
-                                pass
+                layer_info = {
+                    "speed_mms": int(speed),
+                    "cutter_type": cutter_name,
+                    "cutter_type_id": cutter_id_map.get(cutter_name, 0),
+                    "number_of_feeding": feed_num,
+                    "start_height_h1_mm": round(start_height_h1, 3),
+                    "travel_safety_height_mm": round(start_height_h1, 3),
+                    "end_height_h2_mm": round(end_height_h2, 3),
+                    "total_cut_length_mm": 0.0,
+                    "color_hex": f"0x{color_val:08x}",
+                    "color_val": color_val,
+                    "color_rgb": [r_comp, g_comp, b_comp],
+                    "direction": "N/A",
+                    "direction_id": 0,
+                    "v_slot_width_comp_mm": 0.0,
+                    "starting_extension_mm": 0.0,
+                    "ending_extension_mm": 0.0,
+                    "is_output_yes": True,
+                    "operation_type": "N/A",
+                    "complexity": {
+                        "avg_segment_length_mm": 0.0,
+                        "curvature_index": 0.0,
+                        "sharp_corners_count": 0,
+                        "total_direction_changes": 0
+                    }
+                }
 
-                        active_layers.append(layer_info)
+                try:
+                    start_ext = struct.unpack('<d', binary_data[pos + 110:pos + 118])[0]
+                    end_ext = struct.unpack('<d', binary_data[pos + 118:pos + 126])[0]
+                    if not (math.isnan(start_ext) or math.isinf(start_ext)):
+                        layer_info["starting_extension_mm"] = round(start_ext, 3)
+                    if not (math.isnan(end_ext) or math.isinf(end_ext)):
+                        layer_info["ending_extension_mm"] = round(end_ext, 3)
+                except:
+                    pass
+
+                if cutter_type == 3:
+                    try:
+                        direction_raw = struct.unpack('<H', binary_data[pos + 100:pos + 102])[0]
+                        v_slot_comp = struct.unpack('<d', binary_data[pos + 102:pos + 110])[0]
+                        dir_name = dir_map.get(direction_raw, "Unknown")
+                        layer_info["direction"] = dir_name
+                        layer_info["direction_id"] = dir_id_map.get(dir_name, -1)
+                        if not (math.isnan(v_slot_comp) or math.isinf(v_slot_comp)):
+                            layer_info["v_slot_width_comp_mm"] = round(v_slot_comp, 3)
+                    except:
+                        pass
+
+                active_layers.append(layer_info)
             except:
                 pass
 
-        active_layers.reverse()
         return active_layers
 
     def _parse_geometry_v18_2(self, binary_data: bytes, layers: list) -> list:
