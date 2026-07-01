@@ -52,4 +52,7 @@ Viz `CHANGELOG.md` — 6 fází vývoje od tacitních znalostí po cloud deploym
 
 ## Licence
 
+Copyright (c) 2026 SYSTEQ. All rights reserved.
+Proprietary — no license granted for use, modification, or distribution.
+
 Všechna práva vyhrazena. Tento software je výsledkem nezávislého reverzního inženýrství.
