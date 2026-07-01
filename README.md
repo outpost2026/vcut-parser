@@ -1,5 +1,7 @@
 # VCut-Parser — Reverse Engineered Ruida VCF Parser
 
+[![CI](https://github.com/outpost2026/vcut-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/outpost2026/vcut-parser/actions/workflows/ci.yml)
+
 Parser a analyzátor proprietárního binárního formátu `.VCF` (Ruida/VCutWorks CNC plotry). Vznikl procesem reverzního inženýrství z testovacích souborů a systematické dokumentace CAM parametrů.
 
 ## Schopnosti
