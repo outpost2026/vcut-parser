@@ -24,6 +24,9 @@ GCP_Sandbox/
 original_moodpasta_vcf/
 original_moodpasta_vcf_single_folder/
 
+# Secrets
+.env
+
 # OS
 Thumbs.db
 .DS_Store
