@@ -27,6 +27,9 @@ original_moodpasta_vcf_single_folder/
 # Secrets
 .env
 
+# Windows reserved device names
+nul
+
 # OS
 Thumbs.db
 .DS_Store
